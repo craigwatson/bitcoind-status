@@ -8,7 +8,7 @@ $config = array(
   'rpc_ssl'           => FALSE,
   'rpc_ssl_ca'        => NULL,
   'cache_file'        => '/tmp/bitcoind-status-cache.php',
-  'cache_time'        => 300,
+  'max_cache_time'    => 300,
   'nocache_whitelist' => array('127.0.0.1'),
 );
 

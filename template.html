@@ -27,7 +27,8 @@
     <p><strong>Number of Connections:</strong> <?php echo $data['connections']; ?></p>
     <p><strong>Block Number:</strong> <?php echo $data['blocks']; ?></p>
     <p><strong>Difficulty:</strong> <?php echo $data['difficulty']; ?></p>
-    <p><strong>IP Address:</strong> <?php echo $data['server_ip'];?></p>
+    <p><strong>IP Address:</strong> <?php echo $data['server_ip']; ?></p>
+    <p><strong>Last Updated:</strong> <?php echo date('r',$data['cache_time']); ?></>
 <?php } ?>
   </div>
 </div>

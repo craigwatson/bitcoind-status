@@ -12,6 +12,7 @@ function get_raw_data() {
   }
   
   $data = $bitcoin->getinfo();
+  $data['cache_time'] = time();
   write_to_cache($data);
   return $data;
 
@@ -19,7 +20,6 @@ function get_raw_data() {
 
 function write_to_cache($data) {
   global $config;
-  
   $raw_data = serialize($data);
   file_put_contents($config['cache_file']);
 }
