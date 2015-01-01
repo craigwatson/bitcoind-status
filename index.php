@@ -3,7 +3,7 @@
 require_once('./config.php');
 require_once('./functions.php');
 
-if((isset($_GET['nocache'])) & (in_array($_SERVER['REMOTE_ADDR'],$config['nocache_whitelist'])){
+if( (isset($_GET['nocache'])) & (in_array($_SERVER['REMOTE_ADDR'],$config['nocache_whitelist'])) ){
   $data = get_raw_data();
 } elseif (is_file($config['cache_file'])) {
   
