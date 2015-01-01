@@ -3,7 +3,7 @@
 function get_raw_data() {
 
   global $config;
-  require_once('./easybitcoin.php');
+  require_once('./php/easybitcoin.php');
 
   $bitcoin = new Bitcoin($config['rpc_user'],$config['rpc_pass'],$config['rpc_host'],$config['rpc_port']);
 
