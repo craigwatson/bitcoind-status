@@ -10,7 +10,7 @@ if( (isset($_GET['nocache'])) & (in_array($_SERVER['REMOTE_ADDR'],$config['nocac
   $raw_cache = file_get_contents($config['cache_file']);
   $cache = unserialize($raw_cache);
   
-  if ($cache['cache_time'] > (time()-$config['max_cache_time'])) {
+  if (time() > ($cache['cache_time']+$config['max_cache_time'])) {
   	$data = get_raw_data();
   } else {
     $data = $cache;
