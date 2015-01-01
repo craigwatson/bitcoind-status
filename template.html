@@ -21,7 +21,7 @@
     <div class="error">
       <h2>There has been an error communicating with the Bitcoin Daemon</h2>
       <pre><?php echo $data['error']; ?></pre>
-      <p>Please report this to <a href="mailto:<?php echo $data['admin_email']; ?>"><?php echo data['admin_email']; ?></a></p>
+      <p>Please report this to <a href="mailto:<?php echo $config['admin_email']; ?>"><?php echo $config['admin_email']; ?></a></p>
     </div>
 <?php } else { ?>
     <p><strong>Number of Connections:</strong> <?php echo $data['connections']; ?></p>
