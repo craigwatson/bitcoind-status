@@ -17,11 +17,11 @@
   <img src="http://media.tumblr.com/tumblr_lmuxp0Byto1qznjpp.png" alt="Bitcoin Logo" class="logo"/>
   <div id="inner">
     <h1>Bitcoin Node Status</h1>
-<?php if (!$info) { ?>
+<?php if (isset($data['error'])) { ?>
     <div class="error">
       <h2>There has been an error communicating with the Bitcoin Daemon</h2>
-      <pre><?php echo $bitcoin->error; ?></pre>
-      <p>Please report this to <a href="mailto:admin@vikingserv.net">admin@vikingserv.net</a></p>
+      <pre><?php echo $data['error']; ?></pre>
+      <p>Please report this to <a href="mailto:<?php echo $data['admin_email']; ?>"><?php echo data['admin_email']; ?></a></p>
     </div>
 <?php } else { ?>
     <p><strong>Number of Connections:</strong> <?php echo $data['connections']; ?></p>

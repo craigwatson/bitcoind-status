@@ -10,6 +10,7 @@ $config = array(
   'cache_file'        => '/tmp/bitcoind-status-cache.php',
   'max_cache_time'    => 300,
   'nocache_whitelist' => array('127.0.0.1'),
+  'admin_email'       => 'admin@domain.com'
 );
 
 ?>
