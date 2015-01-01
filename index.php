@@ -4,12 +4,12 @@ require_once('./config.php');
 require_once('./functions.php');
 
 // If we're good to clear cache, remove cache file
-if((isset($_GET['clearcache'])) & (in_array($_SERVER['REMOTE_ADDR'],$config['nocache_whitelist']))){
+if(isset($_GET['clearcache']) & in_array($_SERVER['REMOTE_ADDR'],$config['nocache_whitelist']) & is_file($config['cache_file']){
   unlink($config['cache_file']);
 }
 
 // If we're good to bypass cache, get raw data from RPC
-if((isset($_GET['nocache'])) & (in_array($_SERVER['REMOTE_ADDR'],$config['nocache_whitelist']))){
+if(isset($_GET['nocache']) & in_array($_SERVER['REMOTE_ADDR'],$config['nocache_whitelist'])){
   $data = get_raw_data();
 } elseif (is_file($config['cache_file'])) {
   
