@@ -15,7 +15,7 @@ $config = array(
   'donation_address'       => 'not_set',
   'donation_amount'        => '0.001',
   'use_bitcoind_ip'        => FALSE,
-  'into_text'              => FALSE,
+  'intro_text'             => 'not_set',
   'display_peer_info'      => FALSE
 );
 
