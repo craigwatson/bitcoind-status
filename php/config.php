@@ -15,7 +15,7 @@ $config = array(
   'donation_address'       => 'not_set',
   'donation_amount'        => '0.001',
   'use_bitcoind_ip'        => FALSE,
-  'intro_text'             => 'This Bitcoin node is hosted in the UK, and is running 24/7 to help support the Bitcoin network around the globe.',
+  'intro_text'             => 'not_set',
   'display_peer_info'      => FALSE
 );
 
