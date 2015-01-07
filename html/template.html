@@ -21,9 +21,9 @@
 
   <div class="pure-u-1 pure-u-md-1-1">
     <h1>Bitcoin Node Status</h1>
-    <?php if ($config['intro_text'] !== FALSE) { ?>
-    <p>This Bitcoin node is hosted in the UK, and is running 24/7 to help support the Bitcoin network around the globe.</p>
-    <?php } ?>
+    <?php if ($config['intro_text'] != 'not_set') {
+    echo '<p style="text-align:center;">'.$config['intro_text'].'</p>';
+    } ?>
   </div>
 
   <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-3 image">
@@ -51,11 +51,11 @@ if (strcmp($config['donation_address'],'not_set') == 0){
 <?php } else { ?>
       <p class="stat"><span class="label">Number of Connections:</span> <?php echo $data['connections']; ?></p>
       <p class="stat"><span class="label">Block Number:</span> <?php echo $data['blocks']; ?></p>
-      <p class="stat"><span class="label">Difficulty:</span> <?php echo $data['difficulty']; ?></p>
+      <p class="stat"><span class="label">Difficulty:</span> <?php echo number_format($data['difficulty'],3); ?></p>
       <p class="stat"><span class="label">Node IP Address:</span> <?php echo $data['node_ip']; ?></p>
       <p class="stat"><span class="label">Last Updated:</span> <?php echo date('H:i:s \o\n j F Y ',$data['cache_time']); ?></p>
 <?php if ($config['display_peer_info'] === TRUE) { ?>
-      <p class="stat"><span class="label">Connected Peers</span></p>      
+      <h3>Connected Peers</h3>      
       <table class="pure-table pure-table-bordered  pure-table-striped">
          <thead>
            <tr>
