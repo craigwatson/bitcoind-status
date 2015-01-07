@@ -12,7 +12,7 @@ if(isset($_GET['clearcache']) & in_array($_SERVER['REMOTE_ADDR'],$config['nocach
 if(isset($_GET['nocache']) & in_array($_SERVER['REMOTE_ADDR'],$config['nocache_whitelist'])){
   $data = get_raw_data();
 } elseif (is_file($config['cache_file'])) {
-  
+
   // Get cache data
   $raw_cache = file_get_contents($config['cache_file']);
   $cache = unserialize($raw_cache);
@@ -28,7 +28,6 @@ if(isset($_GET['nocache']) & in_array($_SERVER['REMOTE_ADDR'],$config['nocache_w
 }
 
 // Add the IP of the server, and include template
-$data['server_ip'] = $_SERVER['SERVER_ADDR'];
 require_once('./html/template.html');
 
 ?>

@@ -11,10 +11,12 @@ $config = array(
   'max_cache_time'         => 300,
   'nocache_whitelist'      => array('127.0.0.1'),
   'admin_email'            => 'admin@vikingserv.net',
-  'display_donation_text'  => FALSE,
+  'display_donation_text'  => TRUE,
   'donation_address'       => 'not_set',
   'donation_amount'        => '0.001',
-  'into_text'              => FALSE
+  'use_bitcoind_ip'        => FALSE,
+  'into_text'              => FALSE,
+  'display_peer_info'      => FALSE
 );
 
 ?>

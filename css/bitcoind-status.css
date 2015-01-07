@@ -75,3 +75,7 @@ div#footer p a {
 div#footer p a:hover {
   text-decoration: underline;
 }
+
+table {
+  background-color: #fff;
+}

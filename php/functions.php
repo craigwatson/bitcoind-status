@@ -16,6 +16,19 @@ function get_raw_data() {
   // Get info
   $data = $bitcoin->getinfo();
 
+  // Use bitcoind IP
+  if ($config['use_bitcoind_ip'] === TRUE) {
+    $net_info = $bitcoin->getnetworkinfo();
+    $data['node_ip'] = $net_info['localaddresses'][0]['address'];
+  } else {
+    $data['node_ip'] = $_SERVER['SERVER_ADDR'];
+  }
+
+  // Add peer info
+  if ($config['display_peer_info'] === TRUE) {
+    $data['peers'] = $bitcoin->getpeerinfo();
+  }
+
   // Handle errors if they happened
   if (!$data) {
     $data['error'] = $bitcoin->error;
