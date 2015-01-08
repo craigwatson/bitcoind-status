@@ -1,6 +1,7 @@
 <?php
 
 $config = array(
+  'debug'                  => FALSE,
   'rpc_user'               => 'rpcuser',
   'rpc_pass'               => 'rpcpass',
   'rpc_host'               => 'localhost',
