@@ -16,6 +16,14 @@ function get_raw_data() {
   // Get info
   $data = $bitcoin->getinfo();
 
+  // Handle errors if they happened
+  if (!$data) {
+    $return_data['error'] = $bitcoin->error;
+    $return_data['status'] = $bitcoin->status;
+    write_to_cache($return_data);
+    return $return_data;
+  }
+
   // Use bitcoind IP
   if ($config['use_bitcoind_ip'] === TRUE) {
     $net_info = $bitcoin->getnetworkinfo();
@@ -29,24 +37,16 @@ function get_raw_data() {
     $data['peers'] = $bitcoin->getpeerinfo();
   }
 
-  // Handle errors if they happened
-  if (!$data) {
-    $data['error'] = $bitcoin->error;
-    $data['status'] = $bitcoin->status;
-  } else {
-    // Set cache time and write cache
-    $data['cache_time'] = time();
-    write_to_cache($data);
-  }
-
+  write_to_cache($data);
   return $data;
 
 }
 
 /** Simple function to serialize an array and write to file **/
-function write_to_cache($data) {
+function write_to_cache($array_data) {
   global $config;
-  $raw_data = serialize($data);
+  $array_data['cache_time'] = time();
+  $raw_data = serialize($array_data);
   file_put_contents($config['cache_file'],$raw_data);
 }
 
