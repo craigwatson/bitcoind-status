@@ -42,7 +42,7 @@ if (strcmp($config['donation_address'],'not_set') == 0){
 
   <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-2-3">
 <?php if (isset($data['error'])) { ?>
-    <div class="error">
+    <div class="red">
       <h2>There has been an error communicating with the Bitcoin Daemon</h2>
       <pre><?php echo $data['error']; ?></pre>
       <p>Please report this to <a href="mailto:<?php echo $config['admin_email']; ?>"><?php echo $config['admin_email']; ?></a></p>
@@ -52,7 +52,9 @@ if (strcmp($config['donation_address'],'not_set') == 0){
       <p class="stat"><span class="label">Block Number:</span> <?php echo $data['blocks']; ?></p>
       <p class="stat"><span class="label">Difficulty:</span> <?php echo number_format($data['difficulty'],3); ?></p>
       <p class="stat"><span class="label">Node IP Address:</span> <?php echo $data['node_ip']; ?></p>
+<?php if (isset($data['cache_time'])) { ?>
       <p class="stat"><span class="label">Last Updated:</span> <?php echo date('H:i:s \o\n j F Y ',$data['cache_time']); ?></p>
+<?php } ?>
 <?php if ($config['display_peer_info'] === TRUE) { ?>
       <h3>Connected Peers</h3>      
       <table class="pure-table pure-table-bordered  pure-table-striped">
