@@ -34,7 +34,7 @@ if (strcmp($config['donation_address'],'not_set') == 0){
   echo '<img src="img/logo.png" alt="Bitcoin Logo" class="logo" />';
 } else {
   if ($config['display_donation_text'] === TRUE) {
-    echo "<p>Please support this Bitcoin node by donating to " . $config['donation_address'] . '</p>';
+    echo "<p>Please support this Bitcoin node by donating to <a href='http://blocktrail.com/address/" . $config['donation_address'] . "' target='_blank'>" . $config['donation_address'] . "</a></p>";
   }
   echo generate_donation_image();
 }
