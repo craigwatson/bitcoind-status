@@ -12,7 +12,7 @@ To run the application, you will need:
 
 ## Getting Started
 
-To get started, all you need to do is configure your node`s RPC credentials inside `config.php`. The application will connect to your node via RPC and report statistics.
+To get started, all you need to do is configure your node's RPC credentials inside `config.php`. The application will connect to your node via RPC and report statistics.
 
 ## Advanced Options
 
