@@ -72,7 +72,7 @@ if (strcmp($config['donation_address'],'not_set') == 0){
            <tr>
              <td><?php echo $peer['addr']; ?></td>
              <td><?php echo date('H:i:s j F Y ',$peer['conntime']); ?></td>
-             <td><?php echo $peer['version'] . ' ' . str_replace('/','',str_replace(':',' ',$peer['subver'])); ?></td>
+             <td><?php echo $peer['version'] . ' ' . str_replace('/','',str_replace(':',' ',htmlspecialchars($peer['subver']))); ?></td>
            </tr>
 <?php } ?>
          </tbody>
