@@ -54,6 +54,9 @@ if (strcmp($config['donation_address'],'not_set') == 0){
       <p class="stat"><span class="label">Block Number:</span> <?php echo $data['blocks']; ?></p>
       <p class="stat"><span class="label">Difficulty:</span> <?php echo number_format($data['difficulty'],3); ?></p>
       <p class="stat"><span class="label">Node IP Address:</span> <?php echo $data['node_ip']; ?></p>
+<?php if (isset($data['ip_location'])) { ?>
+      <p class="stat"><span class="label">Node Location:</span> <?php echo $data['ip_location']['geoplugin_countryName']; ?></p>
+<?php } ?>
 <?php if (isset($data['free_disk_space'])) { ?>
       <p class="stat"><span class="label">Free Disk Space:</span> <?php echo $data['free_disk_space']; ?></p>
 <?php } ?>

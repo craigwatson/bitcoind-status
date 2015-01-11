@@ -42,6 +42,11 @@ function get_raw_data() {
     $data['peers'] = $bitcoin->getpeerinfo();
   }
 
+  // Use geolocation
+  if($config['display_ip_location'] === TRUE) {
+    $data['ip_location'] = geolocate_ip($data['node_ip']);
+  }
+
   write_to_cache($data);
   return $data;
 
@@ -69,6 +74,17 @@ function get_free_disk_space() {
   $base = 1024;
   $return_class = min((int)log($bytes , $base) , count($si_prefix) - 1);
   return sprintf('%1.2f' , $bytes / pow($base,$return_class)) . ' ' . $si_prefix[$return_class] . '<br />';
+}
+
+/** Gets location of an IP via Geolocation **/
+function geolocate_ip($ip_address) {
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, "http://www.geoplugin.net/php.gp?ip=$ip_address");
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'BitCoin Node Status Page');
+  $curl_response = curl_exec($ch);
+  curl_close ($ch);
+  return unserialize($curl_response);
 }
 
 ?>
