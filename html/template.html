@@ -54,6 +54,9 @@ if (strcmp($config['donation_address'],'not_set') == 0){
       <p class="stat"><span class="label">Block Number:</span> <?php echo $data['blocks']; ?></p>
       <p class="stat"><span class="label">Difficulty:</span> <?php echo number_format($data['difficulty'],3); ?></p>
       <p class="stat"><span class="label">Node IP Address:</span> <?php echo $data['node_ip']; ?></p>
+<?php if (isset($data['free_disk_space'])) { ?>
+      <p class="stat"><span class="label">Free Disk Space:</span> <?php echo $data['free_disk_space']; ?></p>
+<?php } ?>
 <?php if (isset($data['cache_time'])) { ?>
       <p class="stat"><span class="label">Last Updated:</span> <?php echo date('H:i:s j F Y ',$data['cache_time']); ?></p>
 <?php } ?>
@@ -72,7 +75,7 @@ if (strcmp($config['donation_address'],'not_set') == 0){
            <tr>
              <td><?php echo $peer['addr']; ?></td>
              <td><?php echo date('H:i:s j F Y ',$peer['conntime']); ?></td>
-             <td><?php echo $peer['version'] . ' ' . str_replace('/','',str_replace(':',' ',htmlspecialchars($peer['subver']))); ?></td>
+             <td><?php echo $peer['version'] . ' ' . str_replace('/','',str_replace(':',' ',$peer['subver'])); ?></td>
            </tr>
 <?php } ?>
          </tbody>

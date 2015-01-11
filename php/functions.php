@@ -24,6 +24,11 @@ function get_raw_data() {
     return $return_data;
   }
 
+  // Get free disk space
+  if ($config['display_free_disk_space'] === TRUE) {
+    $data['free_disk_space'] = get_free_disk_space();
+  }
+
   // Use bitcoind IP
   if ($config['use_bitcoind_ip'] === TRUE) {
     $net_info = $bitcoin->getnetworkinfo();
@@ -55,6 +60,15 @@ function generate_donation_image() {
   global $config;
   $alt_text = 'Donate ' . $config['donation_amount'] . ' BTC to ' . $config['donation_address'];
   return "\n" . '<img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=' . $config['donation_address'] . '" alt="' . $alt_text . '" />' . "\n";
+}
+
+/** Gets free disk space **/
+function get_free_disk_space() {
+  $bytes = disk_free_space(".");
+  $si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
+  $base = 1024;
+  $return_class = min((int)log($bytes , $base) , count($si_prefix) - 1);
+  return sprintf('%1.2f' , $bytes / pow($base,$return_class)) . ' ' . $si_prefix[$return_class] . '<br />';
 }
 
 ?>
