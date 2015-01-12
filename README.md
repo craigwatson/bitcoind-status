@@ -35,3 +35,7 @@ The `config.php` file also contains lots of options to control how the applicati
   * `use_bitcoind_ip` (Boolean, default: `FALSE`) - Use the Bitcoin daemon to get the public IP, instead of `$_SERVER`
   * `intro_text` (String, default: `not_set`) - Introductory text to display above the node statistics.
   * `display_peer_info` (Boolean, default: `FALSE`) - Switch to enable displaying connected peers.
+  * `display_free_disk_space` (Boolean, default: `FALSE`) - Switch to enable displaying free disk space.
+  * `display_ip_location` (Boolean, default: `FALSE`) - Switch to enable displaying your IP location.
+  * `display_testnet` (Boolean, default: `TRUE`) - Switch to enable displaying if the node is running on testnet.
+  * `display_version` (Boolean, default: `FALSE`) - Switch to enable displaying the nodes version.
