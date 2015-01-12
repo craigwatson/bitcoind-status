@@ -34,7 +34,7 @@ if (strcmp($config['donation_address'],'not_set') == 0){
   echo '<img src="img/logo.png" alt="Bitcoin Logo" class="logo" />';
 } else {
   if ($config['display_donation_text'] === TRUE) {
-    echo "<p>Please support this Bitcoin node by donating to " . $config['donation_address'] . '</p>';
+    echo "<p>Please support this Bitcoin node by donating to <a href='http://blocktrail.com/address/" . $config['donation_address'] . "' target='_blank'>" . $config['donation_address'] . "</a></p>";
   }
   echo generate_donation_image();
 }
@@ -53,7 +53,13 @@ if (strcmp($config['donation_address'],'not_set') == 0){
       <p class="stat"><span class="label">Number of Connections:</span> <?php echo $data['connections']; ?></p>
       <p class="stat"><span class="label">Block Number:</span> <?php echo $data['blocks']; ?></p>
       <p class="stat"><span class="label">Difficulty:</span> <?php echo number_format($data['difficulty'],3); ?></p>
+<?php if (isset($config['display_testnet']) && $config['display_testnet']) { ?>
+	  <p class="stat"><span class="label">Testnet:</span> <?php echo ($date['testnet']) ? "Yes" : "No"; ?></p>
+<?php } ?>	 
       <p class="stat"><span class="label">Node IP Address:</span> <?php echo $data['node_ip']; ?></p>
+<?php if (isset($config['display_version']) && $config['display_version']) { ?>
+	  <p class="stat"><span class="label">Node Version:</span> <?php echo $data['version']; ?></p>
+<?php } ?>	 
 <?php if (isset($data['ip_location'])) { ?>
       <p class="stat"><span class="label">Node Location:</span> <?php echo $data['ip_location']['geoplugin_countryName']; ?></p>
 <?php } ?>
