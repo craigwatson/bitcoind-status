@@ -28,12 +28,13 @@ The `config.php` file also contains lots of options to control how the applicati
   * `cache_file` (String, default: `/tmp/bitcoind-status.cache`) - File location to write to for cache.
   * `max_cache_time` (Int, default: 300`) - Expiry time for cache.
   * `nocache_whitelist` (Array, default: `array('127.0.0.1')`) - The IP addresses that are allowed to bypass or clear cache.
-  * `admin_email` (String, default: `admin@domain.net`) - Email address to display on error
+  * `admin_email` (String, default: `admin@domain.net`) - Email address to display on error.
   * `display_donation_text` (Boolean, default: `TRUE`) - Display text to encourage donations.
   * `donation_address` (String, default: `not_set`) - Bitcoin address to use for donations to support the node.
   * `donation_amount` (String, default: `0.001`) - Donation amount - not currently implemented.
-  * `use_bitcoind_ip` (Boolean, default: `FALSE`) - Use the Bitcoin daemon to get the public IP, instead of `$_SERVER`
+  * `use_bitcoind_ip` (Boolean, default: `FALSE`) - Use the Bitcoin daemon to get the public IP, instead of `$_SERVER`.
   * `intro_text` (String, default: `not_set`) - Introductory text to display above the node statistics.
+  * `use_cache` (Boolean, default: `TRUE`) - Switch to enable or disable the internal cache system. **Don't change this unless you have a good caching system in place!**
   * `display_peer_info` (Boolean, default: `FALSE`) - Switch to enable displaying connected peers.
   * `display_free_disk_space` (Boolean, default: `FALSE`) - Switch to enable displaying free disk space.
   * `display_ip_location` (Boolean, default: `FALSE`) - Switch to enable displaying your IP location.
