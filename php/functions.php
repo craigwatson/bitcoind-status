@@ -55,9 +55,11 @@ function get_raw_data() {
 /** Simple function to serialize an array and write to file **/
 function write_to_cache($array_data) {
   global $config;
-  $array_data['cache_time'] = time();
-  $raw_data = serialize($array_data);
-  file_put_contents($config['cache_file'],$raw_data);
+  if ($config['use_cache'] === TRUE) {
+    $array_data['cache_time'] = time();
+    $raw_data = serialize($array_data);
+    file_put_contents($config['cache_file'],$raw_data);
+  }
 }
 
 /** Generates a QR Code image for donations **/

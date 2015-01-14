@@ -9,7 +9,7 @@ if(isset($_GET['clearcache']) & in_array($_SERVER['REMOTE_ADDR'],$config['nocach
 }
 
 // If we're good to bypass cache, get raw data from RPC
-if(isset($_GET['nocache']) & in_array($_SERVER['REMOTE_ADDR'],$config['nocache_whitelist'])){
+if((isset($_GET['nocache']) & in_array($_SERVER['REMOTE_ADDR'],$config['nocache_whitelist'])) || ($config['use_cache'] === FALSE)){
   $data = get_raw_data();
 } elseif (is_file($config['cache_file'])) {
 
