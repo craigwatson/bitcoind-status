@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>Bitcoin Node Status</title>
-  <link rel="icon" type="image/png" href="img/favicon.png" />
   <link rel="stylesheet" href="css/pure-min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--[if lte IE 8]>
@@ -67,7 +66,7 @@ if (strcmp($config['donation_address'],'not_set') == 0){
 <?php if (isset($data['free_disk_space'])) { ?>
       <p class="stat"><span class="label">Free Disk Space:</span> <?php echo $data['free_disk_space']; ?></p>
 <?php } ?>
-<?php if (isset($data['cache_time'])) { ?>
+<?php if (isset($data['cache_time']) && $config['use_cache']) { ?>
       <p class="stat"><span class="label">Last Updated:</span> <?php echo date('H:i:s j F Y ',$data['cache_time']); ?></p>
 <?php } ?>
 <?php if ($config['display_peer_info'] === TRUE) { ?>
@@ -97,7 +96,7 @@ if (strcmp($config['donation_address'],'not_set') == 0){
     <hr />
     <p>
        <a href="https://github.com/craigwatson/bitcoind-status">Bitcoin Daemon Status Page</a> by <a href="http://www.cwatson.org">Craig Watson</a>, distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a> <br />
-       Donate: <a href="http://blocktrail.com/address/174N2KwMzKYvYkCSx1kezrzfSQuJQEZY9T" target="_blank">174N2KwMzKYvYkCSx1kezrzfSQuJQEZY9T</a>
+       Donate: 174N2KwMzKYvYkCSx1kezrzfSQuJQEZY9T
     </p>
   </div>
 </div>

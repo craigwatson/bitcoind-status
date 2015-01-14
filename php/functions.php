@@ -1,6 +1,6 @@
 <?php
 
-/** Connects to Bitcoin daemon and retrieves information, then writes to cache **/
+/** Connects to Bitcoin daemon and retrieves information, then writes to cache (if cache is enabled) **/
 function get_raw_data() {
   global $config;
 
@@ -47,7 +47,9 @@ function get_raw_data() {
     $data['ip_location'] = geolocate_ip($data['node_ip']);
   }
 
-  write_to_cache($data);
+  if($config['use_cache'] === TRUE) {
+    write_to_cache($data);
+  }
   return $data;
 
 }
