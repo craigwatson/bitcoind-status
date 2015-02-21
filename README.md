@@ -2,10 +2,6 @@
 
 This is a small PHP application designed to display status and information from the Bitcoin node daemon.
 
-## Licencing
-
-This application is licenced under the terms of the [Apache Licence v2.0](http://www.apache.org/licenses/LICENSE-2.0), and the [EasyBitcoin library](https://github.com/aceat64/EasyBitcoin-PHP) is reproduced under the terms of the [MIT licence](http://opensource.org/licenses/MIT).
-
 ## Requirements
 
 To run the application, you will need:
@@ -48,3 +44,10 @@ The `config.php` file also contains lots of options to control how the applicati
 ### Important Note
 
   *  **Do not** disable cache unless you either have an alternative mechanism or your node is protected from potential DDoS attacks.
+
+## Development & Licensing
+
+* Copyright (C) 2015 [Craig Watson](http://www.cwatson.org)
+* Distributed under the terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0) - see [LICENSE file](https://github.com/craigwatson/bitcoind-status/blob/master/LICENSE) for details.
+* [EasyBitcoin-PHP library](https://github.com/aceat64/EasyBitcoin-PHP) is reproduced under the terms of the [MIT licence](http://opensource.org/licenses/MIT).
+* Further contributions and testing reports are extremely welcome - please submit a pull request or issue on [GitHub](https://github.com/craigwatson/bitcoind-status)
