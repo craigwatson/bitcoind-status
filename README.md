@@ -2,6 +2,10 @@
 
 This is a small PHP application designed to display status and information from the Bitcoin node daemon.
 
+## Licencing
+
+This application is licenced under the terms of the [Apache Licence v2.0](http://www.apache.org/licenses/LICENSE-2.0), and the [EasyBitcoin library](https://github.com/aceat64/EasyBitcoin-PHP] is reproduced under the terms of the (MIT licence)[http://opensource.org/licenses/MIT).
+
 ## Requirements
 
 To run the application, you will need:
@@ -18,7 +22,7 @@ To get started, all you need to do is copy/rename `php/config.sample.php` to `ph
 
 The `config.php` file also contains lots of options to control how the application behaves:
 
-  * `debug` (Boolean, default: FALSE) - Enables debug mode. This prints the full `$data` array into the page`s HTML output inside a comment.
+  * `debug` (Boolean, default: FALSE) - Enables debug mode. This prints the full `$data` array into the page's HTML output inside a comment.
   * `rpc_user`(String, default: `rpcuser`) - Username for RPC calls.
   * `rpc_pass` (String, default: `rpcpass`) - Password for RPC calls.
   * `rpc_host` (String, default: `localhost`) - Which RPC host to connect to.
