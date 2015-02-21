@@ -4,7 +4,7 @@ This is a small PHP application designed to display status and information from 
 
 ## Licencing
 
-This application is licenced under the terms of the [Apache Licence v2.0](http://www.apache.org/licenses/LICENSE-2.0), and the [EasyBitcoin library](https://github.com/aceat64/EasyBitcoin-PHP] is reproduced under the terms of the (MIT licence)[http://opensource.org/licenses/MIT).
+This application is licenced under the terms of the [Apache Licence v2.0](http://www.apache.org/licenses/LICENSE-2.0), and the [EasyBitcoin library](https://github.com/aceat64/EasyBitcoin-PHP) is reproduced under the terms of the (MIT licence)[http://opensource.org/licenses/MIT).
 
 ## Requirements
 
