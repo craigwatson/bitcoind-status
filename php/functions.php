@@ -39,7 +39,15 @@ function get_raw_data() {
 
   // Add peer info
   if ($config['display_peer_info'] === TRUE) {
-    $data['peers'] = $bitcoin->getpeerinfo();
+    if($config['display_peer_port'] === TRUE) {
+      $data['peers'] = $bitcoin->getpeerinfo();
+    } else {
+      foreach ($bitcoin->getpeerinfo() as $peer) {
+        $peer_addr_array = explode(':',$peer['addr']);
+        $peer['addr'] = $peer_addr_array[0];
+        $data['peers'][] = $peer;
+      }
+    }
   }
 
   // Use geolocation

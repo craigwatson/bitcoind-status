@@ -18,6 +18,7 @@ $config = array(
   'use_bitcoind_ip'         => FALSE,
   'intro_text'              => 'not_set',
   'display_peer_info'       => FALSE,
+  'display_peer_port'       => FALSE,
   'display_free_disk_space' => FALSE,
   'display_ip_location'     => FALSE,
   'display_testnet'         => TRUE,
