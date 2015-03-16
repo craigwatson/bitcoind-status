@@ -40,7 +40,9 @@ The `config.php` file also contains lots of options to control how the applicati
   * `display_ip_location` (Boolean, default: `FALSE`) - Switch to enable displaying your IP location.
   * `display_testnet` (Boolean, default: `TRUE`) - Switch to enable displaying if the node is running on testnet.
   * `display_version` (Boolean, default: `FALSE`) - Switch to enable displaying the nodes version.
+  * `display_github_ribbon` (Boolean, default: `TRUE`) - Displays the 'Fork me on GitHub vanity ribbon.
   * `use_cache` (Boolean, default: `TRUE`) - Switch to enable the cache feature.
+  * `stylesheet` (String, default: `v2-light.css`) - CSS Stylesheet to use.
 
 ### Important Note
 

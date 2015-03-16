@@ -101,6 +101,11 @@ if (strcmp($config['donation_address'],'not_set') == 0){
        <a href="https://github.com/craigwatson/bitcoind-status">Bitcoin Daemon Status Page</a> by <a href="http://www.cwatson.org">Craig Watson</a>, distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a> <br />
        Donate: <a href="http://blocktrail.com/address/174N2KwMzKYvYkCSx1kezrzfSQuJQEZY9T" target="_blank">174N2KwMzKYvYkCSx1kezrzfSQuJQEZY9T</a>
     </p>
+    <?php if ($config['display_github_ribbon'] === TRUE) { ?>
+      <p>
+        <span id="forkongithub"><a href="https://github.com/craigwatson/bitcoind-status">Fork me on GitHub</a></span>
+      </p>
+    <?php } ?>
   </div>
 </div>
 </body>
