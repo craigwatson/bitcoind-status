@@ -1,0 +1,165 @@
+body {
+  padding: 20px 10px 0px 10px;
+  background: #000;
+}
+
+div#container {
+  width: 90%;
+  border: 1px #333 solid;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  margin: 0px auto 20px auto;
+  background-color: #222;
+  padding: 10px;
+  color: #ddd;
+}
+
+a {
+  color: #ddd;
+}
+
+h1 {
+  font-size: 1.6em;
+  text-align: center;
+  border-bottom: 1px #333 solid;
+}
+
+dt {
+  font-weight: bold;
+}
+
+div.image img {
+  display: block;
+  margin: 0px auto 10px auto;
+}
+
+p.intro, p.donation {
+  text-align: center;
+  font-size: 0.9em;
+}
+
+p.stat {
+  font-size: 0.9em;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 0px 0px 15px 0px;
+  background: #fff; /* Old browsers */
+  background: -moz-linear-gradient(top,  #333 0%, #eee 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#333), color-stop(100%,#666)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #333 0%,#666 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #333 0%,#666 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #333 0%,#666 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #333 0%,#666 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333', endColorstr='#666',GradientType=0 ); /* IE6-9 */
+  border: 1px #333 solid;
+}
+
+p.stat span.label {
+  font-weight: bold;
+}
+
+div#footer {
+  padding-top: 7px;
+}
+
+div#footer hr {
+  width: 100%;
+  border: none;
+  height: 1px;
+  color: #333;
+  background-color: #333;
+}
+
+div#footer p {
+  color: #aaa;
+  text-align: center;
+  font-style: italic;
+  font-size: 0.7em;
+}
+
+div#footer p a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #aaa;
+}
+
+div#footer p a:hover {
+  text-decoration: underline;
+}
+
+table {
+  background-color: #444;
+}
+
+div.red {
+  text-align: center;
+  background-color: #ffe2e1;
+  border: 1px #600 solid;
+}
+
+table {
+  border: 1px #666 solid;
+}
+
+th, td {
+  padding: 10px;
+  border-right: 1px #666 solid;
+}
+
+.pure-table-striped tr:nth-child(2n-1) td {
+  background-color: #555;
+}
+
+th {
+  background: #333;
+  border-bottom: 1px #666 solid;
+}
+
+/** RESPONSIVE TABLES **/  
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px)  {
+
+  /* Force table to not be like tables anymore */
+  table, thead, tbody, th, td, tr { 
+    display: block; 
+  }
+	
+  /* Hide table headers (but not display: none;, for accessibility) */
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+	
+  tr {
+    border: 1px solid #666;
+  }
+
+  /* Behave  like a "row" */
+  td { 
+    border: none;
+    border-bottom: 1px solid #333; 
+    position: relative;
+    padding-left: 50%; 
+    padding-top: 10px;
+  }
+
+  /* Now like a table header */	
+  td:before { 
+    font-weight: bold;
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%; 
+    padding-right: 10px; 
+    white-space: nowrap;
+  }
+	
+  /* Label the data */
+  td:nth-of-type(1):before { content: "IP"; }
+  td:nth-of-type(2):before { content: "Time Connected"; }
+  td:nth-of-type(3):before { content: "Protocol Version"; }
+
+}

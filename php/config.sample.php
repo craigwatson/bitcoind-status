@@ -23,7 +23,8 @@ $config = array(
   'display_ip_location'     => FALSE,
   'display_testnet'         => TRUE,
   'display_version'         => FALSE,
-  'use_cache'               => TRUE
+  'use_cache'               => TRUE,
+  'stylesheet'              => 'v1.css'
 );
 
 ?>

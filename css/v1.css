@@ -27,6 +27,10 @@ div.image img {
   margin: 0px auto 10px auto;
 }
 
+p.intro {
+  text-align: center;
+}
+
 p.stat {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;

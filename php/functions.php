@@ -74,7 +74,7 @@ function write_to_cache($array_data) {
 function generate_donation_image() {
   global $config;
   $alt_text = 'Donate ' . $config['donation_amount'] . ' BTC to ' . $config['donation_address'];
-  return "\n" . '<img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=' . $config['donation_address'] . '" alt="' . $alt_text . '" />' . "\n";
+  return "\n" . '<img src="https://chart.googleapis.com/chart?chld=H|2&chs=225x225&cht=qr&chl=' . $config['donation_address'] . '" alt="' . $alt_text . '" />' . "\n";
 }
 
 /** Gets free disk space **/
