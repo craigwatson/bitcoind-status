@@ -1,7 +1,7 @@
 <?php
 
-require_once('./php/config.php');
-require_once('./php/functions.php');
+require_once './php/config.php';
+require_once './php/functions.php';
 
 // If we're good to clear cache, remove cache file
 if(isset($_GET['clearcache']) & in_array($_SERVER['REMOTE_ADDR'],$config['nocache_whitelist']) & is_file($config['cache_file'])){
@@ -28,7 +28,4 @@ if((isset($_GET['nocache']) & in_array($_SERVER['REMOTE_ADDR'],$config['nocache_
 }
 
 // Add the IP of the server, and include template
-require_once('./html/template.html');
-
-?>
-
+require_once './html/template.html';

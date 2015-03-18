@@ -27,5 +27,3 @@ $config = array(
   'use_cache'               => TRUE,
   'stylesheet'              => 'v1.css'
 );
-
-?>
