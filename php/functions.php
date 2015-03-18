@@ -66,7 +66,7 @@ function write_to_cache($array_data) {
   if ($config['use_cache'] === TRUE) {
     $array_data['cache_time'] = time();
     $raw_data = serialize($array_data);
-    file_put_contents($config['cache_file'],$raw_data,FILE_APPEND|LOCK_EX);
+    file_put_contents($config['cache_file'],$raw_data,LOCK_EX);
   }
 }
 

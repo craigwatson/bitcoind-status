@@ -4,7 +4,7 @@ require_once './php/config.php';
 require_once './php/functions.php';
 
 // If we're good to clear cache, remove cache file
-if(isset($_GET['clearcache']) & in_array($_SERVER['REMOTE_ADDR'],$config['nocache_whitelist']) & is_file($config['cache_file'])){
+if(!empty($_GET['clearcache']) & in_array($_SERVER['REMOTE_ADDR'],$config['nocache_whitelist']) & is_file($config['cache_file'])){
   unlink($config['cache_file']);
 }
 
