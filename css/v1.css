@@ -27,6 +27,14 @@ div.image img {
   margin: 0px auto 10px auto;
 }
 
+span.small {
+  font-size: 0.7em;
+}
+
+span.small a {
+  text-decoration: none;
+}
+
 p.intro {
   text-align: center;
 }

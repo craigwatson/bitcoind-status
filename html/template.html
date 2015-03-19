@@ -5,6 +5,7 @@
   <link rel="icon" type="image/png" href="img/favicon.png" />
   <link rel="stylesheet" href="css/pure-min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
   <!--[if lte IE 8]>
     <link rel="stylesheet" href="css/grids-responsive-old-ie-min.css">
   <![endif]-->
@@ -12,6 +13,8 @@
     <link rel="stylesheet" href="css/grids-responsive-min.css">
   <!--<![endif]-->
   <link rel="stylesheet" href="css/<?php echo $config['stylesheet']; ?>">
+  <script src="js/jquery-1.11.2.min.js"></script>
+  <script src="js/btc-status.js"></script>
 </head>
 <body>
 <?php if ($config['debug'] === TRUE) { ?>
@@ -72,8 +75,9 @@ if (strcmp($config['donation_address'],'not_set') == 0){
 <?php if (isset($data['cache_time']) & $config['use_cache'] === TRUE) { ?>
       <p class="stat"><span class="label">Last Updated:</span> <?php echo date('H:i:s j F Y ',$data['cache_time']); ?></p>
 <?php } ?>
-<?php if ($config['display_peer_info'] === TRUE) { ?>
-      <h3>Connected Peers</h3>      
+<?php if (isset($data['peers']) & $config['display_peer_info'] === TRUE) { ?>
+      <h3>Connected Peers <span class="small">[<a id="peerslink" onclick="showHidePeers()" href="javascript:void(0);">Hide</a>]</span></h3>
+      <div id="peerstable">
       <table class="pure-table-striped pure-table-bordered">
          <thead>
            <tr>
@@ -92,6 +96,7 @@ if (strcmp($config['donation_address'],'not_set') == 0){
 <?php } ?>
          </tbody>
        </table>
+       </div>
 <?php } // end peer info ?>
 <?php } // end error ?>
   </div>
