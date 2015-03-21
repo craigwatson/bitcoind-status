@@ -4,13 +4,19 @@
 
 This is a small PHP application designed to display status and information from the Bitcoin node daemon.
 
-![Screnshot](https://raw.githubusercontent.com/craigwatson/bitcoind-status/master/screenshot-light.png)
+#### Table of Contents
+
+1. [Requirements](#requirements)
+1. [Getting Started](#getting-started)
+1. [Contributing](#contributing)
+1. [Advanced Configuration Options](#advanced-configuration-options)
+1. [Licensing](#licensing)
 
 ## Requirements
 
 To run the application, you will need:
 
-  * A Bitcoin node!
+  * A Bitcoin node with RPC enabled.
   * A web-server with PHP installed.
   * The PHP `curl` module - this is used to make RPC calls to the Bitcoin daemon.
 
@@ -18,13 +24,15 @@ To run the application, you will need:
 
 To get started, all you need to do is copy/rename `php/config.sample.php` to `php/config.php` and configure your node's RPC credentials. The application will connect to your node via RPC and report statistics.
 
-## Tipping
+## Contributing
+
+* Further contributions and testing reports are extremely welcome - please submit a pull request or issue on [GitHub](https://github.com/craigwatson/bitcoind-status)
 
 [![Buy me a beer!](https://cdn.changetip.com/img/graphics/Beer_Graphic.png)](https://www.changetip.com/tipme/craigwatson1987)
 
 I accept tips via [ChangeTip](https://www.changetip.com/tipme/craigwatson1987) in any currency - if you would like to buy me a beer, please do!
 
-## Advanced Options
+### Advanced Options
 
 The `config.php` file also contains lots of options to control how the application behaves:
 
@@ -54,13 +62,12 @@ The `config.php` file also contains lots of options to control how the applicati
   * `use_cache` (Boolean, default: `TRUE`) - Switch to enable the cache feature.
   * `stylesheet` (String, default: `v2-light.css`) - CSS Stylesheet to use.
 
-### Important Note
+#### Important Note
 
   *  **Do not** disable cache unless you either have an alternative mechanism or your node is protected from potential DDoS attacks.
 
-## Development & Licensing
+## Licensing
 
 * Copyright (C) 2015 [Craig Watson](http://www.cwatson.org)
 * Distributed under the terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0) - see [LICENSE file](https://github.com/craigwatson/bitcoind-status/blob/master/LICENSE) for details.
 * [EasyBitcoin-PHP library](https://github.com/aceat64/EasyBitcoin-PHP) is reproduced under the terms of the [MIT licence](http://opensource.org/licenses/MIT) and is used from commit [670414e](https://github.com/aceat64/EasyBitcoin-PHP/tree/670414e1b733e11bb7bdf4fcb17169853301716b).
-* Further contributions and testing reports are extremely welcome - please submit a pull request or issue on [GitHub](https://github.com/craigwatson/bitcoind-status)
