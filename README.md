@@ -14,6 +14,12 @@ To run the application, you will need:
 
 To get started, all you need to do is copy/rename `php/config.sample.php` to `php/config.php` and configure your node's RPC credentials. The application will connect to your node via RPC and report statistics.
 
+## Tipping
+
+[![Buy me a beer!](https://cdn.changetip.com/img/graphics/Beer_Graphic.png)](https://www.changetip.com/tipme/craigwatson1987)
+
+I accept tips via [ChangeTip](https://www.changetip.com/tipme/craigwatson1987) in any currency - if you would like to buy me a beer, please do!
+
 ## Advanced Options
 
 The `config.php` file also contains lots of options to control how the application behaves:
