@@ -20,6 +20,10 @@ To run the application, you will need:
   * A web-server with PHP installed.
   * The PHP `curl` module - this is used to make RPC calls to the Bitcoin daemon.
 
+### PHP Support
+
+This application has been tested with PHP 5.4, 5.5 and 5.6, as well as HHVM and Nightly PHP builds.
+
 ## Getting Started
 
 To get started, all you need to do is copy/rename `php/config.sample.php` to `php/config.php` and configure your node's RPC credentials. The application will connect to your node via RPC and report statistics.
