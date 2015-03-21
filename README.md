@@ -32,7 +32,7 @@ To get started, all you need to do is copy/rename `php/config.sample.php` to `ph
 
 I accept tips via [ChangeTip](https://www.changetip.com/tipme/craigwatson1987) in any currency - if you would like to buy me a beer, please do!
 
-### Advanced Options
+## Advanced Options
 
 The `config.php` file also contains lots of options to control how the application behaves:
 
