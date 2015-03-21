@@ -2,6 +2,8 @@
 
 This is a small PHP application designed to display status and information from the Bitcoin node daemon.
 
+![Screnshot](https://raw.githubusercontent.com/craigwatson/bitcoind-status/master/screenshot-light.png)
+
 ## Requirements
 
 To run the application, you will need:
