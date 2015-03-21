@@ -30,7 +30,7 @@ To get started, all you need to do is copy/rename `php/config.sample.php` to `ph
 
 ## Contributing
 
-* Further contributions and testing reports are extremely welcome - please submit a pull request or issue on [GitHub](https://github.com/craigwatson/bitcoind-status)
+Contributions and testing reports are extremely welcome - please submit a pull request or issue on [GitHub](https://github.com/craigwatson/bitcoind-status)
 
 [![Buy me a beer!](https://cdn.changetip.com/img/graphics/Beer_Graphic.png)](https://www.changetip.com/tipme/craigwatson1987)
 
