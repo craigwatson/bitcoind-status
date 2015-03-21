@@ -1,5 +1,7 @@
 # bitcoind-status
 
+[![Travis CI Status](https://travis-ci.org/craigwatson/bitcoind-status.svg?branch=master)](https://travis-ci.org/craigwatson/bitcoind-status)
+
 This is a small PHP application designed to display status and information from the Bitcoin node daemon.
 
 ![Screnshot](https://raw.githubusercontent.com/craigwatson/bitcoind-status/master/screenshot-light.png)
