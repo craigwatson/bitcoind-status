@@ -6,3 +6,6 @@ php:
   - hhvm
   - nightly
 script: ./run_tests.sh
+notifications:
+  email:
+    - craig@cwatson.org
