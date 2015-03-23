@@ -55,18 +55,27 @@ function getData()
     if ($config['display_peer_info'] === true) {
         if ($config['display_peer_port'] === true) {
             $data['peers'] = $bitcoin->getpeerinfo();
+            if ($config['geolocate_peer_ip'] === true) {
+                for ($num = 0; $num < count($data['peers']); ++$num) {
+                    $peer_addr_array = explode(':', $data['peers'][$num]['addr']);
+                    $data['peers'][$num]['country'] = getGeolocation($peer_addr_array[0], 'geoplugin_countryCode');
+                }
+            }
         } else {
             foreach ($bitcoin->getpeerinfo() as $peer) {
                 $peer_addr_array = explode(':', $peer['addr']);
                 $peer['addr'] = $peer_addr_array[0];
+                if ($config['geolocate_peer_ip'] === true) {
+                    $peer['country'] = getGeolocation($peer['addr'], 'geoplugin_countryCode');
+                }
                 $data['peers'][] = $peer;
             }
         }
     }
 
-    // Use geolocation
+    // Node geolocation
     if ($config['display_ip_location'] === true) {
-        $data['ip_location'] = getGeolocation($data['node_ip']);
+          $data['ip_location'] = getGeolocation($data['node_ip'], 'all');
     }
 
     writeToCache($data);
@@ -131,17 +140,30 @@ function convertToSI($bytes)
 /**
  * Gets location of an IP via Geolocation
  *
- * @param String $ip_address The IP to Geolocate
+ * @param String $ip_address   The IP to Geolocate
+ * @param String $response_key The key of the response array to return
+ *                             'all' will return all keys
  *
- * @return String Location
+ * @return mixed Either an array if 'all' is passed to $response_key or string
  */
-function getGeolocation($ip_address)
+function getGeolocation($ip_address, $response_key)
 {
+    global $config;
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, "http://www.geoplugin.net/php.gp?ip=$ip_address");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_USERAGENT, 'BitCoin Node Status Page');
-    $curl_response = curl_exec($ch);
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Bitcoin Node Status Page');
+    $exec_result = curl_exec($ch);
+    $response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
-    return unserialize($curl_response);
+    if ($response_code === 200) {
+        $response_array = unserialize($exec_result);
+        if (strcmp($response_key, "all") == 0) {
+            return $response_array;
+        } else {
+            return $response_array[$response_key];
+        }
+    } else {
+        return 'Unavailable';
+    }
 }

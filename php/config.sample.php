@@ -28,12 +28,13 @@ $config = array(
   'intro_text'              => 'not_set',
   'display_peer_info'       => false,
   'display_peer_port'       => false,
+  'geolocate_peer_ip'       => true,
   'display_free_disk_space' => false,
   'display_ip_location'     => false,
   'display_testnet'         => true,
   'display_version'         => false,
   'display_github_ribbon'   => true,
   'use_cache'               => true,
-  'date_format'             => 'H:i:s e j F Y ',
+  'date_format'             => 'H:i:s e, j F Y ',
   'stylesheet'              => 'v1.css'
 );

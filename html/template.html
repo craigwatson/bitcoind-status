@@ -4,6 +4,7 @@
   <title>Bitcoin Node Status</title>
   <link rel="icon" type="image/png" href="img/favicon.png" />
   <link rel="stylesheet" href="css/pure-min.css">
+  <link rel="stylesheet" href="css/flags.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8"> 
   <!--[if lte IE 8]>
@@ -67,7 +68,19 @@ if (strcmp($config['donation_address'],'not_set') == 0){
       <p class="stat"><span class="label">Node Version:</span> <?php echo $data['version']; ?></p>
 <?php } ?>	 
 <?php if (isset($data['ip_location'])) { ?>
-      <p class="stat"><span class="label">Node Location:</span> <?php echo $data['ip_location']['geoplugin_countryName']; ?></p>
+      <p class="stat">
+          <span class="label">Node Location:</span>
+<?php
+              if (is_array($data['ip_location'])) {
+                  $country_code = strtolower($data['ip_location']['geoplugin_countryCode']);
+                  $country_name = $data['ip_location']['geoplugin_countryName'];
+              } else {
+                  $country_code = 'blank';
+                  $country_name = $data['ip_location'];
+              }
+?>
+          <img src="img/blank.gif" class="flag flag-<?php echo $country_code; ?>" alt="<?php echo $country_name; ?>" /> <?php echo $country_name . "\n"; ?>
+      </p>
 <?php } ?>
 <?php if (isset($data['free_disk_space'])) { ?>
       <p class="stat"><span class="label">Free Disk Space:</span> <?php echo $data['free_disk_space']; ?></p>
@@ -96,7 +109,7 @@ if (strcmp($config['donation_address'],'not_set') == 0){
          <tbody>
 <?php foreach ($data['peers'] as $peer) { ?>
            <tr>
-             <td><?php echo $peer['addr']; ?></td>
+             <td><?php if ($config['geolocate_peer_ip'] === true) { ?><img src="img/blank.gif" class="flag flag-<?php echo strtolower($peer['country']); ?>" alt="<?php echo $peer['country']; ?>" /> <?php } ?><?php echo $peer['addr']; ?></td>
              <td><?php echo date($config['date_format'], $peer['conntime']); ?></td>
              <td><?php echo $peer['version'] . ' ' . str_replace('/','',str_replace(':',' ',$peer['subver'])); ?></td>
              <td><?php echo date($config['date_format'], $peer['lastsend']); ?></td>
@@ -115,8 +128,9 @@ if (strcmp($config['donation_address'],'not_set') == 0){
   <div id="footer" class="pure-u-1-1 pure-u-md-1-1 pure-u-lg-1-1">
     <hr />
     <p>
-       <a href="https://github.com/craigwatson/bitcoind-status">Bitcoin Daemon Status Page</a> by <a href="http://www.cwatson.org">Craig Watson</a>, distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a> <br />
-       Donate: <a href="http://blocktrail.com/address/174N2KwMzKYvYkCSx1kezrzfSQuJQEZY9T" target="_blank">174N2KwMzKYvYkCSx1kezrzfSQuJQEZY9T</a>
+       <a href="https://github.com/craigwatson/bitcoind-status">Bitcoin Daemon Status Page</a> by <a href="http://www.cwatson.org">Craig Watson</a>, distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a><br />
+       Donate: <a href="http://blocktrail.com/address/174N2KwMzKYvYkCSx1kezrzfSQuJQEZY9T" target="_blank">174N2KwMzKYvYkCSx1kezrzfSQuJQEZY9T</a><br />
+       <a href="http://www.geoplugin.com/geolocation/" target="_new">IP Geolocation</a> by <a href="http://www.geoplugin.com/" target="_new">geoPlugin</a><br />
     </p>
     <?php if ($config['display_github_ribbon'] === TRUE) { ?>
       <p>

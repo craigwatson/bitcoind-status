@@ -1,6 +1,6 @@
 function showHidePeers () {
   if( $("div#peerstable").is(":hidden")) {
-    $("div#peerstable").show("slow");
+    $("div#peerstable").slideDown();
     $("a#peerslink").text("Hide");
   } else {
     $("div#peerstable").slideUp();
