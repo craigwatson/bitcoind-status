@@ -34,5 +34,6 @@ $config = array(
   'display_version'         => false,
   'display_github_ribbon'   => true,
   'use_cache'               => true,
+  'date_format'             => 'H:i:s e j F Y ',
   'stylesheet'              => 'v1.css'
 );

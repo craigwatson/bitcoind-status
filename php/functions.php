@@ -11,7 +11,7 @@
 
 /**
  * Connects to Bitcoin daemon and retrieves information, then writes to cache
- * 
+ *
  * @return array
  */
 function getData()
@@ -110,11 +110,22 @@ function generateDonationImage()
  */
 function getFreeDiskSpace()
 {
-    $bytes = disk_free_space(".");
+    return convertToSI(disk_free_space(".")) . '<br />';
+}
+
+/**
+ * Formats a number into SI storage units
+ *
+ * @param Int $bytes The number of bytes to convert
+ *
+ * @return String Expression of $bytes in SI units
+ */
+function convertToSI($bytes)
+{
     $si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
     $base = 1024;
     $return_class = min((int)log($bytes, $base), count($si_prefix) - 1);
-    return sprintf('%1.2f', $bytes / pow($base, $return_class)) . ' ' . $si_prefix[$return_class] . '<br />';
+    return sprintf('%1.2f', $bytes / pow($base, $return_class)) . ' ' . $si_prefix[$return_class];
 }
 
 /**
