@@ -101,7 +101,7 @@ if (strcmp($config['donation_address'],'not_set') == 0){
              <td><?php echo $peer['version'] . ' ' . str_replace('/','',str_replace(':',' ',$peer['subver'])); ?></td>
              <td><?php echo date($config['date_format'], $peer['lastsend']); ?></td>
              <td><?php echo date($config['date_format'], $peer['lastrecv']); ?></td>
-             <td><?php echo round(($peer['pingtime']*100),2); ?></td>
+             <td><?php echo round(($peer['pingtime']*1000),2); ?></td>
              <td><?php echo convertToSI($peer['bytessent']); ?></td>
              <td><?php echo convertToSI($peer['bytesrecv']); ?></td>
            </tr>
