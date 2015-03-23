@@ -15,6 +15,7 @@
   <!--<![endif]-->
   <link rel="stylesheet" href="css/<?php echo $config['stylesheet']; ?>">
   <script src="js/jquery-1.11.2.min.js"></script>
+  <script src="js/sorttable.js"></script>
   <script src="js/btc-status.js"></script>
 </head>
 <body>
@@ -93,7 +94,8 @@ if (strcmp($config['donation_address'],'not_set') == 0){
   <div class="pure-u-1 pure-u-md-1-1 pure-u-lg-1-1" style="margin: 0px auto">
       <h3>Connected Peers <span class="small">[<a id="peerslink" onclick="showHidePeers()" href="javascript:void(0);">Hide</a>]</span></h3>
       <div id="peerstable">
-      <table class="pure-table-striped pure-table-bordered" style="margin: 0px auto">
+      <p><span class="small">Click on a column header to sort the table:</span></p>
+      <table class="pure-table-striped pure-table-bordered sortable" style="margin: 0px auto">
          <thead>
            <tr>
              <th>IP</th>
