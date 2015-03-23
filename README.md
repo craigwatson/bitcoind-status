@@ -28,6 +28,8 @@ This application has been tested with PHP 5.4, 5.5 and 5.6, as well as HHVM and 
 
 To get started, all you need to do is copy/rename `php/config.sample.php` to `php/config.php` and configure your node's RPC credentials. The application will connect to your node via RPC and report statistics.
 
+To use Google Analytics, simply create a file called `google_analytics.inc` inside the `php` directory and paste your GA code within.
+
 ## Contributing
 
 [![Buy me a beer!](https://cdn.changetip.com/img/graphics/Beer_Graphic.png)](https://www.changetip.com/tipme/craigwatson1987)
