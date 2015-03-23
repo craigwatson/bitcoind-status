@@ -79,14 +79,14 @@ if (strcmp($config['donation_address'],'not_set') == 0){
                   $country_name = $data['ip_location'];
               }
 ?>
-          <img src="img/blank.gif" class="flag flag-<?php echo $country_code; ?>" alt="<?php echo $country_name; ?>" /> <?php echo $country_name . "\n"; ?>
+          <?php if (strcmp(strtolower($country_name), "unavailable") != 0) { ?><img src="img/blank.gif" class="flag flag-<?php echo $country_code; ?>" alt="<?php echo $country_name; ?>" /><?php } ?> <?php echo $country_name . "\n"; ?>
       </p>
 <?php } ?>
 <?php if (isset($data['free_disk_space'])) { ?>
       <p class="stat"><span class="label">Free Disk Space:</span> <?php echo $data['free_disk_space']; ?></p>
 <?php } ?>
 <?php if (isset($data['cache_time']) & $config['use_cache'] === TRUE) { ?>
-      <p class="stat"><span class="label">Last Updated:</span> <?php echo date($config['date_format'], $data['cache_time']); ?></p>
+      <p class="stat"><span class="label">Last Updated:</span> <?php echo date($config['date_format'], $data['cache_time']); ?> (refreshes every <?php echo ($config['max_cache_time']/60); ?> minutes)</p>
 <?php } ?>
 <?php if (isset($data['peers']) & $config['display_peer_info'] === TRUE) { ?>
   </div>
@@ -109,7 +109,7 @@ if (strcmp($config['donation_address'],'not_set') == 0){
          <tbody>
 <?php foreach ($data['peers'] as $peer) { ?>
            <tr>
-             <td><?php if ($config['geolocate_peer_ip'] === true) { ?><img src="img/blank.gif" class="flag flag-<?php echo strtolower($peer['country']); ?>" alt="<?php echo $peer['country']; ?>" /> <?php } ?><?php echo $peer['addr']; ?></td>
+             <td><?php if ($config['geolocate_peer_ip'] === true) { if (strcmp(strtolower($peer['country']), "unavailable") != 0) { ?><img src="img/blank.gif" class="flag flag-<?php echo strtolower($peer['country']); ?>" alt="<?php echo $peer['country']; ?>" /> <?php } } ?><?php echo $peer['addr']; ?></td>
              <td><?php echo date($config['date_format'], $peer['conntime']); ?></td>
              <td><?php echo $peer['version'] . ' ' . str_replace('/','',str_replace(':',' ',$peer['subver'])); ?></td>
              <td><?php echo date($config['date_format'], $peer['lastsend']); ?></td>
