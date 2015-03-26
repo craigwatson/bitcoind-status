@@ -61,7 +61,8 @@ function getData()
         $data['ip_location'] = getGeolocation($data['node_ip'], 'all');
     }
 
-    if ($config['display_bitcoind_uptime'] === true) {
+    // Bitcoin Daemon uptime
+    if (($config['display_bitcoind_uptime'] === true) || (strcmp(PHP_OS, "Linux") == 0)) {
         $uptime = exec("/bin/ps -p `pidof bitcoind` -o etime=");
         $data['bitcoind_uptime'] = str_replace('-', ' days, ', $uptime);
     }
