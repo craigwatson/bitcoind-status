@@ -53,33 +53,64 @@ function getData()
 
     // Add peer info
     if ($config['display_peer_info'] === true) {
-        if ($config['display_peer_port'] === true) {
-            $data['peers'] = $bitcoin->getpeerinfo();
-            if ($config['geolocate_peer_ip'] === true) {
-                for ($num = 0; $num < count($data['peers']); ++$num) {
-                    $peer_addr_array = explode(':', $data['peers'][$num]['addr']);
-                    $data['peers'][$num]['country'] = getGeolocation($peer_addr_array[0], 'geoplugin_countryCode');
-                }
-            }
-        } else {
-            foreach ($bitcoin->getpeerinfo() as $peer) {
-                $peer_addr_array = explode(':', $peer['addr']);
-                $peer['addr'] = $peer_addr_array[0];
-                if ($config['geolocate_peer_ip'] === true) {
-                    $peer['country'] = getGeolocation($peer['addr'], 'geoplugin_countryCode');
-                }
-                $data['peers'][] = $peer;
-            }
-        }
+        $data['peers'] = parsePeers($bitcoin->getpeerinfo());
     }
 
     // Node geolocation
     if ($config['display_ip_location'] === true) {
-          $data['ip_location'] = getGeolocation($data['node_ip'], 'all');
+        $data['ip_location'] = getGeolocation($data['node_ip'], 'all');
+    }
+
+    if ($config['display_bitcoind_uptime'] === true) {
+        $uptime = exec("/bin/ps -p `pidof bitcoind` -o etime=");
+        $data['bitcoind_uptime'] = str_replace('-', ' days, ', $uptime);
     }
 
     writeToCache($data);
     return $data;
+
+}
+
+/**
+ * Parses an array of peers and applies our filtering
+ *
+ * @param array $peers The array of peers to parse
+ *
+ * @return array
+ */
+function parsePeers($peers)
+{
+    global $config;
+    $to_return = array();
+
+    foreach ($peers as $peer) {
+
+        // Extract IP address for later
+        $peer_addr_array = explode(':', $peer['addr']);
+        $peer_ip = $peer_addr_array[0];
+
+        // Continue if peer is 'dark'
+        if ($config['hide_dark_peers'] === true) {
+            if ((strcmp($peer_ip, '127.0.0.1') == 0) || (strpos($peer_ip, '.onion') !== false)) {
+                continue;
+            }
+        }
+
+        // Do geolocation
+        if ($config['geolocate_peer_ip'] === true) {
+            $peer['country'] = getGeolocation($peer_ip, 'geoplugin_countryCode');
+        }
+
+        // Override peer addr with IP
+        if ($config['display_peer_port'] === false) {
+            $peer['addr'] = $peer_ip;
+        }
+
+        $to_return[] = $peer;
+
+    }
+
+    return $to_return;
 
 }
 

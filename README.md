@@ -62,11 +62,13 @@ The `config.php` file also contains lots of options to control how the applicati
   * `display_peer_info` (Boolean, default: `false`) - Display connected peers.
   * `display_peer_port` (Boolean, default: `false`) - Display remote peer's port.
   * `geolocate_peer_ip` (Boolean: default: `true`) - Attempt to Geolocate peer's IP addresses
+  * `hide_dark_peers` (Boolean: default: `true`) - Hides peers connected from "Dark" networks.
   * `display_free_disk_space` (Boolean, default: `false`) - Displayfree disk space.
   * `display_ip_location` (Boolean, default: `false`) - Attempt geolocation of node IP.
   * `display_testnet` (Boolean, default: `true`) - Display testnet status.
   * `display_version` (Boolean, default: `false`) - Display node `bitcoind` version.
   * `display_github_ribbon` (Boolean, default: `true`) - Displays the 'Fork me on GitHub vanity ribbon.
+  * `display_bitcoind_uptime` (Boolean, default: `true`) - Displays the uptime of the Bitcoin daemon.
   * `use_cache` (Boolean, default: `true`) - Enable cache.
   * `date_format` (String, default: 'H:i:s e, j F Y') - PHP date fuction format to use when outputting dates.
   * `stylesheet` (String, default: `v2-light.css`) - CSS Stylesheet to use.

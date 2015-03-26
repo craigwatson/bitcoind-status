@@ -69,6 +69,9 @@ if (strcmp($config['donation_address'],'not_set') == 0){
 <?php if (isset($config['display_version']) && $config['display_version']) { ?>
       <p class="stat"><span class="label">Node Version:</span> <?php echo $data['version']; ?></p>
 <?php } ?>	 
+<?php if (isset($data['bitcoind_uptime'])) { ?>
+      <p class="stat"><span class="label">Bitcoin Daemon Uptime:</span> <?php echo $data['bitcoind_uptime']; ?></p>
+<?php } ?>
 <?php if (isset($data['ip_location'])) { ?>
       <p class="stat">
           <span class="label">Node Location:</span>
