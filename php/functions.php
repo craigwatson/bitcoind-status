@@ -63,13 +63,32 @@ function getData()
 
     // Bitcoin Daemon uptime
     if (($config['display_bitcoind_uptime'] === true) || (strcmp(PHP_OS, "Linux") == 0)) {
-        $uptime = exec("/bin/ps -p `pidof bitcoind` -o etime=");
-        $data['bitcoind_uptime'] = str_replace('-', ' days, ', $uptime);
+        $data['bitcoind_uptime'] = getProcessUptime($config['bitcoind_process_name']);
     }
 
     writeToCache($data);
     return $data;
 
+}
+
+/**
+ * Gets uptime of a process - reference: http://unix.stackexchange.com/q/27276/39264
+ *
+ * @param string $process The name of the pricess to find
+ *
+ * @return string A textual representation of the lifetime of the process
+ */
+function getProcessUptime($process)
+{
+    $process_pid = exec("pidof $process");
+    $system_uptime = exec('cut -d "." -f1 /proc/uptime');
+    $pid_uptime = round((exec("cut -d \" \" -f22 /proc/$process_pid//stat")/100), 0);
+    $seconds = $system_uptime-$pid_uptime;
+    $days = floor($seconds / 86400);
+    $hours = floor(($seconds - ($days*86400)) / 3600);
+    $mins = floor(($seconds - ($days*86400) - ($hours*3600)) / 60);
+    $secs = floor($seconds % 60);
+    return "$days days, $hours hours, $mins minutes, $secs seconds";
 }
 
 /**

@@ -57,20 +57,21 @@ The `config.php` file also contains lots of options to control how the applicati
   * `display_donation_text` (Boolean, default: `true`) - Display text to encourage donations.
   * `donation_address` (String, default: `not_set`) - Bitcoin address to use for donations to support the node.
   * `donation_amount` (String, default: `0.001`) - Donation amount - not currently implemented.
-  * `use_bitcoind_ip` (Boolean, default: `false`) - Use the Bitcoin daemon to get the public IP, instead of `$_SERVER`
+  * `use_bitcoind_ip` (Boolean, default: `true`) - Use the Bitcoin daemon to get the public IP, instead of `$_SERVER`
   * `intro_text` (String, default: `not_set`) - Introductory text to display above the node statistics.
   * `display_peer_info` (Boolean, default: `false`) - Display connected peers.
   * `display_peer_port` (Boolean, default: `false`) - Display remote peer's port.
-  * `geolocate_peer_ip` (Boolean: default: `true`) - Attempt to Geolocate peer's IP addresses
+  * `geolocate_peer_ip` (Boolean: default: `false`) - Attempt to Geolocate peer's IP addresses
   * `hide_dark_peers` (Boolean: default: `true`) - Hides peers connected from "Dark" networks.
   * `display_free_disk_space` (Boolean, default: `false`) - Displayfree disk space.
   * `display_ip_location` (Boolean, default: `false`) - Attempt geolocation of node IP.
-  * `display_testnet` (Boolean, default: `true`) - Display testnet status.
-  * `display_version` (Boolean, default: `false`) - Display node `bitcoind` version.
+  * `display_testnet` (Boolean, default: `false`) - Display testnet status.
+  * `display_version` (Boolean, default: `true`) - Display node `bitcoind` version.
   * `display_github_ribbon` (Boolean, default: `true`) - Displays the 'Fork me on GitHub vanity ribbon.
   * `display_bitcoind_uptime` (Boolean, default: `true`) - Displays the uptime of the Bitcoin daemon.
+  * `bitcoind_process_name` (String, default `bitcoind`) - Name to use when getting the bitcoin daemon process' uptime.
   * `use_cache` (Boolean, default: `true`) - Enable cache.
-  * `date_format` (String, default: 'H:i:s e, j F Y') - PHP date fuction format to use when outputting dates.
+  * `date_format` (String, default: 'H:i:s T, j F Y') - PHP date fuction format to use when outputting dates.
   * `stylesheet` (String, default: `v2-light.css`) - CSS Stylesheet to use.
 
 #### Important Note
