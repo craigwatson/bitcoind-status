@@ -37,6 +37,7 @@ $config = array(
   'display_github_ribbon'   => true,
   'display_bitcoind_uptime' => false,
   'bitcoind_process_name'   => 'bitcoind',
+  'display_max_height'      => true,
   'use_cache'               => true,
   'date_format'             => 'H:i:s T, j F Y ',
   'stylesheet'              => 'v2-light.css'

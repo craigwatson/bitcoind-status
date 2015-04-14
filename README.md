@@ -70,6 +70,7 @@ The `config.php` file also contains lots of options to control how the applicati
   * `display_github_ribbon` (Boolean, default: `true`) - Displays the 'Fork me on GitHub vanity ribbon.
   * `display_bitcoind_uptime` (Boolean, default: `true`) - Displays the uptime of the Bitcoin daemon.
   * `bitcoind_process_name` (String, default `bitcoind`) - Name to use when getting the bitcoin daemon process' uptime.
+  * `display_max_height` (Boolean, default: `false`) - Get the network's max height from the bitnodes.io API via CURL. Displays the node height as a percentage of network height.
   * `use_cache` (Boolean, default: `true`) - Enable cache.
   * `date_format` (String, default: 'H:i:s T, j F Y') - PHP date fuction format to use when outputting dates.
   * `stylesheet` (String, default: `v2-light.css`) - CSS Stylesheet to use.

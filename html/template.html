@@ -60,7 +60,13 @@ if (strcmp($config['donation_address'],'not_set') == 0){
     </div>
 <?php } else { ?>
       <p class="stat"><span class="label">Number of Connections:</span> <?php echo $data['connections']; ?></p>
-      <p class="stat"><span class="label">Block Number:</span> <?php echo $data['blocks']; ?></p>
+      <p class="stat">
+          <span class="label">Node Height:</span> <?php echo $data['blocks']; ?>
+          <?php if($config['display_max_height'] === true){ ?> (<?php echo $data['node_height_percent'] ?>%)<?php } ?>
+      </p>
+<?php if (isset($data['max_height']) === true) { ?>
+      <p class="stat"><span class="label">Network Height:</span> <?php echo $data['max_height']; ?></p>
+<?php } ?>
       <p class="stat"><span class="label">Difficulty:</span> <?php echo number_format($data['difficulty'],3); ?></p>
 <?php if (isset($config['display_testnet']) && $config['display_testnet']) { ?>
       <p class="stat"><span class="label">Testnet:</span> <?php echo ($data['testnet']) ? "Yes" : "No"; ?></p>

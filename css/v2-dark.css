@@ -52,8 +52,8 @@ p.stat {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
-  padding: 5px 10px;
-  margin: 0px 0px 15px 0px;
+  padding: 5px;
+  margin: 0px 0px 10px 0px;
   background: #fff; /* Old browsers */
   background: -moz-linear-gradient(top,  #333 0%, #eee 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#333), color-stop(100%,#666)); /* Chrome,Safari4+ */
