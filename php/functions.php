@@ -43,7 +43,7 @@ function getData()
         $data['free_disk_space'] = getFreeDiskSpace();
     }
 
-    if(isset($config['display_ip']) && $config['display_ip'] === true){
+    if (isset($config['display_ip']) && $config['display_ip'] === true){
         // Use bitcoind IP
         if ($config['use_bitcoind_ip'] === true) {
             $net_info = $bitcoin->getnetworkinfo();
