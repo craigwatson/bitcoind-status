@@ -30,6 +30,7 @@ $config = array(
   'display_peer_port'       => false,
   'geolocate_peer_ip'       => false,
   'hide_dark_peers'         => true,
+  'display_ip'              => false,
   'display_free_disk_space' => false,
   'display_ip_location'     => false,
   'display_testnet'         => false,
