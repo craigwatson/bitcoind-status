@@ -64,6 +64,7 @@ The `config.php` file also contains lots of options to control how the applicati
   * `geolocate_peer_ip` (Boolean: default: `false`) - Attempt to Geolocate peer's IP addresses
   * `hide_dark_peers` (Boolean: default: `true`) - Hides peers connected from "Dark" networks.
   * `display_free_disk_space` (Boolean, default: `false`) - Displayfree disk space.
+  * `display_ip` (Boolean, default: `false`) - Display the server IP address.
   * `display_ip_location` (Boolean, default: `false`) - Attempt geolocation of node IP.
   * `display_testnet` (Boolean, default: `false`) - Display testnet status.
   * `display_version` (Boolean, default: `true`) - Display node `bitcoind` version.
