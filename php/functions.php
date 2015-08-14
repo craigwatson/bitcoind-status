@@ -59,7 +59,7 @@ function getData()
     }
 
     // Node geolocation
-    if ($config['display_ip_location'] === true) {
+    if ($config['display_ip_location'] === true && $config['display_ip'] === true) {
         $data['ip_location'] = getGeolocation($data['node_ip'], 'all');
     }
 
