@@ -161,6 +161,7 @@ function writeToCache($data)
     global $config;
     if ($config['use_cache'] === true) {
         $data['cache_time'] = time();
+        $data['cache_expiry'] = $data['cache_time']+$config['max_cache_time'];
         $raw_data = serialize($data);
         file_put_contents($config['cache_file'], $raw_data, LOCK_EX);
     }

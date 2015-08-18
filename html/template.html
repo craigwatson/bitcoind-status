@@ -98,7 +98,7 @@ if (strcmp($config['donation_address'],'not_set') == 0){
       <p class="stat"><span class="label">Free Disk Space:</span> <?php echo $data['free_disk_space']; ?></p>
 <?php } ?>
 <?php if (isset($data['cache_time']) & $config['use_cache'] === TRUE) { ?>
-      <p class="stat"><span class="label">Last Updated:</span> <?php echo date($config['date_format'], $data['cache_time']); ?> (refreshes every <?php echo ($config['max_cache_time']/60); ?> minutes)</p>
+      <p class="stat"><span class="label">Last Updated:</span> <?php echo date($config['date_format'], $data['cache_time']); ?> (refreshes every <?php echo ($config['max_cache_time']/60); ?> minutes, next at <?php echo date('H:i:s',$data['cache_expiry']) ?>)</p>
 <?php } ?>
 <?php if (isset($data['peers']) & $config['display_peer_info'] === TRUE) { ?>
   </div>
