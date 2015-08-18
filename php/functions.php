@@ -138,7 +138,8 @@ function parsePeers($peers)
 
         // Override peer addr with IP
         if ($config['display_peer_port'] === false) {
-            $peer['addr'] = $peer_ip;
+            array_pop($peer_addr_array);
+            $peer['addr'] = str_replace(array('[',']'), '', implode(':', $peer_addr_array));
         }
 
         $to_return[] = $peer;
