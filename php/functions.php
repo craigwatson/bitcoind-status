@@ -199,10 +199,14 @@ function getFreeDiskSpace()
  */
 function convertToSI($bytes)
 {
-    $si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
-    $base = 1024;
-    $return_class = min((int)log($bytes, $base), count($si_prefix) - 1);
-    return sprintf('%1.2f', $bytes / pow($base, $return_class)) . ' ' . $si_prefix[$return_class];
+    if ($bytes === 0) {
+        return '0B';
+    } else {
+        $si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
+        $base = 1024;
+        $return_class = min((int)log($bytes, $base), count($si_prefix) - 1);
+        return sprintf('%1.2f', $bytes / pow($base, $return_class)) . ' ' . $si_prefix[$return_class];
+    }
 }
 
 /**
