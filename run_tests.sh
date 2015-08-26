@@ -12,7 +12,7 @@ done
 
 echo "--- PHP Standards"
 for PHP_FILE in ${PHP_FILES}; do
-  BASENAME=$(basename $0)
+  BASENAME=$(basename ${PHP_FILE})
   if [ "${BASENAME}" != "easybitcoin.php" ]; then
     ./vendor/bin/phpcs --colors -n ${PHP_FILE}
     if [ $? -ne 0 ]; then
