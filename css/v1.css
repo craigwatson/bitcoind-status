@@ -1,4 +1,4 @@
-body {
+#body {
   padding: 20px 10px 0px 10px;
   background: #e0e0e0;
 }
@@ -35,8 +35,16 @@ span.small a {
   text-decoration: none;
 }
 
+p.cache {
+  background-color: #300;
+}
+
 p.intro {
   text-align: center;
+}
+
+p.cache {
+  padding: 10px;
 }
 
 p.stat {
@@ -92,7 +100,7 @@ table {
   background-color: #fff;
 }
 
-div.red {
+div.red, p.cache {
   text-align: center;
   background-color: #ffe2e1;
   border: 1px #600 solid;

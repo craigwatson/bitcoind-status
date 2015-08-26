@@ -30,9 +30,14 @@
   <div class="pure-u-1 pure-u-md-1-1">
     <h1>Bitcoin Node Status</h1>
     <?php
+      if (isset($cache_message)) {
+        echo '<p class="cache small">' . $cache_message . '</p>';
+      }
+
       if ($config['intro_text'] != 'not_set') {
         echo '<p class="intro">'.$config['intro_text'].'</p>' . "\n";
       }
+
       if ($config['display_donation_text'] === TRUE) {
         echo '<p class="donation">' . "Please support this Bitcoin node by donating to <a href='http://blocktrail.com/address/" . $config['donation_address'] . "' target='_blank'>" . $config['donation_address'] . "</a></p>";
       }

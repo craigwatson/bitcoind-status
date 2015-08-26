@@ -47,6 +47,10 @@ p.intro, p.donation {
   font-size: 0.9em;
 }
 
+p.cache {
+  padding: 10px;
+}
+
 p.stat {
   font-size: 0.9em;
   -webkit-border-radius: 5px;
@@ -102,7 +106,7 @@ table {
   background-color: #444;
 }
 
-div.red {
+div.red, p.cache {
   text-align: center;
   background-color: #ffe2e1;
   border: 1px #600 solid;

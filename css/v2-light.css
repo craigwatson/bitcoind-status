@@ -53,6 +53,10 @@ a:hover {
   text-decoration: underline;
 }
 
+p.cache {
+  padding: 10px;
+}
+
 p.stat {
   font-size: 0.9em;
   -webkit-border-radius: 5px;
@@ -108,7 +112,7 @@ table {
   background-color: #fff;
 }
 
-div.red {
+div.red, p.cache {
   text-align: center;
   background-color: #ffe2e1;
   border: 1px #600 solid;

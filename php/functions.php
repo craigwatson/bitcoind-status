@@ -12,11 +12,30 @@
 /**
  * Connects to Bitcoin daemon and retrieves information, then writes to cache
  *
+ * @param string $from_cache Whether to get the data from cache or not
+ *
  * @return array
  */
-function getData()
+function getData($from_cache = false)
 {
     global $config;
+    global $cache_message;
+
+    // If we're getting data from cache, do it
+    if (($from_cache === true) && (is_file($config['cache_file']))) {
+        $cache = json_decode(file_get_contents($config['cache_file']), true);
+
+        // Only proceed if the array is a cache - invalid otherwise
+        if (is_array($cache)) {
+            if ($cache['config_hash'] == md5(json_encode($config))) {
+                if (time() < $cache['cache_expiry']) {
+                    return $cache;
+                }
+            } else {
+                $cache_message = 'Configuration has changed, cache has been refreshed.';
+            }
+        }
+    }
 
     // Include EasyBitcoin library and set up connection
     include_once './php/easybitcoin.php';
@@ -163,7 +182,8 @@ function writeToCache($data)
     if ($config['use_cache'] === true) {
         $data['cache_time'] = time();
         $data['cache_expiry'] = $data['cache_time']+$config['max_cache_time'];
-        $raw_data = serialize($data);
+        $data['config_hash'] = md5(json_encode($config));
+        $raw_data = json_encode($data);
         file_put_contents($config['cache_file'], $raw_data, LOCK_EX);
     }
 }
