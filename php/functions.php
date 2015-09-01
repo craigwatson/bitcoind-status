@@ -89,15 +89,44 @@ function getData($from_cache = false)
 
     // Get max height from bitnodes.io
     if ($config['display_max_height'] === true) {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Bitcoin Node Status Page');
-        curl_setopt($ch, CURLOPT_URL, "https://getaddr.bitnodes.io/api/v1/snapshots/");
-        $exec_result = json_decode(curl_exec($ch), true);
-        curl_close($ch);
+        $bitnodes_ch = curl_init();
+        curl_setopt($bitnodes_ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($bitnodes_ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($bitnodes_ch, CURLOPT_USERAGENT, 'Bitcoin Node Status Page');
+        curl_setopt($bitnodes_ch, CURLOPT_URL, "https://getaddr.bitnodes.io/api/v1/snapshots/");
+        $exec_result = json_decode(curl_exec($bitnodes_ch), true);
+
+        // Don't close handle if we reuse it
+        if ($config['display_bitnodes_info'] !== true) {
+            curl_close($bitnodes_ch);
+        }
+
         $data['max_height'] = $exec_result['results'][0]['latest_height'];
         $data['node_height_percent'] = round(($data['blocks']/$data['max_height'])*100, 1);
+    }
+
+    // Get node info from bitnodes.io
+    if ($config['display_bitnodes_info'] === true) {
+        if ($bitnodes_ch === false) {
+            $bitnodes_ch = curl_init();
+            curl_setopt($bitnodes_ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($bitnodes_ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($bitnodes_ch, CURLOPT_USERAGENT, 'Bitcoin Node Status Page');
+        }
+
+        // Get node info
+        curl_setopt($bitnodes_ch, CURLOPT_URL, "https://getaddr.bitnodes.io/api/v1/nodes/" . $data['node_ip'] . "-8333/");
+        $data['bitnodes_info'] = json_decode(curl_exec($bitnodes_ch), true);
+
+        // Get latency info
+        curl_setopt($bitnodes_ch, CURLOPT_URL, "https://getaddr.bitnodes.io/api/v1/nodes/" . $data['node_ip'] . "-8333/latency/");
+        $latency = json_decode(curl_exec($bitnodes_ch), true);
+        $data['bitnodes_info']['latest_latency'] = $latency['daily_latency'][0];
+    }
+
+    // Get chart data
+    if ($config['display_chart'] === true) {
+        $data['chart'] = json_decode(file_get_contents($config['stats_file']));
     }
 
     writeToCache($data);

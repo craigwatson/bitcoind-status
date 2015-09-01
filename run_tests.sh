@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PHP_FILES=$(find ./ -path ./vendor -prune -o -type f -iname "*.php" -print)
+PHP_FILES=$(find . -path ./vendor -prune -o -type f -iname "*.php" -print)
 
 echo "--- PHP Syntax"
 for PHP_FILE in ${PHP_FILES}; do
