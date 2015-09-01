@@ -94,7 +94,7 @@ The `config.php` file also contains lots of options to control how the applicati
 ### Geolocation
 
 | Value                 | Type    | Default | Explanation                   |
-|--------------- -------|---------|---------|-------------------------------|
+|-----------------------|---------|---------|-------------------------------|
 | `geolocate_peer_ip`   | Boolean | `false` | Geolocate peers' IP addresses |
 | `display_ip_location` | Boolean | `false` | Geolocate node IP address     |
 
