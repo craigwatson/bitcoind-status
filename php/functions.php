@@ -126,7 +126,7 @@ function getData($from_cache = false)
 
     // Get chart data
     if (($config['display_chart'] === true) & (is_file($config['stats_file']))) {
-        $data['chart'] = json_decode(file_get_contents($config['stats_file']));
+        $data['chart'] = json_decode(file_get_contents($config['stats_file']), true);
     }
 
     writeToCache($data);
