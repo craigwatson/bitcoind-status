@@ -47,6 +47,14 @@ $config = array(
   'display_max_height'      => true,
   'use_bitcoind_ip'         => true,
   'intro_text'              => 'not_set',
+  'display_bitnodes_info'   => false,
+  'display_chart'           => false,
+
+  // Stats
+  'stats_whitelist'         => array('127.0.0.1'),
+  'stats_file'              => '/tmp/bitcoind-status.data',
+  'stats_max_age'           => '604800',
+  'stats_min_data_points'   => 5,
 
   // Uptime
   'display_bitcoind_uptime' => false,
