@@ -22,9 +22,6 @@
   <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
   <script type="text/javascript">
       google.setOnLoadCallback(drawChart);
-      $(window).resize(function(){
-          drawChart();
-      });
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Date', 'Connections'],
@@ -37,10 +34,20 @@
         ]);
 
         var options = { title: 'Connections History', legend: 'none'};
-
         var chart = new google.visualization.LineChart(document.getElementById('connections_chart'));
         chart.draw(data, options);
       }
+
+      $(window).resize(function() {
+        if(this.resizeTO) clearTimeout(this.resizeTO);
+          this.resizeTO = setTimeout(function() {
+            $(this).trigger('resizeEnd');
+          }, 500);
+      });
+
+      $(window).on('resizeEnd', function() {
+        drawChart();
+      });
     </script>
 <?php } ?>
 </head>
