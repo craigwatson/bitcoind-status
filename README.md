@@ -42,6 +42,23 @@ Below is an example `crontab` entry to call the script every five minutes via `c
 */5 *  *   *   *  curl -Ssk https://127.0.0.1/stats.php > /dev/null
 ```
 
+## Node Profile Icons
+
+To configure profile icons for your node, just set them up using the `node_links` variable in `config.php`. The format is a multi-dimensional array, as below. Icon images for Bitnodes.io and Blockchain.info are included in the `img` directory.
+
+```
+    'node_links' => array (
+        array (
+            'name' => 'Bitnodes.io',
+            'image => 'img/bitnodes.io.png'
+            'link  => 'https://getaddr.bitnodes.io/nodes/<IP>-<PORT>/
+        ),
+        array (
+            ...
+        )
+    ),
+```
+
 ## Contributing
 
 [![Buy me a beer!](https://cdn.changetip.com/img/graphics/Beer_Graphic.png)](https://www.changetip.com/tipme/craigwatson1987)
@@ -100,18 +117,19 @@ The `config.php` file also contains lots of options to control how the applicati
 
 ### UI
 
-| Value   | Type    | Default | Explanation                                                                            |
-|---------------------------|---------|-----------|--------------------------------------------------------------------|
-| `display_ip`              | Boolean | `false`   | Display the server IP address                                      |
-| `display_free_disk_space` | Boolean | `false`   | Displayfree disk space                                             |
-| `display_testnet`         | Boolean | `false`   | Display testnet status                                             |
-| `display_version`         | Boolean | `true`    | Display node `bitcoind` version                                    |
-| `display_github_ribbon`   | Boolean | `true`    | Displays the 'Fork me on GitHub' ribbon                            |
-| `display_max_height`      | Boolean | `false`   | Displays the node height as a percentage of network height         |
-| `use_bitcoind_ip`         | Boolean | `true`    | Use the Bitcoin daemon to get the public IP, instead of `$_SERVER` |
-| `intro_text`              | String  | `not_set` | Introductory text to display above the node statistics.            |
-| `display_bitnodes_info`   | Boolean | `false`   | Displays various information via the bitnodes.io API               |
-| `display_chart`           | String  | `false`   |
+| Value   | Type    | Default | Explanation                                                                                                                         |
+|---------------------------|---------|-----------|---------------------------------------------------------------------------------------------------------------- |
+| `display_ip`              | Boolean | `false`   | Display the server IP address                                                                                   |
+| `display_free_disk_space` | Boolean | `false`   | Displayfree disk space                                                                                          |
+| `display_testnet`         | Boolean | `false`   | Display testnet status                                                                                          |
+| `display_version`         | Boolean | `true`    | Display node `bitcoind` version                                                                                 |
+| `display_github_ribbon`   | Boolean | `true`    | Displays the 'Fork me on GitHub' ribbon                                                                         |
+| `display_max_height`      | Boolean | `false`   | Displays the node height as a percentage of network height                                                      |
+| `use_bitcoind_ip`         | Boolean | `true`    | Use the Bitcoin daemon to get the public IP, instead of `$_SERVER`                                              | 
+| `intro_text`              | String  | `not_set` | Introductory text to display above the node statistics.                                                         |
+| `display_bitnodes_info`   | Boolean | `false`   | Displays various information via the bitnodes.io API                                                            |
+| `display_chart`           | String  | `false`   | Displays a chart showing the stats collected by the stats.php script                                            |
+| `node_links`              | Array   | `array()` | Displays links to various other profiles for your node. Takes the form of a multidimensional array, see example | 
 
 ### Stats
 
