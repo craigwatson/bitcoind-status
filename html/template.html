@@ -18,7 +18,7 @@
   <script src="js/sorttable.js"></script>
   <script src="js/btc-status.js"></script>
 <?php if (is_file('./php/google_analytics.inc')) { include './php/google_analytics.inc'; } ?>
-<?php if ((isset($data['chart'])) & (count($data['chart']) > $config['stats_min_data_points'])) { ?>
+<?php if (isset($data['chart'])) { if (count($data['chart']) > $config['stats_min_data_points']) { ?>
   <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
   <script type="text/javascript">
       google.setOnLoadCallback(drawChart);
@@ -49,7 +49,7 @@
         drawChart();
       });
     </script>
-<?php } ?>
+<?php }} ?>
 </head>
 <body>
 <?php if ($config['debug'] === TRUE) { ?>
@@ -92,9 +92,9 @@
     </div>
 <?php } else { ?>
       <p class="stat"><span class="label">Number of Connections:</span> <?php echo $data['connections']; ?></p>
-<?php if ((isset($data['chart'])) & (count($data['chart']) > $config['stats_min_data_points'])) { ?>
+<?php if (isset($data['chart'])) { if (count($data['chart']) > $config['stats_min_data_points']) { ?>
       <div id="connections_chart" style="width: 100%; height: 20%"></div>
-<?php } ?>
+<?php } } ?>
 <?php if (isset($data['bitnodes_info']) === true) { ?>
       <p class="stat"><span class="label">Average Bitnodes Latency:</span> <?php if ($data['bitnodes_info']['latest_latency']['v'] !== 0) { echo $data['bitnodes_info']['latest_latency']['v'] . "ms"; } else { echo "Unavailable"; } ?></p>
 <?php } ?>
