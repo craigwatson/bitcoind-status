@@ -1,7 +1,7 @@
 Vagrant.configure("2") do |config|
 
   ip                 = '172.17.100.24'
-  config.vm.hostname = 'test.vikingserv.net'
+  config.vm.hostname = 'bitcoind-status.test.local'
   config.vm.box      = 'ubuntu/trusty64'
 
   config.vm.synced_folder "./", "/vagrant", type: "nfs"
