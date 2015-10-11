@@ -1,5 +1,8 @@
 #!/bin/bash
 
+rm -rf ./vendor
+composer install
+
 PHP_FILES=$(find . -path ./vendor -prune -o -type f -iname "*.php" -print)
 
 echo "--- PHP Syntax"
