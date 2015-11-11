@@ -44,14 +44,15 @@ Below is an example `crontab` entry to call the script every five minutes via `c
 
 ## Node Profile Icons
 
-To configure profile icons for your node, just set them up using the `node_links` variable in `config.php`. The format is a multi-dimensional array, as below. Icon images for Bitnodes.io and Blockchain.info are included in the `img` directory.
+To configure profile icons for your node, just set them up using the `node_links` variable in `config.php`. The format is a multi-dimensional array, as 
+below. Icon images for Bitnodes.21.co and Blockchain.info are included in the `img` directory.
 
 ```
     'node_links' => array (
         array (
-            'name' => 'Bitnodes.io',
-            'image => 'img/bitnodes.io.png'
-            'link  => 'https://getaddr.bitnodes.io/nodes/<IP>-<PORT>/
+            'name' => 'Bitnodes.21.co',
+            'image => 'img/bitnodes.png'
+            'link  => 'https://getaddr.bitnodes.21.co/nodes/<IP>-<PORT>/
         ),
         array (
             ...
@@ -127,7 +128,7 @@ The `config.php` file also contains lots of options to control how the applicati
 | `display_max_height`      | Boolean | `false`   | Displays the node height as a percentage of network height                                                      |
 | `use_bitcoind_ip`         | Boolean | `true`    | Use the Bitcoin daemon to get the public IP, instead of `$_SERVER`                                              | 
 | `intro_text`              | String  | `not_set` | Introductory text to display above the node statistics.                                                         |
-| `display_bitnodes_info`   | Boolean | `false`   | Displays various information via the bitnodes.io API                                                            |
+| `display_bitnodes_info`   | Boolean | `false`   | Displays various information via the bitnodes.21.co API                                                            |
 | `display_chart`           | String  | `false`   | Displays a chart showing the stats collected by the stats.php script                                            |
 | `node_links`              | Array   | `array()` | Displays links to various other profiles for your node. Takes the form of a multidimensional array, see example | 
 

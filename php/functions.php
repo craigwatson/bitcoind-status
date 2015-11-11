@@ -87,7 +87,7 @@ function getData($from_cache = false)
         $data['bitcoind_uptime'] = getProcessUptime($config['bitcoind_process_name']);
     }
 
-    // Get max height from bitnodes.io
+    // Get max height from bitnodes.21.co
     if ($config['display_max_height'] === true) {
         $bitnodes_ch = curl_init();
         curl_setopt($bitnodes_ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -105,7 +105,7 @@ function getData($from_cache = false)
         $data['node_height_percent'] = round(($data['blocks']/$data['max_height'])*100, 1);
     }
 
-    // Get node info from bitnodes.io
+    // Get node info from bitnodes.21.co
     if ($config['display_bitnodes_info'] === true) {
         if ($bitnodes_ch === false) {
             $bitnodes_ch = curl_init();
@@ -115,11 +115,11 @@ function getData($from_cache = false)
         }
 
         // Get node info
-        curl_setopt($bitnodes_ch, CURLOPT_URL, "https://getaddr.bitnodes.io/api/v1/nodes/" . $data['node_ip'] . "-8333/");
+        curl_setopt($bitnodes_ch, CURLOPT_URL, "https://getaddr.bitnodes.21.co/api/v1/nodes/" . $data['node_ip'] . "-8333/");
         $data['bitnodes_info'] = json_decode(curl_exec($bitnodes_ch), true);
 
         // Get latency info
-        curl_setopt($bitnodes_ch, CURLOPT_URL, "https://getaddr.bitnodes.io/api/v1/nodes/" . $data['node_ip'] . "-8333/latency/");
+        curl_setopt($bitnodes_ch, CURLOPT_URL, "https://getaddr.bitnodes.21.co/api/v1/nodes/" . $data['node_ip'] . "-8333/latency/");
         $latency = json_decode(curl_exec($bitnodes_ch), true);
         $data['bitnodes_info']['latest_latency'] = $latency['daily_latency'][0];
     }

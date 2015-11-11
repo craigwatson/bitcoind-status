@@ -41,4 +41,6 @@ Vagrant.configure("2") do |config|
   # Provision with Puppet
   config.vm.provision "puppet"
 
+  config.vm.provision :shell, :inline => "hostname --fqdn"
+
 end
