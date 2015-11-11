@@ -93,7 +93,7 @@ function getData($from_cache = false)
         curl_setopt($bitnodes_ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($bitnodes_ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($bitnodes_ch, CURLOPT_USERAGENT, 'Bitcoin Node Status Page');
-        curl_setopt($bitnodes_ch, CURLOPT_URL, "https://getaddr.bitnodes.io/api/v1/snapshots/");
+        curl_setopt($bitnodes_ch, CURLOPT_URL, "https://bitnodes.21.co/api/v1/snapshots/");
         $exec_result = json_decode(curl_exec($bitnodes_ch), true);
 
         // Don't close handle if we reuse it
