@@ -9,8 +9,8 @@
  * @link     https://github.com/craigwatson/bitcoind-status
  */
 
-if (!is_file('./php/config.php')){
-  die("Configuration file not found. To continue, please create a config.php file.");
+if (!is_file('./php/config.php')) {
+    die("Configuration file not found. To continue, please create a config.php file.");
 }
 
 require_once './php/config.php';
