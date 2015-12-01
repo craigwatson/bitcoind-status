@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="css/pure-min.css">
   <link rel="stylesheet" href="css/flags.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="UTF-8"> 
+  <meta charset="UTF-8">
   <!--[if lte IE 8]>
     <link rel="stylesheet" href="css/grids-responsive-old-ie-min.css">
   <![endif]-->
@@ -108,12 +108,12 @@
       <p class="stat"><span class="label">Difficulty:</span> <?php echo number_format($data['difficulty'],3); ?></p>
 <?php if (isset($config['display_testnet']) && $config['display_testnet']) { ?>
       <p class="stat"><span class="label">Testnet:</span> <?php echo ($data['testnet']) ? "Yes" : "No"; ?></p>
-<?php } ?>	 
+<?php } ?>
 <?php if (isset($config['display_ip']) && $config['display_ip']) { ?>
       <p class="stat"><span class="label">Node IP Address:</span> <?php echo $data['node_ip']; ?></p><?php } ?>
 <?php if (isset($config['display_version']) && $config['display_version']) { ?>
       <p class="stat"><span class="label">Node Version:</span> <?php echo $data['version']; ?></p>
-<?php } ?>	 
+<?php } ?>
 <?php if (isset($data['bitcoind_uptime'])) { ?>
       <p class="stat"><span class="label">Bitcoin Daemon Uptime:</span> <?php echo $data['bitcoind_uptime']; ?></p>
 <?php } ?>
