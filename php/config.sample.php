@@ -65,5 +65,5 @@ $config = array(
   'date_format'             => 'H:i:s T, j F Y ',
   'stylesheet'              => 'v2-light.css',
   'debug'                   => false,
-  'admin_email'             => 'admin@domain.net',
+  'admin_email'             => 'admin@example.com',
 );
