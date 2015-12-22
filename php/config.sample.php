@@ -66,5 +66,5 @@ $config = array(
   'timezone'                => null,
   'stylesheet'              => 'v2-light.css',
   'debug'                   => false,
-  'admin_email'             => 'admin@domain.net',
+  'admin_email'             => 'admin@example.com',
 );
