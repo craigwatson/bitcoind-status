@@ -150,13 +150,13 @@ The `config.php` file also contains lots of options to control how the applicati
 
 ### System
 
-| Value         | Type    | Default            | Explanation                                                  |
-|---------------|---------|--------------------|--------------------------------------------------------------|
-| `date_format` | String  | `H:i:s T, j F Y`   | PHP date fuction format to use when outputting dates         |
-| `timezone`    | String  | `null`             | Timezone to use for dates. Set to null to use system default |
-| `stylesheet`  | String  | `v2-light.css`     | CSS Stylesheet to use                                        |
-| `debug`       | Boolean | false`             | If enabled, the contents of $data is echoed in HTML comments |
-| `admin_email` | String  | `admin@domain.net` | Email address to display on error                            |
+| Value         | Type    | Default             | Explanation                                                  |
+|---------------|---------|---------------------|--------------------------------------------------------------|
+| `date_format` | String  | `H:i:s T, j F Y`    | PHP date fuction format to use when outputting dates         |
+| `timezone`    | String  | `null`              | Timezone to use for dates. Set to null to use system default |
+| `stylesheet`  | String  | `v2-light.css`      | CSS Stylesheet to use                                        |
+| `debug`       | Boolean | `false`             | If enabled, the contents of $data is echoed in HTML comments |
+| `admin_email` | String  | `admin@example.com` | Email address to display on error                            |
 
 #### Important Note
 
