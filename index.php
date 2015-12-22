@@ -16,6 +16,11 @@ if (!is_file('./php/config.php')) {
 require_once './php/config.php';
 require_once './php/functions.php';
 
+
+if ($config['timezone'] !== null) {
+    date_default_timezone_set($config['timezone']);
+}
+
 // If we're good to clear cache, remove cache file
 if (isset($_GET['clearcache']) & in_array($_SERVER['REMOTE_ADDR'], $config['nocache_whitelist']) & is_file($config['cache_file'])) {
     unlink($config['cache_file']);
