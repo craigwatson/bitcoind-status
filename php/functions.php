@@ -296,7 +296,8 @@ function getGeolocation($ip_address, $response_key)
  *
  * @return String Time ago text.
  */
-function time_elapsed($ptime) {
+function elapsedTime($ptime)
+{
     $etime = time() - $ptime;
 
     if ($etime < 1) {
