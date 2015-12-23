@@ -155,6 +155,7 @@
              <th>Ping (ms)</th>
              <th>Bytes Sent</th>
              <th>Bytes Received</th>
+             <th>Direction</th>
            </tr>
          </thead>
          <tbody>
@@ -168,6 +169,7 @@
              <td><?php echo round(($peer['pingtime']*1000),2); ?></td>
              <td><?php echo convertToSI($peer['bytessent']); ?></td>
              <td><?php echo convertToSI($peer['bytesrecv']); ?></td>
+             <td><?php if ($peer['inbound'] === true) { echo "in"; } else { echo "out"; } ?></td>
            </tr>
 <?php } ?>
          </tbody>
