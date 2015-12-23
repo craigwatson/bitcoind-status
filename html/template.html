@@ -169,7 +169,7 @@
              <td><?php echo round(($peer['pingtime']*1000),2); ?></td>
              <td><?php echo convertToSI($peer['bytessent']); ?></td>
              <td><?php echo convertToSI($peer['bytesrecv']); ?></td>
-             <td><?php if ($peer['inbound'] === true) { ?> <span style="color: #9f000f">&#x25BC;</span> <?php } else { ?> <span style="color: #347235">&#x25B2;</span><?php } ?></td>
+             <td align="center"><?php if ($peer['inbound'] === true) { ?> <span style="color: #9f000f">&#x25BC;</span> <?php } else { ?> <span style="color: #347235">&#x25B2;</span><?php } ?></td>
            </tr>
 <?php } ?>
          </tbody>
