@@ -155,19 +155,21 @@
              <th>Ping (ms)</th>
              <th>Bytes Sent</th>
              <th>Bytes Received</th>
+             <th>Direction</th>
            </tr>
          </thead>
          <tbody>
 <?php foreach ($data['peers'] as $peer) { ?>
            <tr>
              <td><?php if ($config['geolocate_peer_ip'] === true) { if (strcmp(strtolower($peer['country']), "unavailable") != 0) { ?><img src="img/blank.gif" class="flag flag-<?php echo strtolower($peer['country']); ?>" alt="<?php echo $peer['country']; ?>" /> <?php } } ?><?php echo $peer['addr']; ?></td>
-             <td><?php echo date($config['date_format'], $peer['conntime']); ?></td>
+             <td><?php echo elapsedTime($peer['conntime']); ?></td>
              <td><?php echo $peer['version'] . ' ' . str_replace('/','',str_replace(':',' ',$peer['subver'])); ?></td>
-             <td><?php echo date($config['date_format'], $peer['lastsend']); ?></td>
-             <td><?php echo date($config['date_format'], $peer['lastrecv']); ?></td>
+             <td><?php echo elapsedTime($peer['lastsend']); ?></td>
+             <td><?php echo elapsedTime($peer['lastrecv']); ?></td>
              <td><?php echo round(($peer['pingtime']*1000),2); ?></td>
              <td><?php echo convertToSI($peer['bytessent']); ?></td>
              <td><?php echo convertToSI($peer['bytesrecv']); ?></td>
+             <td><?php if ($peer['inbound'] === true) { echo "in"; } else { echo "out"; } ?></td>
            </tr>
 <?php } ?>
          </tbody>
