@@ -1,0 +1,51 @@
+/** RESPONSIVE TABLES **/
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px)  {
+
+  /* Force table to not be like tables anymore */
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    border: 1px solid #eee;
+  }
+
+  /* Behave  like a "row" */
+  td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+    padding-top: 10px;
+  }
+
+  /* Now like a table header */
+  td:before {
+    font-weight: bold;
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+
+  /* Label the data */
+  td:nth-of-type(1):before { content: "IP"; }
+  td:nth-of-type(2):before { content: "Time Connected"; }
+  td:nth-of-type(3):before { content: "Protocol Version"; }
+  td:nth-of-type(4):before { content: "Last Send"; }
+  td:nth-of-type(5):before { content: "Last Receive"; }
+  td:nth-of-type(6):before { content: "Ping (ms)"; }
+  td:nth-of-type(7):before { content: "Bytes Sent"; }
+  td:nth-of-type(8):before { content: "Bytes Received "; }
+  td:nth-of-type(9):before { content: "Direction"; }
+
+}
