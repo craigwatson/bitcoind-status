@@ -115,13 +115,13 @@ function getData($from_cache = false)
         }
 
         // Get node info
-        curl_setopt($bitnodes_ch, CURLOPT_URL, "https://getaddr.bitnodes.21.co/api/v1/nodes/" . $data['node_ip'] . "-8333/");
+        curl_setopt($bitnodes_ch, CURLOPT_URL, "https://bitnodes.21.co/api/v1/nodes/" . $data['node_ip'] . "-8333/");
         $data['bitnodes_info'] = json_decode(curl_exec($bitnodes_ch), true);
 
         // Get latency info
-        curl_setopt($bitnodes_ch, CURLOPT_URL, "https://getaddr.bitnodes.21.co/api/v1/nodes/" . $data['node_ip'] . "-8333/latency/");
+        curl_setopt($bitnodes_ch, CURLOPT_URL, "https://bitnodes.21.co/api/v1/nodes/" . $data['node_ip'] . "-8333/latency/");
         $latency = json_decode(curl_exec($bitnodes_ch), true);
-        $data['bitnodes_info']['latest_latency'] = $latency['daily_latency'][0];
+        $data['bitnodes_info']['latest_latency'] = $latency['daily_latency'][0]['v'];
     }
 
     // Get chart data
