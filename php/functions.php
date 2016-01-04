@@ -179,6 +179,11 @@ function parsePeers($peers)
             }
         }
 
+        // Continue if peer is to be ignored
+        if (is_array($config['peers_to_ignore']) & in_array($peer_ip, $config['peers_to_ignore'])) {
+            continue;
+        }
+
         // Do geolocation
         if ($config['geolocate_peer_ip'] === true) {
             $peer['country'] = getGeolocation($peer_ip, 'geoplugin_countryCode');

@@ -27,6 +27,7 @@ $config = array(
   'display_peer_info'       => false,
   'display_peer_port'       => false,
   'hide_dark_peers'         => true,
+  'peers_to_ignore'         => array(),
 
   // Cache
   'use_cache'               => true,
