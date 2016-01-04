@@ -279,7 +279,9 @@ function getGeolocation($ip_address, $response_key)
     curl_close($ch);
     if ($response_code === 200) {
         $response_array = unserialize($exec_result);
-        if (strcmp($response_key, "all") == 0) {
+        if ($response_array['geoplugin_status'] === 404) {
+            return 'Unavailable';
+        } elseif (strcmp($response_key, 'all') == 0) {
             return $response_array;
         } else {
             return $response_array[$response_key];
