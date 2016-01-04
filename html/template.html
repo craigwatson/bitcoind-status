@@ -167,7 +167,7 @@
          <tbody>
 <?php foreach ($data['peers'] as $peer) { ?>
            <tr>
-             <td><?php if ($config['geolocate_peer_ip'] === true) { if (strcmp(strtolower($peer['country']), "unavailable") != 0) { ?><img src="img/blank.gif" class="flag flag-<?php echo strtolower($peer['country']); ?>" alt="<?php echo $peer['country']; ?>" /> <?php } } ?><?php echo $peer['addr']; ?></td>
+             <td><?php if ($config['geolocate_peer_ip'] === true) { if (strcmp(strtolower($peer['country_code']), "unavailable") != 0) { ?><img src="img/blank.gif" class="flag flag-<?php echo strtolower($peer['country_code']); ?>" title="<?php echo $peer['country_name']; ?>" alt="<?php echo $peer['country_name']; ?>" /> <?php } } ?><?php echo $peer['addr']; ?></td>
              <td><?php echo elapsedTime($peer['conntime']); ?></td>
              <td><?php echo $peer['version'] . ' ' . str_replace('/','',str_replace(':',' ',$peer['subver'])); ?></td>
              <td><?php echo elapsedTime($peer['lastsend']); ?></td>

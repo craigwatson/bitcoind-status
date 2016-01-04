@@ -186,7 +186,9 @@ function parsePeers($peers)
 
         // Do geolocation
         if ($config['geolocate_peer_ip'] === true) {
-            $peer['country'] = getGeolocation($peer_ip, 'geoplugin_countryCode');
+            $geo_data = getGeolocation($peer_ip, 'all');
+            $peer['country_code'] = $geo_data['geoplugin_countryCode'];
+            $peer['country_name'] = $geo_data['geoplugin_countryName'];
         }
 
         // Override peer addr with IP
