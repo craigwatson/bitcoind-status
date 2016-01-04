@@ -5,7 +5,6 @@
   <link rel="icon" type="image/png" href="img/favicon.png" />
   <link rel="stylesheet" href="css/pure-min.css">
   <link rel="stylesheet" href="css/flags.css">
-  <link rel="stylesheet" href="css/table.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
   <!--[if lte IE 8]>
@@ -15,6 +14,7 @@
     <link rel="stylesheet" href="css/grids-responsive-min.css">
   <!--<![endif]-->
   <link rel="stylesheet" href="css/<?php echo $config['stylesheet']; ?>">
+  <link rel="stylesheet" href="css/table.css">
   <script src="js/jquery-1.11.2.min.js"></script>
   <script src="js/sorttable.js"></script>
   <script src="js/btc-status.js"></script>
@@ -97,7 +97,7 @@
       <div id="connections_chart" style="width: 100%; height: 20%"></div>
 <?php } } ?>
 <?php if (isset($data['bitnodes_info']) === true) { ?>
-      <p class="stat"><span class="label">Average Bitnodes Latency:</span> <?php if ($data['bitnodes_info']['latest_latency']['v'] !== 0) { echo $data['bitnodes_info']['latest_latency']['v'] . "ms"; } else { echo "Unavailable"; } ?></p>
+      <p class="stat"><span class="label">Latest Bitnodes Latency:</span> <?php if ($data['bitnodes_info']['latest_latency'] !== 0) { echo $data['bitnodes_info']['latest_latency'] . "ms"; } else { echo "Unavailable"; } ?></p>
 <?php } ?>
       <p class="stat">
           <span class="label">Node Height:</span> <?php echo $data['blocks']; ?>
