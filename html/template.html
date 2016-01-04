@@ -123,11 +123,16 @@
           <span class="label">Node Location:</span>
 <?php
               if (is_array($data['ip_location'])) {
-                  $country_code = strtolower($data['ip_location']['geoplugin_countryCode']);
-                  $country_name = $data['ip_location']['geoplugin_countryName'];
+                  if ($data['ip_location']['geoplugin_status'] != '404') {
+                      $country_code = strtolower($data['ip_location']['geoplugin_countryCode']);
+                      $country_name = $data['ip_location']['geoplugin_countryName'];
+                  } else {
+                      $country_code = 'blank';
+                      $country_name = 'Unavailable';
+                  }
               } else {
                   $country_code = 'blank';
-                  $country_name = $data['ip_location'];
+                  $country_name = 'Unavailable';
               }
 ?>
           <?php if (strcmp(strtolower($country_name), "unavailable") != 0) { ?><img src="img/blank.gif" class="flag flag-<?php echo $country_code; ?>" alt="<?php echo $country_name; ?>" /><?php } ?> <?php echo $country_name . "\n"; ?>
