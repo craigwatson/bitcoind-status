@@ -187,11 +187,11 @@ function parsePeers($peers)
         // Do geolocation
         if ($config['geolocate_peer_ip'] === true) {
             $geo_data = getGeolocation($peer_ip, 'all');
-            if(is_array($geo_data)){
-              $peer['country_code'] = $geo_data['geoplugin_countryCode'];
-              $peer['country_name'] = $geo_data['geoplugin_countryName'];
+            if (is_array($geo_data)) {
+                $peer['country_code'] = $geo_data['geoplugin_countryCode'];
+                $peer['country_name'] = $geo_data['geoplugin_countryName'];
             } else {
-              $peer['country_code'] = 'unavailable';
+                $peer['country_code'] = 'unavailable';
             }
         }
 
