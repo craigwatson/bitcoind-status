@@ -2,9 +2,17 @@ node default {
 
   include apt
 
+  Class['::apt::update'] -> Package <| title != 'software-properties-common' |>
+
   class { 'apache':
-    docroot    => '/vagrant',
-    mpm_module => 'prefork',
+    mpm_module    => 'prefork',
+    default_vhost => false,
+  }
+
+  apache::vhost { $::fqdn:
+    port           => '80',
+    docroot        => '/vagrant',
+    manage_docroot => false,
   }
 
   include php::params
@@ -12,13 +20,14 @@ node default {
   include php::extension::curl
   include apache::mod::php
 
-  class { 'bitcoind':
-    rpcallowip  => ['127.0.0.1'],
-    rpcpassword => 'statustest',
-    rpcuser     => 'status',
-    testnet     => true,
-  }
-
   Php::Extension <| |> -> Php::Config <| |> ~> Service['httpd']
+
+  class { 'bitcoind':
+    rpcallowip    => ['127.0.0.1'],
+    rpcpassword   => 'statustest',
+    rpcuser       => 'status',
+    testnet       => true,
+    disablewallet => true,
+  }
 
 }
