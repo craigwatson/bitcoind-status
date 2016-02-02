@@ -169,9 +169,20 @@ sorttable = {
     for (var i=0; i<table.tBodies[0].rows.length; i++) {
       text = sorttable.getInnerText(table.tBodies[0].rows[i].cells[column]);
       if (text != '') {
-        if (text.match(/^-?[£$¤]?[\d,.]+%?$/)) {
+        if (text.match(/^-?[Â£$Â¤]?[\d,.]+%?$/)) {
           return sorttable.sort_numeric;
         }
+
+        text = sorttable.getRawBytes(table.tBodies[0].rows[i].cells[column])
+        if(text != '') {
+          return sorttable.sort_numeric;
+        }
+
+        text = sorttable.getRawTime(table.tBodies[0].rows[i].cells[column])
+        if(text != '') {
+          return sorttable.sort_numeric;
+        }
+
         // check for a date: dd/mm/yyyy or dd/mm/yy
         // can have / or . or - as separator
         // can be mm/dd as well
@@ -195,7 +206,26 @@ sorttable = {
     }
     return sortfn;
   },
+  getRawBytes: function(node) {
+      if(!node) return "";
 
+      if(node.hasAttribute('data-bytes') !== undefined) {
+        return node.getAttribute('data-bytes');
+      }
+      else {
+        return "";
+      }
+  },
+  getRawTime: function(node) {
+    if(!node) return "";
+
+    if(node.hasAttribute('data-time') !== undefined) {
+      return node.getAttribute('data-time');
+    }
+    else {
+      return "";
+    }
+  },
   getInnerText: function(node) {
     // gets the text we want to use for sorting for a cell.
     // strips leading and trailing whitespace.
@@ -210,6 +240,12 @@ sorttable = {
 
     if (node.getAttribute("sorttable_customkey") != null) {
       return node.getAttribute("sorttable_customkey");
+    }
+    else if(node.getAttribute('data-bytes') !== null) {
+      return node.getAttribute('data-bytes');
+    }
+    else if(node.getAttribute('data-time') !== null) {
+      return node.getAttribute('data-time');
     }
     else if (typeof node.textContent != 'undefined' && !hasInputs) {
       return node.textContent.replace(/^\s+|\s+$/g, '');
@@ -492,4 +528,3 @@ var forEach = function(object, block, context) {
 		resolve.forEach(object, block, context);
 	}
 };
-
