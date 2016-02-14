@@ -123,13 +123,8 @@
           <span class="label">Node Location:</span>
 <?php
               if (is_array($data['ip_location'])) {
-                  if ($data['ip_location']['geoplugin_status'] != '404') {
-                      $country_code = strtolower($data['ip_location']['geoplugin_countryCode']);
-                      $country_name = $data['ip_location']['geoplugin_countryName'];
-                  } else {
-                      $country_code = 'blank';
-                      $country_name = 'Unavailable';
-                  }
+                  $country_code = strtolower($data['ip_location']['country_code']);
+                  $country_name = $data['ip_location']['country_name'];
               } else {
                   $country_code = 'blank';
                   $country_name = 'Unavailable';
@@ -187,9 +182,9 @@
   <div id="footer" class="pure-u-1-1 pure-u-md-1-1 pure-u-lg-1-1">
     <hr />
     <p>
-       <a href="https://github.com/craigwatson/bitcoind-status">Bitcoin Daemon Status Page</a> by <a href="http://www.cwatson.org">Craig Watson</a>, distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a><br />
-       Donate: <a href="http://blocktrail.com/address/174N2KwMzKYvYkCSx1kezrzfSQuJQEZY9T" target="_blank">174N2KwMzKYvYkCSx1kezrzfSQuJQEZY9T</a><br />
-       <a href="http://www.geoplugin.com/geolocation/" target="_new">IP Geolocation</a> by <a href="http://www.geoplugin.com/" target="_new">geoPlugin</a><br />
+       <a href="https://github.com/craigwatson/bitcoind-status">Bitcoin Daemon Status Page</a> by <a href="https://cwatson.org">Craig Watson</a>, distributed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a><br />
+       Donate: <a href="https://www.blocktrail.com/BTC/address/174N2KwMzKYvYkCSx1kezrzfSQuJQEZY9T" target="_blank">174N2KwMzKYvYkCSx1kezrzfSQuJQEZY9T</a><br />
+       IP Geolocation by <a href="https://freegeoip.net/" target="_new">freegeoip.net</a>, using GeoLite2 data from <a href="https://www.maxmind.com" target="_new">MaxMind</a><br />
     </p>
     <?php if ($config['display_github_ribbon'] === TRUE) { ?>
       <p>

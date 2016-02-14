@@ -188,8 +188,8 @@ function parsePeers($peers)
         if ($config['geolocate_peer_ip'] === true) {
             $geo_data = getGeolocation($peer_ip, 'all');
             if (is_array($geo_data)) {
-                $peer['country_code'] = $geo_data['geoplugin_countryCode'];
-                $peer['country_name'] = $geo_data['geoplugin_countryName'];
+                $peer['country_code'] = $geo_data['country_code'];
+                $peer['country_name'] = $geo_data['country_name'];
             } else {
                 $peer['country_code'] = 'unavailable';
             }
@@ -276,27 +276,29 @@ function convertToSI($bytes)
  * @param String $response_key The key of the response array to return
  *                             'all' will return all keys
  *
- * @return mixed Either an array if 'all' is passed to $response_key or string
+ * @return mixed Either an array of country name and code or string 'Unavailable'
  */
 function getGeolocation($ip_address, $response_key)
 {
     global $config;
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "http://www.geoplugin.net/php.gp?ip=$ip_address");
+    curl_setopt($ch, CURLOPT_URL, "http://freegeoip.net/json/$ip_address");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_USERAGENT, 'Bitcoin Node Status Page');
     $exec_result = curl_exec($ch);
     $response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
     if ($response_code === 200) {
-        $response_array = unserialize($exec_result);
-        if ($response_array['geoplugin_status'] === 404) {
-            return 'Unavailable';
-        } elseif (strcmp($response_key, 'all') == 0) {
-            return $response_array;
+        $response_array = json_decode($exec_result);
+        if (strcmp($response_key, 'all') == 0) {
+            $return_array = array (
+              'country_code' => $response_array['country_code'],
+              'country_name' => $response_array['country_name']
+            );
         } else {
-            return $response_array[$response_key];
+            $return_array = $response_array[$response_key];
         }
+        return $return_array;
     } else {
         return 'Unavailable';
     }
