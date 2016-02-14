@@ -275,8 +275,8 @@ function getGeolocation($ip_address)
 {
     global $config;
     global $country_codes;
-    $exec_result = curlRequest("http://freegeoip.net/json/$ip_address");
-    if (($exec_result !== false) & (in_array(trim($exec_result['country_code']), $country_codes))) {
+    $exec_result = json_decode(curlRequest("http://freegeoip.net/json/$ip_address"));
+    if (($exec_result !== false) & (in_array($exec_result['country_code'], $country_codes))) {
         return trim($exec_result['country_code']);
     } else {
         return 'blank';
