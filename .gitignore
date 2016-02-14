@@ -3,3 +3,8 @@ php/config.php
 vendor
 php/google_analytics.inc
 .vagrant
+Capfile
+config
+lib
+Gemfile
+Gemfile.lock
