@@ -6,5 +6,6 @@ php/google_analytics.inc
 Capfile
 config
 lib
+log
 Gemfile
 Gemfile.lock
