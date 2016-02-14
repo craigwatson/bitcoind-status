@@ -118,11 +118,8 @@
 <?php if (isset($data['bitcoind_uptime'])) { ?>
       <p class="stat"><span class="label">Bitcoin Daemon Uptime:</span> <?php echo $data['bitcoind_uptime']; ?></p>
 <?php } ?>
-<?php if (isset($data['ip_location'])) { ?>
-      <p class="stat">
-          <span class="label">Node Location:</span>
-          <?php if (strcmp(strtolower($data['ip_location']), 'blank') != 0) { ?><img src="img/blank.gif" class="flag flag-<?php echo $data['ip_location']; ?>" alt="<?php echo $country_codes[$data['ip_location']]; ?>" /><?php } ?> <?php echo $country_codes[$data['ip_location']] . "\n"; ?>
-      </p>
+<?php if ((isset($data['ip_location'])) && (strcmp($data['ip_location'], 'blank') != 0)) { ?>
+      <p class="stat"><span class="label">Node Location:</span><img src="img/blank.gif" class="flag flag-<?php echo $data['ip_location']; ?>" alt="<?php echo $country_codes[$data['ip_location']]; ?>" /> <?php echo $country_codes[$data['ip_location']]; ?></p>
 <?php } ?>
 <?php if (isset($data['free_disk_space'])) { ?>
       <p class="stat"><span class="label">Free Disk Space:</span> <?php echo $data['free_disk_space']; ?></p>
