@@ -289,7 +289,7 @@ function getGeolocation($ip_address, $response_key)
     $response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
     if ($response_code === 200) {
-        $response_array = json_decode($exec_result);
+        $response_array = json_decode($exec_result, true);
         if (strcmp($response_key, 'all') == 0) {
             $return_array = array (
               'country_code' => $response_array['country_code'],
