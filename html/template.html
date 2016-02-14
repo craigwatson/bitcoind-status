@@ -121,16 +121,7 @@
 <?php if (isset($data['ip_location'])) { ?>
       <p class="stat">
           <span class="label">Node Location:</span>
-<?php
-              if (is_array($data['ip_location'])) {
-                  $country_code = strtolower($data['ip_location']['country_code']);
-                  $country_name = $data['ip_location']['country_name'];
-              } else {
-                  $country_code = 'blank';
-                  $country_name = 'Unavailable';
-              }
-?>
-          <?php if (strcmp(strtolower($country_name), "unavailable") != 0) { ?><img src="img/blank.gif" class="flag flag-<?php echo $country_code; ?>" alt="<?php echo $country_name; ?>" /><?php } ?> <?php echo $country_name . "\n"; ?>
+          <?php if (strcmp(strtolower($data['ip_location']), 'blank') != 0) { ?><img src="img/blank.gif" class="flag flag-<?php echo $data['ip_location']; ?>" alt="<?php echo $country_codes[$data['ip_location']]; ?>" /><?php } ?> <?php echo $country_codes[$data['ip_location']] . "\n"; ?>
       </p>
 <?php } ?>
 <?php if (isset($data['free_disk_space'])) { ?>
@@ -162,7 +153,7 @@
          <tbody>
 <?php foreach ($data['peers'] as $peer) { ?>
            <tr>
-             <td><?php if ($config['geolocate_peer_ip'] === true) { if (strcmp(strtolower($peer['country_code']), "unavailable") != 0) { ?><img src="img/blank.gif" class="flag flag-<?php echo strtolower($peer['country_code']); ?>" title="<?php echo $peer['country_name']; ?>" alt="<?php echo $peer['country_name']; ?>" /> <?php } } ?><?php echo $peer['addr']; ?></td>
+             <td><?php if ($config['geolocate_peer_ip'] === true) { if (strcmp(strtolower($peer['country']), "blank") != 0) { ?><img src="img/blank.gif" class="flag flag-<?php echo strtolower($peer['country']); ?>" title="<?php echo $country_codes[$peer['country']]; ?>" alt="<?php echo $country_codes[$peer['country']]; ?>" /> <?php } } echo $peer['addr']; ?></td>
              <td data-time="<?php echo $peer['conntime']; ?>"><?php echo elapsedTime($peer['conntime']); ?></td>
              <td><?php echo $peer['version'] . ' ' . str_replace('/','',str_replace(':',' ',$peer['subver'])); ?></td>
              <td data-time="<?php echo $peer['lastsend']; ?>"><?php echo elapsedTime($peer['lastsend']); ?></td>

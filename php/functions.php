@@ -10,6 +10,23 @@
  */
 
 /**
+ * Wrapper function for CURL calls
+ *
+ * @param string $url The URL to CURL
+ *
+ * @return string
+ */
+function curlRequest($url)
+{
+    global $curl_handle;
+    curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl_handle, CURLOPT_USERAGENT, 'Bitcoin Node Status Page');
+    curl_setopt($curl_handle, CURLOPT_URL, $url);
+    return curl_exec($curl_handle);
+}
+
+/**
  * Connects to Bitcoin daemon and retrieves information, then writes to cache
  *
  * @param string $from_cache Whether to get the data from cache or not
@@ -20,6 +37,7 @@ function getData($from_cache = false)
 {
     global $config;
     global $cache_message;
+    global $curl_handle;
 
     // If we're getting data from cache, do it
     if (($from_cache === true) && (is_file($config['cache_file']))) {
@@ -62,7 +80,7 @@ function getData($from_cache = false)
         $data['free_disk_space'] = getFreeDiskSpace();
     }
 
-    if (isset($config['display_ip']) && $config['display_ip'] === true) {
+    if ($config['display_ip'] === true) {
         // Use bitcoind IP
         if ($config['use_bitcoind_ip'] === true) {
             $net_info = $bitcoin->getnetworkinfo();
@@ -79,7 +97,7 @@ function getData($from_cache = false)
 
     // Node geolocation
     if ($config['display_ip_location'] === true && $config['display_ip'] === true) {
-        $data['ip_location'] = getGeolocation($data['node_ip'], 'all');
+        $data['ip_location'] = getGeolocation($data['node_ip']);
     }
 
     // Bitcoin Daemon uptime
@@ -89,38 +107,21 @@ function getData($from_cache = false)
 
     // Get max height from bitnodes.21.co
     if ($config['display_max_height'] === true) {
-        $bitnodes_ch = curl_init();
-        curl_setopt($bitnodes_ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($bitnodes_ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($bitnodes_ch, CURLOPT_USERAGENT, 'Bitcoin Node Status Page');
-        curl_setopt($bitnodes_ch, CURLOPT_URL, "https://bitnodes.21.co/api/v1/snapshots/");
-        $exec_result = json_decode(curl_exec($bitnodes_ch), true);
-
-        // Don't close handle if we reuse it
-        if ($config['display_bitnodes_info'] !== true) {
-            curl_close($bitnodes_ch);
+        if ($config['display_testnet'] === true) {
+            $exec_result = json_decode(curlRequest("https://testnet.blockexplorer.com/api/status?q=getBlockCount"), true);
+            $data['max_height'] = $exec_result['blockcount'];
+        } else {
+            $exec_result = json_decode(curlRequest("https://bitnodes.21.co/api/v1/snapshots/"), true);
+            $data['max_height'] = $exec_result['results'][0]['latest_height'];
         }
 
-        $data['max_height'] = $exec_result['results'][0]['latest_height'];
         $data['node_height_percent'] = round(($data['blocks']/$data['max_height'])*100, 1);
     }
 
     // Get node info from bitnodes.21.co
     if ($config['display_bitnodes_info'] === true) {
-        if ($bitnodes_ch === false) {
-            $bitnodes_ch = curl_init();
-            curl_setopt($bitnodes_ch, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($bitnodes_ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($bitnodes_ch, CURLOPT_USERAGENT, 'Bitcoin Node Status Page');
-        }
-
-        // Get node info
-        curl_setopt($bitnodes_ch, CURLOPT_URL, "https://bitnodes.21.co/api/v1/nodes/" . $data['node_ip'] . "-8333/");
-        $data['bitnodes_info'] = json_decode(curl_exec($bitnodes_ch), true);
-
-        // Get latency info
-        curl_setopt($bitnodes_ch, CURLOPT_URL, "https://bitnodes.21.co/api/v1/nodes/" . $data['node_ip'] . "-8333/latency/");
-        $latency = json_decode(curl_exec($bitnodes_ch), true);
+        $data['bitnodes_info'] = json_decode(curlRequest("https://bitnodes.21.co/api/v1/nodes/" . $data['node_ip'] . "-8333/"), true);
+        $latency = json_decode(curlRequest("https://bitnodes.21.co/api/v1/nodes/" . $data['node_ip'] . "-8333/latency/"), true);
         $data['bitnodes_info']['latest_latency'] = $latency['daily_latency'][0]['v'];
     }
 
@@ -186,13 +187,7 @@ function parsePeers($peers)
 
         // Do geolocation
         if ($config['geolocate_peer_ip'] === true) {
-            $geo_data = getGeolocation($peer_ip, 'all');
-            if (is_array($geo_data)) {
-                $peer['country_code'] = $geo_data['country_code'];
-                $peer['country_name'] = $geo_data['country_name'];
-            } else {
-                $peer['country_code'] = 'unavailable';
-            }
+            $peer['country'] = getGeolocation($peer_ip);
         }
 
         // Override peer addr with IP
@@ -272,35 +267,18 @@ function convertToSI($bytes)
 /**
  * Gets location of an IP via Geolocation
  *
- * @param String $ip_address   The IP to Geolocate
- * @param String $response_key The key of the response array to return
- *                             'all' will return all keys
+ * @param String $ip_address The IP to Geolocate
  *
- * @return mixed Either an array of country name and code or string 'Unavailable'
+ * @return string A shortened country code or 'blank'
  */
-function getGeolocation($ip_address, $response_key)
+function getGeolocation($ip_address)
 {
     global $config;
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "http://freegeoip.net/json/$ip_address");
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_USERAGENT, 'Bitcoin Node Status Page');
-    $exec_result = curl_exec($ch);
-    $response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-    if ($response_code === 200) {
-        $response_array = json_decode($exec_result, true);
-        if (strcmp($response_key, 'all') == 0) {
-            $return_array = array (
-              'country_code' => $response_array['country_code'],
-              'country_name' => $response_array['country_name']
-            );
-        } else {
-            $return_array = $response_array[$response_key];
-        }
-        return $return_array;
+    $exec_result = curlRequest("http://ipinfo.io/$ip_address/country");
+    if ($exec_result !== false) {
+        return trim($exec_result);
     } else {
-        return 'Unavailable';
+        return 'blank';
     }
 }
 

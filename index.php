@@ -15,8 +15,9 @@ if (!is_file('./php/config.php')) {
 
 require_once './php/config.php';
 require_once './php/functions.php';
+require_once './php/countrycodes.php';
 
-
+// Set timezone
 if ($config['timezone'] !== null) {
     date_default_timezone_set($config['timezone']);
 }
@@ -37,7 +38,8 @@ if ($config['use_cache'] === false) {
     $use_cache = true;
 }
 
-// Get the data
+// Create cURL handle and get the data
+$curl_handle = curl_init();
 $data = getData($use_cache);
 
 // Add the IP of the server, and include template
