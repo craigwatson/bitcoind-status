@@ -274,8 +274,9 @@ function convertToSI($bytes)
 function getGeolocation($ip_address)
 {
     global $config;
+    global $country_codes;
     $exec_result = curlRequest("http://ipinfo.io/$ip_address/country");
-    if ($exec_result !== false) {
+    if (($exec_result !== false) & (in_array(trim($exec_result), $country_codes))) {
         return trim($exec_result);
     } else {
         return 'blank';
