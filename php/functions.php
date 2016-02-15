@@ -187,7 +187,7 @@ function parsePeers($peers)
 
         // Do geolocation
         if ($config['geolocate_peer_ip'] === true) {
-            $peer['country'] = getGeolocation($peer_ip);
+            $peer['geo_data'] = getGeolocation($peer_ip);
         }
 
         // Override peer addr with IP
@@ -269,23 +269,21 @@ function convertToSI($bytes)
  *
  * @param String $ip_address The IP to Geolocate
  *
- * @return string A shortened country code or 'blank'
+ * @return array An array of shortened country code and full country name
  */
 function getGeolocation($ip_address)
 {
     global $config;
     global $country_codes;
+    $to_return['country_code'] = 'blank';
+    $to_return['country_name'] = 'Unavailable';
     $exec_result = curlRequest("http://freegeoip.net/json/$ip_address");
     if ($exec_result !== false) {
-        $exec_array = json_decode($exec_result, true);
-        if (in_array($exec_array['country_code'], $country_codes)) {
-            return trim($exec_array['country_code']);
-        } else {
-            return 'blank';
-        }
-    } else {
-        return 'blank';
+        $array = json_decode($exec_result, true);
+        $to_return['country_code'] = $array['country_code'];
+        $to_return['country_name'] = $array['country_name'];
     }
+    return $to_return;
 }
 
 /**
