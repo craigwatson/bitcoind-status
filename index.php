@@ -38,9 +38,7 @@ if ($config['use_cache'] === false) {
 }
 
 // Create cURL handle and get the data
-$curl_handle = curl_init();
 $data = getData($use_cache);
-curl_close($curl_handle);
 
 // Add the IP of the server, and include template
 require_once './html/template.html';

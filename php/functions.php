@@ -12,13 +12,13 @@
 /**
  * Wrapper function for CURL calls
  *
- * @param string $url The URL to CURL
+ * @param string        $url         The URL to CURL
+ * @param curl_resource $curl_handle An initialised CURL Handle to use
  *
  * @return string
  */
-function curlRequest($url)
+function curlRequest($url, $curl_handle)
 {
-    global $curl_handle;
     curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl_handle, CURLOPT_USERAGENT, 'Bitcoin Node Status Page');
@@ -105,23 +105,27 @@ function getData($from_cache = false)
         $data['bitcoind_uptime'] = getProcessUptime($config['bitcoind_process_name']);
     }
 
+    if ($config['display_max_height'] || $config['display_bitnodes_info']) {
+        $bitnodes_curl = curl_init();
+    }
+
     // Get max height from bitnodes.21.co
     if ($config['display_max_height'] === true) {
+        $bitnodes_curl = curl_init();
         if ($config['display_testnet'] === true) {
-            $exec_result = json_decode(curlRequest("https://testnet.blockexplorer.com/api/status?q=getBlockCount"), true);
+            $exec_result = json_decode(curlRequest("https://testnet.blockexplorer.com/api/status?q=getBlockCount", $bitnodes_curl), true);
             $data['max_height'] = $exec_result['blockcount'];
         } else {
-            $exec_result = json_decode(curlRequest("https://bitnodes.21.co/api/v1/snapshots/"), true);
+            $exec_result = json_decode(curlRequest("https://bitnodes.21.co/api/v1/snapshots/", $bitnodes_curl), true);
             $data['max_height'] = $exec_result['results'][0]['latest_height'];
         }
-
         $data['node_height_percent'] = round(($data['blocks']/$data['max_height'])*100, 1);
     }
 
     // Get node info from bitnodes.21.co
     if ($config['display_bitnodes_info'] === true) {
-        $data['bitnodes_info'] = json_decode(curlRequest("https://bitnodes.21.co/api/v1/nodes/" . $data['node_ip'] . "-8333/"), true);
-        $latency = json_decode(curlRequest("https://bitnodes.21.co/api/v1/nodes/" . $data['node_ip'] . "-8333/latency/"), true);
+        $data['bitnodes_info'] = json_decode(curlRequest("https://bitnodes.21.co/api/v1/nodes/" . $data['node_ip'] . "-8333/", $bitnodes_curl), true);
+        $latency = json_decode(curlRequest("https://bitnodes.21.co/api/v1/nodes/" . $data['node_ip'] . "-8333/latency/", $bitnodes_curl), true);
         $data['bitnodes_info']['latest_latency'] = $latency['daily_latency'][0]['v'];
     }
 
@@ -187,7 +191,9 @@ function parsePeers($peers)
 
         // Do geolocation
         if ($config['geolocate_peer_ip'] === true) {
-            $peer['geo_data'] = getGeolocation($peer_ip);
+            $geo_curl = curl_init();
+            $peer['geo_data'] = getGeolocation($peer_ip, $geo_curl);
+            curl_close($geo_curl);
         }
 
         // Override peer addr with IP
@@ -267,17 +273,18 @@ function convertToSI($bytes)
 /**
  * Gets location of an IP via Geolocation
  *
- * @param String $ip_address The IP to Geolocate
+ * @param string        $ip_address  The IP to Geolocate
+ * @param curl_resource $curl_handle The CURL handle to pass to the curlRequest call
  *
  * @return array An array of shortened country code and full country name
  */
-function getGeolocation($ip_address)
+function getGeolocation($ip_address, $curl_handle)
 {
     global $config;
     global $country_codes;
     $to_return['country_code'] = 'blank';
     $to_return['country_name'] = 'Unavailable';
-    $exec_result = curlRequest("http://freegeoip.net/json/$ip_address");
+    $exec_result = curlRequest("http://freegeoip.net/json/$ip_address", $curl_handle);
     if ($exec_result !== false) {
         $array = json_decode($exec_result, true);
         $to_return['country_code'] = $array['country_code'];
