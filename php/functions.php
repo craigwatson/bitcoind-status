@@ -19,6 +19,9 @@
  */
 function curlRequest($url, $curl_handle)
 {
+    if ($curl_handle === false) {
+        return false;
+    }
     curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl_handle, CURLOPT_USERAGENT, 'Bitcoin Node Status Page');
@@ -97,7 +100,9 @@ function getData($from_cache = false)
 
     // Node geolocation
     if ($config['display_ip_location'] === true && $config['display_ip'] === true) {
+        $node_curl = curl_init();
         $data['ip_location'] = getGeolocation($data['node_ip']);
+        curl_close($node_curl);
     }
 
     // Bitcoin Daemon uptime
@@ -273,22 +278,22 @@ function convertToSI($bytes)
 /**
  * Gets location of an IP via Geolocation
  *
- * @param string        $ip_address  The IP to Geolocate
- * @param curl_resource $curl_handle The CURL handle to pass to the curlRequest call
+ * @param string        $ip_address The IP to Geolocate
+ * @param curl_resource $handle     The CURL handle to pass to the curlRequest call
  *
  * @return array An array of shortened country code and full country name
  */
-function getGeolocation($ip_address, $curl_handle)
+function getGeolocation($ip_address, $handle)
 {
     global $config;
     global $country_codes;
     $to_return['country_code'] = 'blank';
     $to_return['country_name'] = 'Unavailable';
-    $exec_result = curlRequest("http://freegeoip.net/json/$ip_address", $curl_handle);
+    $exec_result = curlRequest("http://www.geoplugin.net/php.gp?ip=$ip_address", $handle);
     if ($exec_result !== false) {
-        $array = json_decode($exec_result, true);
-        $to_return['country_code'] = $array['country_code'];
-        $to_return['country_name'] = $array['country_name'];
+        $array = unserialize($exec_result);
+        $to_return['country_code'] = $array['geoplugin_countryCode'];
+        $to_return['country_name'] = $array['geoplugin_countryName'];
     }
     return $to_return;
 }
