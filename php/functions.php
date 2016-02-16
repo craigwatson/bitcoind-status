@@ -101,7 +101,7 @@ function getData($from_cache = false)
     // Node geolocation
     if ($config['display_ip_location'] === true && $config['display_ip'] === true) {
         $node_curl = curl_init();
-        $data['ip_location'] = getGeolocation($data['node_ip']);
+        $data['ip_location'] = getGeolocation($data['node_ip'], $node_curl);
         curl_close($node_curl);
     }
 
@@ -278,18 +278,18 @@ function convertToSI($bytes)
 /**
  * Gets location of an IP via Geolocation
  *
- * @param string        $ip_address The IP to Geolocate
- * @param curl_resource $handle     The CURL handle to pass to the curlRequest call
+ * @param string        $ip_address  The IP to Geolocate
+ * @param curl_resource $curl_handle The CURL handle to pass to the curlRequest call
  *
  * @return array An array of shortened country code and full country name
  */
-function getGeolocation($ip_address, $handle)
+function getGeolocation($ip_address, $curl_handle)
 {
     global $config;
     global $country_codes;
     $to_return['country_code'] = 'blank';
     $to_return['country_name'] = 'Unavailable';
-    $exec_result = curlRequest("http://www.geoplugin.net/php.gp?ip=$ip_address", $handle);
+    $exec_result = curlRequest("http://www.geoplugin.net/php.gp?ip=$ip_address", $curl_handle);
     if ($exec_result !== false) {
         $array = unserialize($exec_result);
         $to_return['country_code'] = $array['geoplugin_countryCode'];
