@@ -12,20 +12,27 @@
 /**
  * Wrapper function for CURL calls
  *
- * @param string        $url         The URL to CURL
- * @param curl_resource $curl_handle An initialised CURL Handle to use
+ * @param string        $url           The URL to CURL
+ * @param curl_resource $curl_handle   An initialised CURL Handle to use
+ * @param boolean       $fail_on_error Whether to fail if return code is >= 400
  *
  * @return string
  */
-function curlRequest($url, $curl_handle)
+function curlRequest($url, $curl_handle, $fail_on_error = false)
 {
     if ($curl_handle === false) {
         return false;
     }
+
+    if ($fail_on_error) {
+        curl_setopt($curl_handle, CURLOPT_FAILONERROR, true);
+    }
+
     curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl_handle, CURLOPT_USERAGENT, 'Bitcoin Node Status Page');
     curl_setopt($curl_handle, CURLOPT_URL, $url);
+
     return curl_exec($curl_handle);
 }
 
@@ -289,7 +296,7 @@ function getGeolocation($ip_address, $curl_handle)
     global $country_codes;
     $to_return['country_code'] = 'blank';
     $to_return['country_name'] = 'Unavailable';
-    $exec_result = curlRequest("http://www.geoplugin.net/php.gp?ip=$ip_address", $curl_handle);
+    $exec_result = curlRequest("http://www.geoplugin.net/php.gp?ip=$ip_address", $curl_handle, true);
     if ($exec_result !== false) {
         $array = unserialize($exec_result);
         $to_return['country_code'] = $array['geoplugin_countryCode'];
