@@ -150,7 +150,7 @@
          <tbody>
 <?php foreach ($data['peers'] as $peer) { ?>
            <tr>
-             <td><?php if (($config['geolocate_peer_ip'] === true) & (strcmp($peer['geo_data']['country_code'], 'blank') != 0)) { ?><img src="img/blank.gif" class="flag flag-<?php echo strtolower($peer['geo_data']['country_code']); ?>" title="<?php echo $peer['geo_data']['country_name']; ?>" alt="<?php echo $peer['geo_data']['country_name']; ?>" /> <?php } echo $peer['addr']; ?></td>
+             <td><?php if(array_key_exists('geo_data',$peer)) { if(is_array($peer['geo_data'])) { if(strcmp($peer['geo_data']['country_code'], 'blank') != 0) { ?><img src="img/blank.gif" class="flag flag-<?php echo strtolower($peer['geo_data']['country_code']); ?>" title="<?php echo $peer['geo_data']['country_name']; ?>" alt="<?php echo $peer['geo_data']['country_name']; ?>" /><?php } } } ?> <?php echo $peer['addr']; ?></td>
              <td data-time="<?php echo $peer['conntime']; ?>"><?php echo elapsedTime($peer['conntime']); ?></td>
              <td><?php echo $peer['version'] . ' ' . str_replace('/','',str_replace(':',' ',$peer['subver'])); ?></td>
              <td data-time="<?php echo $peer['lastsend']; ?>"><?php echo elapsedTime($peer['lastsend']); ?></td>
