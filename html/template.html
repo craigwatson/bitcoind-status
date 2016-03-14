@@ -43,7 +43,7 @@
   <script type="text/javascript" src="chartdata.php?stat=connection"></script>
   <script type="text/javascript">
       google.setOnLoadCallback(drawConnectionChart);
-      function drawConnectionChart(chartData) {
+      function drawConnectionChart() {
         var data = google.visualization.arrayToDataTable(connectionChartData);
         var options = { title: 'Connections History', legend: 'none'};
         var chart = new google.visualization.LineChart(document.getElementById('connection_chart'));
@@ -55,8 +55,8 @@
   <script type="text/javascript" src="chartdata.php?stat=peer"></script>
   <script type="text/javascript">
       google.setOnLoadCallback(drawPeerChart);
-      function drawPeerChart(chartData) {
-        var data = google.visualization.arrayToDataTable(connectionChartData);
+      function drawPeerChart() {
+        var data = google.visualization.arrayToDataTable(peerChartData);
         var options = { title: 'Peer History', legend: { position: 'bottom' }};
         var chart = new google.visualization.LineChart(document.getElementById('peer_chart'));
         chart.draw(data, options);
