@@ -66,9 +66,9 @@ foreach ($new_peers as $peer) {
     }
 
     // Increment counters
-    $to_insert['counts'][$node_type] = $to_insert['counts'][$node_type]+1;
+    $to_insert['counts'][$peer_type] = $to_insert['counts'][$peer_type]+1;
     if ($config['peercount_keep_peer_data'] === true) {
-        $to_insert[$node_type][] = $peer;
+        $to_insert[$peer_type][] = $peer;
     }
 }
 
