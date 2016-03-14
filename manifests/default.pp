@@ -23,11 +23,12 @@ node default {
   Php::Extension <| |> -> Php::Config <| |> ~> Service['httpd']
 
   class { 'bitcoind':
-    rpcallowip    => ['127.0.0.1'],
-    rpcpassword   => 'statustest',
-    rpcuser       => 'status',
-    testnet       => true,
-    disablewallet => true,
+    rpcallowip          => ['127.0.0.1'],
+    rpcpassword         => 'statustest',
+    rpcuser             => 'status',
+    testnet             => true,
+    disablewallet       => true,
+    use_bitcoin_classic => true,
   }
 
 }
