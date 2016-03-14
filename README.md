@@ -144,13 +144,12 @@ The `config.php` file also contains lots of options to control how the applicati
 
 ### Peer Count Stats
 
-| Value                       | Type    | Default                     | Explanation                                                        |
-|-----------------------------|---------|-----------------------------|--------------------------------------------------------------------|
-| `peercount_whitelist`       | Array   | `array('127.0.0.1')`        | Hosts that can run the host-count script                           |
-| `peercount_keep_peer_data`  | Boolean | `true`                      | Whether to keep an array of all peers on each run (uses more data) |
-| `peercount_file`            | String  | `/tmp/bitcoind-peers.data`  | File to store host-count                                           |
-| `peercount_max_age`         | String  | `604800`                    | Maximum age for host-count                                         |
-| `peercount_min_data_points` | Int     | `5`                         | Minimum data points to collect before displaying chart             |
+| Value                       | Type    | Default                     | Explanation                                            |
+|-----------------------------|---------|-----------------------------|--------------------------------------------------------|
+| `peercount_whitelist`       | Array   | `array('127.0.0.1')`        | Hosts that can run the host-count script               |
+| `peercount_file`            | String  | `/tmp/bitcoind-peers.data`  | File to store host-count                               |
+| `peercount_max_age`         | String  | `604800`                    | Maximum age for host-count                             |
+| `peercount_min_data_points` | Int     | `5`                         | Minimum data points to collect before displaying chart |
 
 ### Uptime
 

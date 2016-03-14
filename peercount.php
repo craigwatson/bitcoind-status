@@ -48,12 +48,12 @@ if ($config['rpc_ssl'] === true) {
 $new_peers = $bitcoin->getpeerinfo();
 
 // Initialise arrays
-$to_insert = array('counts' => array('classic' => 0, 'core' => 0, 'other' => 0), 'time' => time());
-if ($config['peercount_keep_peer_data'] === true) {
-    $to_insert['core']    = array();
-    $to_insert['classic'] = array();
-    $to_insert['other']   = array();
-}
+$to_insert = array(
+    'time'    => time(),
+    'classic' => 0,
+    'core'    => 0,
+    'other'   => 0
+);
 
  // Loop through peers
 foreach ($new_peers as $peer) {
@@ -67,9 +67,6 @@ foreach ($new_peers as $peer) {
 
     // Increment counters
     $to_insert['counts'][$peer_type] = $to_insert['counts'][$peer_type]+1;
-    if ($config['peercount_keep_peer_data'] === true) {
-        $to_insert[$peer_type][] = $peer;
-    }
 }
 
 // Insert data
