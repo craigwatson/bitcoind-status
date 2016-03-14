@@ -28,6 +28,9 @@ case 'connection':
 case 'peers':
     $data_file = $config['peercount_file'];
     $min_points = $config['peercount_min_data_points'];
+    $headers = array('Date','Classic','Core','Other');
+    $prefixes = array('new Date(','','','');
+    $postfixes = array('*1000)','','','');
     break;
 
 default:
@@ -64,7 +67,7 @@ foreach ($data as $row) {
     foreach ($row as $cell) {
         echo $prefixes[$cellnum] . $cell . $postfixes[$cellnum];
         $cellnum++;
-        if ($cellnum == count($cell)) {
+        if ($cellnum != count($row)) {
             echo ",";
         }
     }
