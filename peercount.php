@@ -66,7 +66,7 @@ foreach ($new_peers as $peer) {
     }
 
     // Increment counters
-    $to_insert['counts'][$peer_type] = $to_insert['counts'][$peer_type]+1;
+    $to_insert[$peer_type] = $to_insert[$peer_type]+1;
 }
 
 // Insert data
