@@ -61,7 +61,6 @@ $config = array(
 
   // Node Count
   'peercount_whitelist'       => array('127.0.0.1'),
-  'peercount_keep_peer_data'  => true,
   'peercount_file'            => '/tmp/bitcoind-peers.data',
   'peercount_max_age'         => '2592000',
   'peercount_min_data_points' => 10,
