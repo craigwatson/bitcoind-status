@@ -19,18 +19,9 @@
   <script src="js/sorttable.js"></script>
   <script src="js/btc-status.js"></script>
 <?php if (is_file('./php/google_analytics.inc')) { include './php/google_analytics.inc'; } ?>
-<?php if (isset($data['chart'])) { if (count($data['chart']) > $config['stats_min_data_points']) { ?>
+<?php if (($data['display_connection_chart'] === true) || ($data['display_peer_chart'] === true)) { ?>
   <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
-  <script type="text/javascript" src="chartdata.php?stat=connection"></script>
   <script type="text/javascript">
-      google.setOnLoadCallback(drawChart);
-      function drawChart(chartData) {
-        var data = google.visualization.arrayToDataTable(connectionChartData);
-        var options = { title: 'Connections History', legend: 'none'};
-        var chart = new google.visualization.LineChart(document.getElementById('connections_chart'));
-        chart.draw(data, options);
-      }
-
       $(window).resize(function() {
         if(this.resizeTO) clearTimeout(this.resizeTO);
           this.resizeTO = setTimeout(function() {
@@ -39,10 +30,39 @@
       });
 
       $(window).on('resizeEnd', function() {
-        drawChart();
+<?php if ($data['display_connection_chart'] === true) { ?>
+        drawConnectionChart();
+<?php } ?>
+<?php if ($data['display_peer_chart'] === true) { ?>
+        drawPeerChart();
+<?php } ?>
       });
-    </script>
-<?php }} ?>
+  </script>
+<?php } ?>
+<?php if ($data['display_connection_chart'] === true) { ?>
+  <script type="text/javascript" src="chartdata.php?stat=connection"></script>
+  <script type="text/javascript">
+      google.setOnLoadCallback(drawConnectionChart);
+      function drawConnectionChart(chartData) {
+        var data = google.visualization.arrayToDataTable(connectionChartData);
+        var options = { title: 'Connections History', legend: 'none'};
+        var chart = new google.visualization.LineChart(document.getElementById('connection_chart'));
+        chart.draw(data, options);
+      }
+  </script>
+<?php } ?>
+<?php if ($data['display_peer_chart'] === true) { ?>
+  <script type="text/javascript" src="chartdata.php?stat=peer"></script>
+  <script type="text/javascript">
+      google.setOnLoadCallback(drawPeerChart);
+      function drawPeerChart(chartData) {
+        var data = google.visualization.arrayToDataTable(connectionChartData);
+        var options = { title: 'Peer History', legend: { position: 'bottom' }};
+        var chart = new google.visualization.LineChart(document.getElementById('peer_chart'));
+        chart.draw(data, options);
+      }
+  </script>
+<?php } ?>
 </head>
 <body>
 <?php if ($config['debug'] === TRUE) { ?>
@@ -85,9 +105,12 @@
     </div>
 <?php } else { ?>
       <p class="stat"><span class="label">Number of Connections:</span> <?php echo $data['connections']; ?></p>
-<?php if (isset($data['chart'])) { if (count($data['chart']) > $config['stats_min_data_points']) { ?>
-      <div id="connections_chart" style="width: 100%; height: 20%"></div>
-<?php } } ?>
+<?php if ($data['display_connection_chart'] === true) { ?>
+      <div id="connection_chart" style="width: 100%; height: 20%"></div>
+<?php } ?>
+<?php if ($data['display_peer_chart'] === true) { ?>
+      <div id="peer_chart" style="width: 100%; height: 20%"></div>
+<?php } ?>
 <?php if (isset($data['bitnodes_info']) === true) { ?>
       <p class="stat"><span class="label">Latest Bitnodes Latency:</span> <?php if ($data['bitnodes_info']['latest_latency'] !== 0) { echo $data['bitnodes_info']['latest_latency'] . "ms"; } else { echo "Unavailable"; } ?></p>
 <?php } ?>

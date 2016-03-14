@@ -143,14 +143,35 @@ function getData($from_cache = false)
         $data['bitnodes_info']['latest_latency'] = $latency['daily_latency'][0]['v'];
     }
 
-    // Get chart data
-    if (($config['display_chart'] === true) & (is_file($config['stats_file']))) {
-        $data['chart'] = json_decode(file_get_contents($config['stats_file']), true);
-    }
+    // Work out if we should display charts or not
+    $data['display_connection_chart'] = displayChart($config['display_chart'], $config['stats_file'], $config['stats_min_data_points']);
+    $data['display_peer_chart'] = displayChart($config['display_peer_chart'], $config['peercount_file'], $config['peercount_min_data_points']);
 
     writeToCache($data);
     return $data;
 
+}
+
+/**
+ * Small function to split out chart-display logic
+ *
+ * @param boolean $config_var      Master variable from $config
+ * @param string  $data_file       The filename holding the stats to display
+ * @param int     $min_data_points The minimum number of data points to display
+ *
+ * @return boolean Whether to display the chart or not
+ */
+function displayChart($config_var, $data_file, $min_data_points)
+{
+    if (($config_var === true) & (is_file($data_file))) {
+        if (count(json_decode(file_get_contents($data_file), true)) > $min_data_points) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
 }
 
 /**

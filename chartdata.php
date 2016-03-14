@@ -25,7 +25,7 @@ case 'connection':
     $postfixes = array('*1000)','');
     break;
 
-case 'peers':
+case 'peer':
     $data_file = $config['peercount_file'];
     $min_points = $config['peercount_min_data_points'];
     $headers = array('Date','Classic','Core','Other');
