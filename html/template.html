@@ -21,19 +21,11 @@
 <?php if (is_file('./php/google_analytics.inc')) { include './php/google_analytics.inc'; } ?>
 <?php if (isset($data['chart'])) { if (count($data['chart']) > $config['stats_min_data_points']) { ?>
   <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
+  <script type="text/javascript" src="chartdata.php?stat=connection"></script>
   <script type="text/javascript">
       google.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Date', 'Connections'],
-<?php
-    for ($i = 0; $i < count($data['chart']); $i++) {
-       if ($i === (count($data['chart'])-1)) { $end = ''; } else { $end = ','; }
-       echo "\t  [new Date(" . $data['chart'][$i]['time'] . "*1000)," . $data['chart'][$i]['connections'] . "]" . $end . "\n";
-    }
-?>
-        ]);
-
+      function drawChart(chartData) {
+        var data = google.visualization.arrayToDataTable(connectionChartData);
         var options = { title: 'Connections History', legend: 'none'};
         var chart = new google.visualization.LineChart(document.getElementById('connections_chart'));
         chart.draw(data, options);
