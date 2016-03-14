@@ -111,9 +111,10 @@
       <p class="stat"><span class="label">Testnet:</span> <?php echo ($data['testnet']) ? "Yes" : "No"; ?></p>
 <?php } ?>
 <?php if (isset($config['display_ip']) && $config['display_ip']) { ?>
-      <p class="stat"><span class="label">Node IP Address:</span> <?php echo $data['node_ip']; ?></p><?php } ?>
+      <p class="stat"><span class="label">Node IP Address:</span> <?php echo $data['node_ip']; ?></p>
+<?php } ?>
 <?php if (isset($config['display_version']) && $config['display_version']) { ?>
-      <p class="stat"><span class="label">Node Version:</span> <?php echo $data['version']; ?></p>
+      <p class="stat"><span class="label">Node Version:</span> <?php echo preg_replace(array('/\//','/:/'),array('',' '),$data['net_info']['subversion']); ?></p>
 <?php } ?>
 <?php if (isset($data['bitcoind_uptime'])) { ?>
       <p class="stat"><span class="label">Bitcoin Daemon Uptime:</span> <?php echo $data['bitcoind_uptime']; ?></p>
