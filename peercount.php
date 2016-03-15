@@ -49,10 +49,11 @@ $new_peers = $bitcoin->getpeerinfo();
 
 // Initialise arrays
 $to_insert = array(
-    'time'    => time(),
-    'classic' => 0,
-    'core'    => 0,
-    'other'   => 0
+    'time'     => time(),
+    'classic'  => 0,
+    'bitcoinj' => 0,
+    'core'     => 0,
+    'other'    => 0
 );
 
  // Loop through peers
@@ -61,6 +62,8 @@ foreach ($new_peers as $peer) {
         $peer_type = 'core';
     } elseif (strpos($peer['subver'], "Classic") !== false) {
         $peer_type = 'classic';
+    } elseif (strpos(strtolower($peer['subver']), "bitcoinj") !== false) {
+        $peer_type = 'bitcoinj';
     } else {
         $peer_type = 'other';
     }
