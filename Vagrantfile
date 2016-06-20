@@ -44,7 +44,7 @@ Vagrant.configure("2") do |config|
   "
 
   # Provision with Puppet
-  config.vm.provision :shell, :inline => "echo 'Running Puppet' && /opt/puppetlabs/puppet/bin/puppet apply --verbose /vagrant/manifests/default.pp"
+  config.vm.provision :shell, :inline => "echo 'Running Puppet' && /opt/puppetlabs/puppet/bin/puppet apply --show_diff --verbose /vagrant/manifests/default.pp"
 
   # Finally, output VM's hostname to terminal
   config.vm.provision :shell, :inline => "echo \"Status Page URL: http://$(hostname --fqdn)\" or http://#{ip}"

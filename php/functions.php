@@ -81,6 +81,8 @@ function getData($from_cache = false)
     if (!$data) {
         $return_data['error'] = $bitcoin->error;
         $return_data['status'] = $bitcoin->status;
+        $return_data['display_connection_chart'] = false;
+        $return_data['display_peer_chart'] = false;
         writeToCache($return_data);
         return $return_data;
     }
