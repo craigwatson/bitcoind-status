@@ -32,14 +32,18 @@ To use Google Analytics, simply create a file called `google_analytics.inc` insi
 
 ## Collecting Connection Statistics
 
-The script can also periodically collect the current number of connections and store it for display via Google Charts on your status page.
+The script can also periodically collect the current number of connections as well as peer protocol versions and store it for display via Google Charts on your status page.
 
-To do this, just schedule the `/stats.php` script to be called at whatever interval you like, then `config.php` to enable the chart display. You can optionally tweak the settings under the "Stats" section if you want to keep more or less data.
+To do this, just schedule the `/stats.php` script as well as the `/peercount.php` script to be called at whatever interval you like, then `config.php` to enable the chart display. You can optionally tweak the settings under the "Stats" and "Node Count" sections if you want to keep more or less data.
 
-Below is an example `crontab` entry to call the script every five minutes via `curl`. It is **highly recommended** to only allow `127.0.0.1` to call the script, as allowing other IP addresses could lead to your node becoming vulnerable to DDoS attacks.
+* `/stats.php` will create a graph showing the number of connections over time.
+* `/peercount.php` will create a graph showing the most common protocol versions over time.
+
+Below are two example `crontab` entries to call the scripts every five minutes via `curl`. It is **highly recommended** to only allow `127.0.0.1` to call the script, as allowing other IP addresses could lead to your node becoming vulnerable to DDoS attacks.
 
 ```
-*/5 *  *   *   *  curl -Ssk https://127.0.0.1/stats.php > /dev/null
+*/5 *  *   *   *  curl -Ssk http://127.0.0.1/stats.php > /dev/null
+*/5 *  *   *   *  curl -Ssk http://127.0.0.1/peercount.php > /dev/null
 ```
 
 ## Node Profile Icons
