@@ -39,7 +39,7 @@ To do this, just schedule the `/stats.php` script as well as the `/peercount.php
 * `/stats.php` will create a graph showing the number of connections over time.
 * `/peercount.php` will create a graph showing the most common protocol versions over time.
 
-Below are two example `crontab` entry to call the scripts every five minutes via `curl`. It is **highly recommended** to only allow `127.0.0.1` to call the script, as allowing other IP addresses could lead to your node becoming vulnerable to DDoS attacks.
+Below are two example `crontab` entries to call the scripts every five minutes via `curl`. It is **highly recommended** to only allow `127.0.0.1` to call the script, as allowing other IP addresses could lead to your node becoming vulnerable to DDoS attacks.
 
 ```
 */5 *  *   *   *  curl -Ssk https://127.0.0.1/stats.php > /dev/null
