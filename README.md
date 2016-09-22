@@ -98,12 +98,13 @@ The `config.php` file also contains lots of options to control how the applicati
 
 ### Peers
 
-| Value               | Type    | Default   | Explanation                                     |
-|---------------------|---------|-----------|-------------------------------------------------|
-| `display_peer_info` | Boolean | `false`   | Display connected peers                         |
-| `display_peer_port` | Boolean | `false`   | Display remote peer's port                      |
-| `hide_dark_peers`   | Boolean | `true`    | Hides peers connected from "Dark" networks      |
-| `peers_to_ignore`   | Array   | `array()` | List of peers *not* to display in the peer list |
+| Value                 | Type    | Default   | Explanation                                     |
+|-----------------------|---------|-----------|-------------------------------------------------|
+| `display_peer_info`   | Boolean | `false`   | Display connected peers                         |
+| `display_peer_port`   | Boolean | `false`   | Display remote peer's port                      |
+| `hide_dark_peers`     | Boolean | `true`    | Hides peers connected from "Dark" networks      |
+| `ignore_unknown_ping` | Boolean | `false`   | Hides peers that do not report pingtime         |
+| `peers_to_ignore`     | Array   | `array()` | List of peers *not* to display in the peer list |
 
 ### Cache
 

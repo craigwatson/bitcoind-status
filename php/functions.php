@@ -226,6 +226,13 @@ function parsePeers($peers)
             continue;
         }
 
+        // Continue if peer reports no pingtime
+        if ($config['ignore_unknown_ping'] === true) {
+            if (!array_key_exists('pingtime', $peer)) {
+                continue;
+            }
+        }
+
         // Do geolocation
         if ($config['geolocate_peer_ip'] === true) {
             $geo_curl = curl_init();
