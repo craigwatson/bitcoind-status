@@ -31,4 +31,16 @@ node default {
     use_bitcoin_classic => false,
   }
 
+  cron { 'bitcoind_stats':
+    command => '/usr/bin/curl -Ssk http://127.0.0.1/stats.php > /dev/null',
+    user    => 'root',
+    minute  => '*/5',
+  }
+
+  cron { 'bitcoind_peer_stats':
+    command => '/usr/bin/curl -Ssk http://127.0.0.1/peercount.php > /dev/null',
+    user    => 'root',
+    minute  => '*/5',
+  }
+
 }
