@@ -64,6 +64,12 @@ below. Icon images for Bitnodes.21.co and Blockchain.info are included in the `i
     ),
 ```
 
+## Peer Count Nodes
+
+The node count script automatically counts Core, Classic and BitcoinJ clients. To add more node types to the chart, simply add an entry into the `peercount_extra_nodes` array in `config.php`.
+
+The key of the entry is an internal-only identifier, and the value is the lower-case text that should be matched in order to increment the counter.
+
 ## Contributing
 
 [![Buy me a beer!](https://cdn.changetip.com/img/graphics/Beer_Graphic.png)](https://www.changetip.com/tipme/craigwatson1987)
@@ -124,20 +130,20 @@ The `config.php` file also contains lots of options to control how the applicati
 
 ### UI
 
-| Value   | Type    | Default | Explanation                                                                                                                         |
-|---------------------------|---------|-----------|---------------------------------------------------------------------------------------------------------------- |
-| `display_ip`              | Boolean | `false`   | Display the server IP address                                                                                   |
-| `display_free_disk_space` | Boolean | `false`   | Displayfree disk space                                                                                          |
-| `display_testnet`         | Boolean | `false`   | Display testnet status                                                                                          |
-| `display_version`         | Boolean | `true`    | Display node `bitcoind` version                                                                                 |
-| `display_github_ribbon`   | Boolean | `true`    | Displays the 'Fork me on GitHub' ribbon                                                                         |
-| `display_max_height`      | Boolean | `false`   | Displays the node height as a percentage of network height                                                      |
-| `use_bitcoind_ip`         | Boolean | `true`    | Use the Bitcoin daemon to get the public IP, instead of `$_SERVER`                                              |
-| `intro_text`              | String  | `not_set` | Introductory text to display above the node statistics.                                                         |
-| `display_bitnodes_info`   | Boolean | `false`   | Displays various information via the bitnodes.21.co API                                                         |
-| `display_chart`           | Boolean | `false`   | Displays a chart showing the stats collected by the stats.php script                                            |
-| `display_peer_chart`      | Boolean | `false`   | Displays a chart showing the mix of node versions connected to your node                                        |
-| `node_links`              | Array   | `array()` | Displays links to various other profiles for your node. Takes the form of a multidimensional array, see example |
+| Value   | Type    | Default | Explanation                                                                                                                          |
+|----------------------------|---------|-----------|-----------------------------------------------------------------------------------------------------------------|
+| `display_ip`               | Boolean | `false`   | Display the server IP address                                                                                   |
+| `display_free_disk_space`  | Boolean | `false`   | Displayfree disk space                                                                                          |
+| `display_testnet`          | Boolean | `false`   | Display testnet status                                                                                          |
+| `display_version`          | Boolean | `true`    | Display node `bitcoind` version                                                                                 |
+| `display_github_ribbon`    | Boolean | `true`    | Displays the 'Fork me on GitHub' ribbon                                                                         |
+| `display_max_height`       | Boolean | `false`   | Displays the node height as a percentage of network height                                                      |
+| `use_bitcoind_ip`          | Boolean | `true`    | Use the Bitcoin daemon to get the public IP, instead of `$_SERVER`                                              |
+| `intro_text`               | String  | `not_set` | Introductory text to display above the node statistics.                                                         |
+| `display_bitnodes_info`    | Boolean | `false`   | Displays various information via the bitnodes.21.co API                                                         |
+| `display_connection_chart` | Boolean | `false`   | Displays a chart showing the stats collected by the stats.php script                                            |
+| `display_peer_chart`       | Boolean | `false`   | Displays a chart showing the mix of node versions connected to your node                                        |
+| `node_links`               | Array   | `array()` | Displays links to various other profiles for your node. Takes the form of a multidimensional array, see example |
 
 ### Stats
 
@@ -150,12 +156,13 @@ The `config.php` file also contains lots of options to control how the applicati
 
 ### Peer Count Stats
 
-| Value                       | Type    | Default                     | Explanation                                            |
-|-----------------------------|---------|-----------------------------|--------------------------------------------------------|
-| `peercount_whitelist`       | Array   | `array('127.0.0.1')`        | Hosts that can run the host-count script               |
-| `peercount_file`            | String  | `/tmp/bitcoind-peers.data`  | File to store host-count                               |
-| `peercount_max_age`         | String  | `604800`                    | Maximum age for host-count                             |
-| `peercount_min_data_points` | Int     | `5`                         | Minimum data points to collect before displaying chart |
+| Value                       | Type    | Default                     | Explanation                                                  |
+|-----------------------------|---------|-----------------------------|--------------------------------------------------------------|
+| `peercount_whitelist`       | Array   | `array('127.0.0.1')`        | Hosts that can run the host-count script                     |
+| `peercount_file`            | String  | `/tmp/bitcoind-peers.data`  | File to store host-count                                     |
+| `peercount_max_age`         | String  | `604800`                    | Maximum age for host-count                                   |
+| `peercount_min_data_points` | Int     | `5`                         | Minimum data points to collect before displaying chart       |
+| `peercount_extra_nodes`     | Array   | `array()`                   | Key-Value array of extra node types to count (value = regex) |
 
 ### Uptime
 
