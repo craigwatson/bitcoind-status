@@ -65,6 +65,7 @@ $config = array(
   'peercount_file'            => '/tmp/bitcoind-peers.data',
   'peercount_max_age'         => '2592000',
   'peercount_min_data_points' => 10,
+  'peercount_extra_nodes'     => array(),
 
   // Uptime
   'display_bitcoind_uptime'   => false,

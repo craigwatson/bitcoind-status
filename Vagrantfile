@@ -5,8 +5,16 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = 'bitcoind-status.test.local'
   config.vm.box      = 'ubuntu/trusty64'
 
-  # Synchronised folder, IP & VM custommisation
-  config.vm.synced_folder "./", "/vagrant"
+  # Synchronised folder
+  if Vagrant::Util::Platform.darwin?
+    config.vm.synced_folder ".", "/vagrant", type: "nfs"
+    config.nfs.map_uid = Process.uid
+    config.nfs.map_gid = Process.gid
+  else
+    config.vm.synced_folder ".", "/vagrant"
+  end
+
+  # IP & VM custommisation
   config.vm.network :private_network, ip: ip
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 1024]

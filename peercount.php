@@ -12,9 +12,11 @@
  // Get config
  require_once './php/config.php';
 
- // Die if we're not in the whitelist
-if (!in_array($_SERVER['REMOTE_ADDR'], $config['peercount_whitelist'])) {
-    die($_SERVER['REMOTE_ADDR'] . " is not in the whitelist");
+ // Die if we're not in the whitelist or running on CLI
+if (php_sapi_name() != 'cli') {
+    if (!in_array($_SERVER['REMOTE_ADDR'], $config['peercount_whitelist'])) {
+        die($_SERVER['REMOTE_ADDR'] . " is not in the whitelist");
+    }
 }
 
 // Clear data if variable present
@@ -47,25 +49,42 @@ if ($config['rpc_ssl'] === true) {
 // Get data via RPC
 $new_peers = $bitcoin->getpeerinfo();
 
+// Default types
+$default_types = array(
+  'classic'  => 'Classic',
+  'bitcoinj' => 'BitcoinJ',
+  'core'     => 'Satoshi'
+);
+
+// If extra nodes are set, include them
+if (is_array($config['peercount_extra_nodes'])) {
+    $node_types = $default_types + $config['peercount_extra_nodes'];
+} else {
+    $node_types = $default_types;
+}
+
 // Initialise arrays
 $to_insert = array(
     'time'     => time(),
-    'classic'  => 0,
-    'bitcoinj' => 0,
-    'core'     => 0,
     'other'    => 0
 );
 
+// Add counters
+foreach ($node_types as $key => $val) {
+    $to_insert[$key] = 0;
+}
+
  // Loop through peers
 foreach ($new_peers as $peer) {
-    if (strpos($peer['subver'], "Satoshi") !== false) {
-        $peer_type = 'core';
-    } elseif (strpos($peer['subver'], "Classic") !== false) {
-        $peer_type = 'classic';
-    } elseif (strpos(strtolower($peer['subver']), "bitcoinj") !== false) {
-        $peer_type = 'bitcoinj';
-    } else {
-        $peer_type = 'other';
+
+    // Default peer counter
+    $peer_type = 'other';
+
+    // Check peer against array
+    foreach ($node_types as $key => $regex) {
+        if (strpos(strtolower($peer['subver']), strtolower($regex)) !== false) {
+            $peer_type = $key;
+        }
     }
 
     // Increment counters

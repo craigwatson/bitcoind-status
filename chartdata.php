@@ -18,19 +18,26 @@ require_once './php/config.php';
 
 switch($_GET['stat']) {
 case 'connection':
-    $data_file = $config['stats_file'];
+    $data_file  = $config['stats_file'];
     $min_points = $config['peercount_min_data_points'];
-    $headers = array('Date','Connections');
-    $prefixes = array('new Date(','');
-    $postfixes = array('*1000)','');
+    $headers    = array('Date','Connections');
+    $prefixes   = array('new Date(','');
+    $postfixes  = array('*1000)','');
     break;
 
 case 'peer':
-    $data_file = $config['peercount_file'];
+    $data_file  = $config['peercount_file'];
     $min_points = $config['peercount_min_data_points'];
-    $headers = array('Date','Classic','BitCoinJ','Core','Other');
-    $prefixes = array('new Date(','','','','');
-    $postfixes = array('*1000)','','','','');
+    $headers    = array('Date','Other','Classic','BitCoinJ','Core');
+    $prefixes   = array('new Date(','','','','');
+    $postfixes  = array('*1000)','','','','');
+
+    foreach ($config['peercount_extra_nodes'] as $key => $val) {
+        $headers[]   = $val;
+        $prefixes[]  = '';
+        $postfixes[] = '';
+    }
+
     break;
 
 default:
@@ -48,7 +55,7 @@ if (is_file($data_file)) {
 echo "var " . $_GET['stat'] . "ChartData = [\n";
 
 // Output headers
-$headernum = 0; echo "[";
+$headernum = 0; echo "\t[";
 foreach ($headers as $header) {
     $headernum++;
     echo "'$header'";
@@ -62,7 +69,7 @@ echo "],\n";
 $rownum = 0;
 foreach ($data as $row) {
     $rownum++;
-    echo "[";
+    echo "\t[";
     $cellnum = 0;
     foreach ($row as $cell) {
         echo $prefixes[$cellnum] . $cell . $postfixes[$cellnum];
