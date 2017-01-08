@@ -50,7 +50,7 @@ $config = array(
   'use_bitcoind_ip'           => true,
   'intro_text'                => 'not_set',
   'display_bitnodes_info'     => false,
-  'display_connection_chart'  => false,
+  'display_chart'             => false,
   'display_peer_chart'        => false,
   'node_links'                => array(),
 
