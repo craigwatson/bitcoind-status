@@ -66,7 +66,7 @@ below. Icon images for Bitnodes.21.co and Blockchain.info are included in the `i
 
 ## Peer Count Nodes
 
-The node count script automatically counts Core, Classic and BitcoinJ clients. To add more node types to the chart, simply add an entry into the `peercount_extra_nodes` array in `config.php`.
+The node count script automatically counts Core, Classic, Unlimited and BitcoinJ clients. To add more node types to the chart, simply add an entry into the `peercount_extra_nodes` array in `config.php`.
 
 The key of the entry is an internal-only identifier, and the value is the lower-case text that should be matched in order to increment the counter.
 
