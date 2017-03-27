@@ -53,7 +53,8 @@ $new_peers = $bitcoin->getpeerinfo();
 $default_types = array(
   'classic'  => 'Classic',
   'bitcoinj' => 'BitcoinJ',
-  'core'     => 'Satoshi'
+  'core'     => 'Satoshi',
+  'unlimited'=> 'Unlimited'
 );
 
 // If extra nodes are set, include them
