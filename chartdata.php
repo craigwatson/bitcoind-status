@@ -29,8 +29,8 @@ case 'peer':
     $data_file  = $config['peercount_file'];
     $min_points = $config['peercount_min_data_points'];
     $headers    = array('Date','Other','Classic','BitCoinJ','Core','Unlimited');
-    $prefixes   = array('new Date(','','','','');
-    $postfixes  = array('*1000)','','','','');
+    $prefixes   = array('new Date(','','','','','');
+    $postfixes  = array('*1000)','','','','','');
 
     foreach ($config['peercount_extra_nodes'] as $key => $val) {
         $headers[]   = $val;
