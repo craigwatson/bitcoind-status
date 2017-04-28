@@ -138,7 +138,7 @@
       <p class="stat"><span class="label">Node Location:</span> <img src="img/blank.gif" class="flag flag-<?php echo strtolower($data['ip_location']['country_code']); ?>" alt="<?php echo $data['ip_location']['country_name']; ?>" /> <?php echo $data['ip_location']['country_name']; ?></p>
 <?php } ?>
 <?php if (isset($data['free_disk_space'])) { ?>
-      <p class="stat"><span class="label">Free Disk Space:</span> <?php echo $data['free_disk_space']; ?></p>
+      <p class="stat"><span class="label">Free Disk Space:</span> <?php echo $data['free_disk_space']; ?> (Space for roughly <?php echo floor((disk_free_space(".") / 1048576) / 144) ?> more days of blocks)</p>
 <?php } ?>
 <?php if (isset($data['cache_time']) & $config['use_cache'] === TRUE) { ?>
       <p class="stat"><span class="label">Last Updated:</span> <?php echo date($config['date_format'], $data['cache_time']); ?> (refreshes every <?php echo ($config['max_cache_time']/60); ?> minutes, next at <?php echo date('H:i:s',$data['cache_expiry']) ?>)</p>
