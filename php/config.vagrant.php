@@ -31,14 +31,17 @@ $config = array(
   'peers_to_ignore'           => array(),
 
   // Cache
-  'use_cache'                 => true,
+  'cache_geo_data'            => true,
+  'geo_cache_file'            => '/var/tmp/bitcoind-geolocation.cache',
+  'geo_cache_time'            => 604800,
+  'use_cache'                 => false,
   'cache_file'                => '/var/tmp/bitcoind-status.cache',
   'max_cache_time'            => 300,
   'nocache_whitelist'         => array('127.0.0.1'),
 
   // Geolocation
-  'geolocate_peer_ip'         => false,
-  'display_ip_location'       => false,
+  'geolocate_peer_ip'         => true,
+  'display_ip_location'       => true,
 
   // UI
   'display_ip'                => true,
@@ -47,11 +50,11 @@ $config = array(
   'display_version'           => true,
   'display_github_ribbon'     => false,
   'display_max_height'        => true,
-  'use_bitcoind_ip'           => true,
+  'use_bitcoind_ip'           => false,
   'intro_text'                => 'not_set',
   'display_bitnodes_info'     => false,
-  'display_chart'             => true,
-  'display_peer_chart'        => true,
+  'display_chart'             => false,
+  'display_peer_chart'        => false,
   'node_links'                => array(),
 
   // Stats
@@ -76,5 +79,5 @@ $config = array(
   'timezone'                  => null,
   'stylesheet'                => 'v2-light.css',
   'debug'                     => false,
-  'admin_email'               => 'craig@cwatson.org',
+  'admin_email'               => 'me@example.com',
 );

@@ -9,32 +9,7 @@
  * @link     https://github.com/craigwatson/bitcoind-status
  */
 
-/**
- * Wrapper function for CURL calls
- *
- * @param string        $url           The URL to CURL
- * @param curl_resource $curl_handle   An initialised CURL Handle to use
- * @param boolean       $fail_on_error Whether to fail if return code is >= 400
- *
- * @return string
- */
-function curlRequest($url, $curl_handle, $fail_on_error = false)
-{
-    if ($curl_handle === false) {
-        return false;
-    }
-
-    if ($fail_on_error) {
-        curl_setopt($curl_handle, CURLOPT_FAILONERROR, true);
-    }
-
-    curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl_handle, CURLOPT_USERAGENT, 'Bitcoin Node Status Page');
-    curl_setopt($curl_handle, CURLOPT_URL, $url);
-
-    return curl_exec($curl_handle);
-}
+$curl_requests = 0;
 
 /**
  * Connects to Bitcoin daemon and retrieves information, then writes to cache
@@ -47,13 +22,14 @@ function getData($from_cache = false)
 {
     global $config;
     global $cache_message;
-    global $curl_handle;
+    global $geo_cache;
+    global $curl_requests;
 
     // If we're getting data from cache, do it
     if (($from_cache === true) && (is_file($config['cache_file']))) {
         $cache = json_decode(file_get_contents($config['cache_file']), true);
 
-        // Only proceed if the array is a cache - invalid otherwise
+        // Only proceed if the cache is an array - invalid otherwise
         if (is_array($cache)) {
             if ($cache['config_hash'] == md5(json_encode($config))) {
                 if (time() < $cache['cache_expiry']) {
@@ -87,6 +63,12 @@ function getData($from_cache = false)
         return $return_data;
     }
 
+    // Get geolocation cache data
+    if ($config['cache_geo_data'] === true) {
+        $geo_cache = getGeoCache($config['geo_cache_file']);
+        $data['geo'] = $geo_cache;
+    }
+
     // Get free disk space
     if ($config['display_free_disk_space'] === true) {
         $data['free_disk_space'] = getFreeDiskSpace();
@@ -104,16 +86,21 @@ function getData($from_cache = false)
         }
     }
 
+    // Create geo handle
+    if (($config['display_ip_location'] === true) || ($config['geolocate_peer_ip'] === true)) {
+        $geo_curl = curl_init();
+    } else {
+        $geo_curl = false;
+    }
+
     // Add peer info
     if ($config['display_peer_info'] === true) {
-        $data['peers'] = parsePeers($bitcoin->getpeerinfo());
+        $data['peers'] = parsePeers($bitcoin->getpeerinfo(), $geo_curl);
     }
 
     // Node geolocation
-    if ($config['display_ip_location'] === true && $config['display_ip'] === true) {
-        $node_curl = curl_init();
-        $data['ip_location'] = getGeolocation($data['node_ip'], $node_curl);
-        curl_close($node_curl);
+    if (($config['display_ip_location'] === true) && ($config['display_ip'] === true)) {
+        $data['ip_location'] = getGeolocation($data['node_ip'], $geo_curl);
     }
 
     // Bitcoin Daemon uptime
@@ -121,13 +108,13 @@ function getData($from_cache = false)
         $data['bitcoind_uptime'] = getProcessUptime($config['bitcoind_process_name']);
     }
 
+    // Create handle
     if ($config['display_max_height'] || $config['display_bitnodes_info']) {
         $bitnodes_curl = curl_init();
     }
 
     // Get max height from bitnodes.21.co
     if ($config['display_max_height'] === true) {
-        $bitnodes_curl = curl_init();
         if ($config['display_testnet'] === true) {
             $exec_result = json_decode(curlRequest("https://testnet.blockexplorer.com/api/status?q=getBlockCount", $bitnodes_curl), true);
             $data['max_height'] = $exec_result['blockcount'];
@@ -145,9 +132,23 @@ function getData($from_cache = false)
         $data['bitnodes_info']['latest_latency'] = $latency['daily_latency'][0]['v'];
     }
 
+    // Close handles
+    if ($config['display_max_height'] || $config['display_bitnodes_info']) {
+        curl_close($bitnodes_curl);
+    }
+
+    if (($config['display_ip_location'] === true) || ($config['geolocate_peer_ip'] === true)) {
+        curl_close($geo_curl);
+    }
+
     // Work out if we should display charts or not
     $data['display_connection_chart'] = displayChart($config['display_chart'], $config['stats_file'], $config['stats_min_data_points']);
     $data['display_peer_chart'] = displayChart($config['display_peer_chart'], $config['peercount_file'], $config['peercount_min_data_points']);
+
+    // Write geolocation cache
+    if ($config['cache_geo_data'] === true) {
+        file_put_contents($config['geo_cache_file'], json_encode($geo_cache), LOCK_EX);
+    }
 
     writeToCache($data);
     return $data;
@@ -155,55 +156,33 @@ function getData($from_cache = false)
 }
 
 /**
- * Small function to split out chart-display logic
+ * Serializes an array and write to file
  *
- * @param boolean $config_var      Master variable from $config
- * @param string  $data_file       The filename holding the stats to display
- * @param int     $min_data_points The minimum number of data points to display
+ * @param array $data Data to write
  *
- * @return boolean Whether to display the chart or not
+ * @return void
  */
-function displayChart($config_var, $data_file, $min_data_points)
+function writeToCache($data)
 {
-    if (($config_var === true) & (is_file($data_file))) {
-        if (count(json_decode(file_get_contents($data_file), true)) > $min_data_points) {
-            return true;
-        } else {
-            return false;
-        }
-    } else {
-        return false;
+    global $config;
+    if ($config['use_cache'] === true) {
+        $data['cache_time'] = time();
+        $data['cache_expiry'] = $data['cache_time']+$config['max_cache_time'];
+        $data['config_hash'] = md5(json_encode($config));
+        $raw_data = json_encode($data);
+        file_put_contents($config['cache_file'], $raw_data, LOCK_EX);
     }
-}
-
-/**
- * Gets uptime of a process - reference: http://unix.stackexchange.com/q/27276/39264
- *
- * @param string $process The name of the pricess to find
- *
- * @return string A textual representation of the lifetime of the process
- */
-function getProcessUptime($process)
-{
-    $process_pid = exec("pidof $process");
-    $system_uptime = exec('cut -d "." -f1 /proc/uptime');
-    $pid_uptime = round((exec("cut -d \" \" -f22 /proc/$process_pid//stat")/100), 0);
-    $seconds = $system_uptime-$pid_uptime;
-    $days = floor($seconds / 86400);
-    $hours = str_pad(floor(($seconds - ($days*86400)) / 3600), 2, "0", STR_PAD_LEFT);
-    $mins = str_pad(floor(($seconds - ($days*86400) - ($hours*3600)) / 60), 2, "0", STR_PAD_LEFT);
-    $secs = str_pad(floor($seconds % 60), 2, "0", STR_PAD_LEFT);
-    return "$days days, $hours:$mins:$secs";
 }
 
 /**
  * Parses an array of peers and applies our filtering
  *
- * @param array $peers The array of peers to parse
+ * @param array  $peers       The array of peers to parse
+ * @param handle $curl_handle A reusable handle to pass to getGeolocation()
  *
  * @return array
  */
-function parsePeers($peers)
+function parsePeers($peers, $curl_handle)
 {
     global $config;
     $to_return = array();
@@ -235,9 +214,7 @@ function parsePeers($peers)
 
         // Do geolocation
         if ($config['geolocate_peer_ip'] === true) {
-            $geo_curl = curl_init();
-            $peer['geo_data'] = getGeolocation($peer_ip, $geo_curl);
-            curl_close($geo_curl);
+            $peer['geo_data'] = getGeolocation($peer_ip, $curl_handle);
         }
 
         // Override peer addr with IP
@@ -254,23 +231,123 @@ function parsePeers($peers)
 
 }
 
+
 /**
- * Serializes an array and write to file
+ * Reads IP geolocation data from file
  *
- * @param array $data Data to write
+ * @param string $file_path The file to read cache from
  *
- * @return void
+ * @return Array
  */
-function writeToCache($data)
+function getGeoCache($file_path)
+{
+
+    global $config;
+    $to_return = array();
+
+    if ($config['cache_geo_data'] === true) {
+        if (is_file($file_path)) {
+            $raw = json_decode(file_get_contents($file_path), true);
+            if (is_array($raw)) {
+                $cache = $raw;
+            } else {
+                $cache = array();
+            }
+        } else {
+            $cache = array();
+        }
+    } else {
+        $cache = array();
+    }
+
+    foreach ($cache as $ip => $data) {
+        if (!array_key_exists('expiry', $data)) {
+            continue;
+        } elseif (time() > $data['expiry']) {
+            continue;
+        } else {
+            $to_return[$ip] = $data;
+        }
+    }
+
+    return $cache;
+}
+
+/**
+ * Gets location of an IP via Geolocation
+ *
+ * @param string        $ip_address  The IP to Geolocate
+ * @param curl_resource $curl_handle The CURL handle to pass to the curlRequest call
+ *
+ * @return array An array of shortened country code and full country name
+ */
+function getGeolocation($ip_address, $curl_handle)
 {
     global $config;
-    if ($config['use_cache'] === true) {
-        $data['cache_time'] = time();
-        $data['cache_expiry'] = $data['cache_time']+$config['max_cache_time'];
-        $data['config_hash'] = md5(json_encode($config));
-        $raw_data = json_encode($data);
-        file_put_contents($config['cache_file'], $raw_data, LOCK_EX);
+    global $geo_cache;
+
+    // Default flag + array
+    $run_curl = false;
+    $to_return = array(
+        'country_code' => 'blank',
+        'country_name' => 'Unavailable',
+    );
+
+    // Check for IP in cache + return if found
+    if ($config['cache_geo_data'] === true) {
+        if (array_key_exists($ip_address, $geo_cache)) {
+            return $geo_cache[$ip_address];
+        }
     }
+
+    // If not found in cache, ping API
+    $exec_result = curlRequest("http://www.geoplugin.net/php.gp?ip=$ip_address", $curl_handle, true);
+    if ($exec_result !== false) {
+        $array = unserialize($exec_result);
+
+        // If match found, store it
+        $to_return['country_code'] = $array['geoplugin_countryCode'];
+        $to_return['country_name'] = $array['geoplugin_countryName'];
+
+        // If we're configured to cache, add expiry + cache it
+        if ($config['cache_geo_data'] === true) {
+            $geo_cache[$ip_address]['expiry'] = time() + $config['geo_cache_time'];
+            $geo_cache[$ip_address]['country_code'] = $array['geoplugin_countryCode'];
+            $geo_cache[$ip_address]['country_name'] = $array['geoplugin_countryName'];
+        }
+    }
+
+    return $to_return;
+}
+
+/**
+ * Wrapper function for CURL calls
+ *
+ * @param string        $url           The URL to CURL
+ * @param curl_resource $curl_handle   An initialised CURL Handle to use
+ * @param boolean       $fail_on_error Whether to fail if return code is >= 400
+ *
+ * @return string
+ */
+function curlRequest($url, $curl_handle, $fail_on_error = false)
+{
+    global $curl_requests;
+
+    if ($curl_handle === false) {
+        return false;
+    }
+
+    if ($fail_on_error === true) {
+        curl_setopt($curl_handle, CURLOPT_FAILONERROR, true);
+    }
+
+    curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl_handle, CURLOPT_USERAGENT, 'Bitcoin Node Status Page');
+    curl_setopt($curl_handle, CURLOPT_URL, $url);
+
+    $curl_requests++;
+    return curl_exec($curl_handle);
 }
 
 /**
@@ -283,6 +360,28 @@ function generateDonationImage()
     global $config;
     $alt_text = 'Donate ' . $config['donation_amount'] . ' BTC to ' . $config['donation_address'];
     return "\n" . '<img src="https://chart.googleapis.com/chart?chld=H|2&chs=225x225&cht=qr&chl=' . $config['donation_address'] . '" alt="' . $alt_text . '" />' . "\n";
+}
+
+/**
+ * Small function to split out chart-display logic
+ *
+ * @param boolean $config_var      Master variable from $config
+ * @param string  $data_file       The filename holding the stats to display
+ * @param int     $min_data_points The minimum number of data points to display
+ *
+ * @return boolean Whether to display the chart or not
+ */
+function displayChart($config_var, $data_file, $min_data_points)
+{
+    if (($config_var === true) & (is_file($data_file))) {
+        if (count(json_decode(file_get_contents($data_file), true)) > $min_data_points) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
 }
 
 /**
@@ -312,29 +411,6 @@ function convertToSI($bytes)
         $return_class = min((int)log($bytes, $base), count($si_prefix) - 1);
         return sprintf('%1.2f', $bytes / pow($base, $return_class)) . ' ' . $si_prefix[$return_class];
     }
-}
-
-/**
- * Gets location of an IP via Geolocation
- *
- * @param string        $ip_address  The IP to Geolocate
- * @param curl_resource $curl_handle The CURL handle to pass to the curlRequest call
- *
- * @return array An array of shortened country code and full country name
- */
-function getGeolocation($ip_address, $curl_handle)
-{
-    global $config;
-    global $country_codes;
-    $to_return['country_code'] = 'blank';
-    $to_return['country_name'] = 'Unavailable';
-    $exec_result = curlRequest("http://www.geoplugin.net/php.gp?ip=$ip_address", $curl_handle, true);
-    if ($exec_result !== false) {
-        $array = unserialize($exec_result);
-        $to_return['country_code'] = $array['geoplugin_countryCode'];
-        $to_return['country_name'] = $array['geoplugin_countryName'];
-    }
-    return $to_return;
 }
 
 /**
@@ -374,4 +450,24 @@ function elapsedTime($ptime)
             return $r . ' ' . ($r > 1 ? $a_plural[$str] : $str);
         }
     }
+}
+
+/**
+ * Gets uptime of a process - reference: http://unix.stackexchange.com/q/27276/39264
+ *
+ * @param string $process The name of the pricess to find
+ *
+ * @return string A textual representation of the lifetime of the process
+ */
+function getProcessUptime($process)
+{
+    $process_pid = exec("pidof $process");
+    $system_uptime = exec('cut -d "." -f1 /proc/uptime');
+    $pid_uptime = round((exec("cut -d \" \" -f22 /proc/$process_pid//stat")/100), 0);
+    $seconds = $system_uptime-$pid_uptime;
+    $days = floor($seconds / 86400);
+    $hours = str_pad(floor(($seconds - ($days*86400)) / 3600), 2, "0", STR_PAD_LEFT);
+    $mins = str_pad(floor(($seconds - ($days*86400) - ($hours*3600)) / 60), 2, "0", STR_PAD_LEFT);
+    $secs = str_pad(floor($seconds % 60), 2, "0", STR_PAD_LEFT);
+    return "$days days, $hours:$mins:$secs";
 }

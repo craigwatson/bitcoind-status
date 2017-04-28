@@ -52,7 +52,10 @@ Vagrant.configure("2") do |config|
   "
 
   # Provision with Puppet
-  config.vm.provision :shell, :inline => "echo 'Running Puppet' && /opt/puppetlabs/puppet/bin/puppet apply --show_diff --verbose /vagrant/manifests/default.pp"
+  config.vm.provision :shell, :inline => "echo 'Running Puppet' && STDLIB_LOG_DEPRECATIONS=false /opt/puppetlabs/puppet/bin/puppet apply --show_diff --verbose /vagrant/manifests/default.pp"
+
+  # Move config file
+  config.vm.provision :shell, :inline => "/bin/bash -c 'if [ ! -f /vagrant/php/config.php ]; then cp /vagrant/php/config.vagrant.php /vagrant/php/config.php; fi'"
 
   # Finally, output VM's hostname to terminal
   config.vm.provision :shell, :inline => "echo \"Status Page URL: http://$(hostname --fqdn)\" or http://#{ip}"

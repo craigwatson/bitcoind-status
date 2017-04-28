@@ -112,12 +112,15 @@ The `config.php` file also contains lots of options to control how the applicati
 
 ### Cache
 
-| Value               | Type    | Default                       | Explanation                                                |
-|---------------------|---------|-------------------------------|------------------------------------------------------------|
-| `use_cache`         | Boolean |  `true`                       | Enable cache                                               |
-| `cache_file`        | String  |  `/tmp/bitcoind-status.cache` | File location to write to for cache                        |
-| `max_cache_time`    | Int     |  `300`                        | Expiry time for cache                                      |
-| `nocache_whitelist` | Array   |  `array('127.0.0.1')`         | The IP addresses that are allowed to bypass or clear cache |
+| Value               | Type    | Default                               | Explanation                                                          |
+|---------------------|---------|---------------------------------------|----------------------------------------------------------------------|
+| `cache_geo_data`    | Boolean | `true`                                | Enables caching of geolocation data                                  |
+| `geo_cache_file`    | String  | `/var/tmp/bitcoind-geolocation.cache` | File location for the geolocation cache                              |
+| `geo_cache_time`    | Int     | `604800`                              | Time in seconds until geolocation cache expires - defaults to 7 days |
+| `use_cache`         | Boolean | `true`                                | Enable cache                                                         |
+| `cache_file`        | String  | `/tmp/bitcoind-status.cache`          | File location to write to for cache                                  |
+| `max_cache_time`    | Int     | `300`                                 | Expiry time for cache                                                |
+| `nocache_whitelist` | Array   | `array('127.0.0.1')`                  | The IP addresses that are allowed to bypass or clear cache           |
 
 ### Geolocation
 

@@ -31,6 +31,9 @@ $config = array(
   'peers_to_ignore'           => array(),
 
   // Cache
+  'cache_geo_data'            => false,
+  'geo_cache_file'            => '/var/tmp/bitcoind-geolocation.cache',
+  'geo_cache_time'            => 604800,
   'use_cache'                 => true,
   'cache_file'                => '/tmp/bitcoind-status.cache',
   'max_cache_time'            => 300,

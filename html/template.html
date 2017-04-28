@@ -189,7 +189,7 @@
        <a href="https://github.com/craigwatson/bitcoind-status">Bitcoin Daemon Status Page</a> by <a href="https://cwatson.org">Craig Watson</a>, distributed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a><br />
        Please send donations to: <a href="https://www.blocktrail.com/BTC/address/15sLQBY3TnCRX5rYLqt8gxPqmnxU4JrKBn" target="_blank">15sLQBY3TnCRX5rYLqt8gxPqmnxU4JrKBn</a><br />
        IP Geolocation by <a href="http://www.geoplugin.com" target="_new">geoPlugin</a>, using GeoLite2 data from <a href="https://www.maxmind.com" target="_new">MaxMind</a><br />
-       Page generated in <?php echo round((microtime(TRUE)-$_SERVER['REQUEST_TIME_FLOAT']), 4); ?> seconds<br />
+       Page generated in <?php echo round((microtime(TRUE)-$_SERVER['REQUEST_TIME_FLOAT']), 4); ?> seconds, using <?php echo $curl_requests; ?> remote request(s)<br />
     </p>
     <?php if ($config['display_github_ribbon'] === TRUE) { ?>
       <p>
