@@ -127,8 +127,8 @@ function getData($from_cache = false)
 
     // Get node info from bitnodes.21.co
     if ($config['display_bitnodes_info'] === true) {
-        $data['bitnodes_info'] = json_decode(curlRequest("https://bitnodes.21.co/api/v1/nodes/" . $data['node_ip'] . "-8333/", $bitnodes_curl), true);
-        $latency = json_decode(curlRequest("https://bitnodes.21.co/api/v1/nodes/" . $data['node_ip'] . "-8333/latency/", $bitnodes_curl), true);
+        $data['bitnodes_info'] = json_decode(curlRequest("https://bitnodes.earn.com/api/v1/nodes/" . $data['node_ip'] . "-8333/", $bitnodes_curl), true);
+        $latency = json_decode(curlRequest("https://bitnodes.earn.com/api/v1/nodes/" . $data['node_ip'] . "-8333/latency/", $bitnodes_curl), true);
         $data['bitnodes_info']['latest_latency'] = $latency['daily_latency'][0]['v'];
     }
 
