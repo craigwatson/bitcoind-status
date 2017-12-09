@@ -96,7 +96,7 @@ The `config.php` file also contains lots of options to control how the applicati
 
 | Value                   | Type    | Default   | Explanation                                 |
 |-------------------------|---------|-----------|---------------------------------------------|
-| `display_donation_text` | Boolean | `true`    | Display text to encourage donations         |
+| `display_donation_text` | Boolean | `false`    | Display text to encourage donations        |
 | `donation_address`      | String  | `not_set` | Bitcoin address to advertise for donations  |
 | `donation_amount`       | String  | `0.001`   | Donation amount - not currently implemented |
 
