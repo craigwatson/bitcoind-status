@@ -142,20 +142,21 @@ The `config.php` file also contains lots of options to control how the applicati
 
 ### UI
 
-| Value   | Type    | Default | Explanation                                                                                                                          |
-|----------------------------|---------|-----------|-----------------------------------------------------------------------------------------------------------------|
-| `display_ip`               | Boolean | `false`   | Display the server IP address                                                                                   |
-| `display_free_disk_space`  | Boolean | `false`   | Displayfree disk space                                                                                          |
-| `display_testnet`          | Boolean | `false`   | Display testnet status                                                                                          |
-| `display_version`          | Boolean | `true`    | Display node `bitcoind` version                                                                                 |
-| `display_github_ribbon`    | Boolean | `true`    | Displays the 'Fork me on GitHub' ribbon                                                                         |
-| `display_max_height`       | Boolean | `false`   | Displays the node height as a percentage of network height                                                      |
-| `use_bitcoind_ip`          | Boolean | `true`    | Use the Bitcoin daemon to get the public IP, instead of `$_SERVER`                                              |
-| `intro_text`               | String  | `not_set` | Introductory text to display above the node statistics.                                                         |
-| `display_bitnodes_info`    | Boolean | `false`   | Displays various information via the bitnodes.earn.com API                                                      |
-| `display_chart`            | Boolean | `false`   | Displays a chart showing the stats collected by the stats.php script                                            |
-| `display_peer_chart`       | Boolean | `false`   | Displays a chart showing the mix of node versions connected to your node                                        |
-| `node_links`               | Array   | `array()` | Displays links to various other profiles for your node. Takes the form of a multidimensional array, see example |
+| Value                      | Type    | Default               | Explanation                                                                                        |
+|----------------------------|---------|-----------------------|--------------------------------------------------------------------------------------------------- |
+| `display_ip`               | Boolean | `false`               | Display the server IP address                                                                      |
+| `display_free_disk_space`  | Boolean | `false`               | Displayfree disk space                                                                             |
+| `display_testnet`          | Boolean | `false`               | Display testnet status                                                                             |
+| `display_version`          | Boolean | `true`                | Display node `bitcoind` version                                                                    |
+| `display_github_ribbon`    | Boolean | `true`                | Displays the 'Fork me on GitHub' ribbon                                                            |
+| `display_max_height`       | Boolean | `false`               | Displays the node height as a percentage of network height                                         |
+| `use_bitcoind_ip`          | Boolean | `true`                | Use the Bitcoin daemon to get the public IP, instead of `$_SERVER`                                 |
+| `intro_text`               | String  | `not_set`             | Introductory text to display above the node statistics.                                            |
+| `title_text`               | String  | `Bitcoin Node Status` | Value to display for the web browser title and main heading                                        |
+| `display_bitnodes_info`    | Boolean | `false`               | Displays various information via the bitnodes.21.co API                                            |
+| `display_chart`            | Boolean | `false`               | Displays a chart showing the stats collected by the stats.php script                               |
+| `display_peer_chart`       | Boolean | `false`               | Displays a chart showing the mix of node versions connected to your node                           |
+| `node_links`               | Array   | `array()`             | Displays links to various other profiles for your node, see "Node Profile Icons"example            |
 
 ### Stats
 
