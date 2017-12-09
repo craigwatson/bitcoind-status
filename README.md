@@ -54,9 +54,9 @@ below. Icon images for Bitnodes.21.co and Blockchain.info are included in the `i
 ```
     'node_links' => array (
         array (
-            'name' => 'Bitnodes.21.co',
-            'image'=> 'img/bitnodes.21.co.png',
-            'link' => 'https://bitnodes.21.co/nodes/[IP]-[PORT]/'
+            'name' => 'bitnodes.earn.com',
+            'image'=> 'img/bitnodes.earn.com.png',
+            'link' => 'https://bitnodes.earn.com/nodes/[IP]-[PORT]/'
         ),
         array (
             ...
