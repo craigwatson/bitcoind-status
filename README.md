@@ -141,7 +141,7 @@ The `config.php` file also contains lots of options to control how the applicati
 | `display_max_height`       | Boolean | `false`   | Displays the node height as a percentage of network height                                                      |
 | `use_bitcoind_ip`          | Boolean | `true`    | Use the Bitcoin daemon to get the public IP, instead of `$_SERVER`                                              |
 | `intro_text`               | String  | `not_set` | Introductory text to display above the node statistics.                                                         |
-| `display_bitnodes_info`    | Boolean | `false`   | Displays various information via the bitnodes.21.co API                                                         |
+| `display_bitnodes_info`    | Boolean | `false`   | Displays various information via the bitnodes.earn.com API                                                      |
 | `display_chart`            | Boolean | `false`   | Displays a chart showing the stats collected by the stats.php script                                            |
 | `display_peer_chart`       | Boolean | `false`   | Displays a chart showing the mix of node versions connected to your node                                        |
 | `node_links`               | Array   | `array()` | Displays links to various other profiles for your node. Takes the form of a multidimensional array, see example |
