@@ -113,7 +113,7 @@ function getData($from_cache = false)
         $bitnodes_curl = curl_init();
     }
 
-    // Get max height from bitnodes.21.co
+    // Get max height from bitnodes.earn.com
     if ($config['display_max_height'] === true) {
         if ($config['display_testnet'] === true) {
             $exec_result = json_decode(curlRequest("https://testnet.blockexplorer.com/api/status?q=getBlockCount", $bitnodes_curl), true);
@@ -125,7 +125,7 @@ function getData($from_cache = false)
         $data['node_height_percent'] = round(($data['blocks']/$data['max_height'])*100, 1);
     }
 
-    // Get node info from bitnodes.21.co
+    // Get node info from bitnodes.earn.com
     if ($config['display_bitnodes_info'] === true) {
         $data['bitnodes_info'] = json_decode(curlRequest("https://bitnodes.earn.com/api/v1/nodes/" . $data['node_ip'] . "-8333/", $bitnodes_curl), true);
         $latency = json_decode(curlRequest("https://bitnodes.earn.com/api/v1/nodes/" . $data['node_ip'] . "-8333/latency/", $bitnodes_curl), true);
