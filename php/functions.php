@@ -76,6 +76,7 @@ function getData($from_cache = false)
 
     // Store network info in data array
     $data['net_info'] = $bitcoin->getnetworkinfo();
+    var_dump($data['net_info']);
 
     if ($config['display_ip'] === true) {
         // Use bitcoind IP
@@ -190,7 +191,8 @@ function parsePeers($peers, $curl_handle)
     foreach ($peers as $peer) {
 
         // Extract IP address for later
-        $peer_addr_array = explode(':', $peer['addr']);
+        //$peer_addr_array = explode(':', $peer['addr']);
+        $peer_addr_array = preg_split('/\:(?=[^:]*$)/', $peer['addr']);
         $peer_ip = $peer_addr_array[0];
 
         // Continue if peer is 'dark'
