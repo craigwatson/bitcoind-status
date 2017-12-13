@@ -64,6 +64,17 @@ below. Icon images for Bitnodes.21.co and Blockchain.info are included in the `i
     ),
 ```
 
+## Ignoring Certain Peers
+
+To ignore any specific peer from appearing in the connections table. Write the IPv4 or IPv6 address of the peer in the array like the example below.
+
+```
+    'peers_to_ignore' => array (
+        '192.168.0.10',
+        '[2a01:4f8:121:14f7::2]'
+  ),
+```
+
 ## Peer Count Nodes
 
 The node count script automatically counts Core, Classic, Unlimited and BitcoinJ clients. To add more node types to the chart, simply add an entry into the `peercount_extra_nodes` array in `config.php`.

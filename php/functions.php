@@ -190,7 +190,7 @@ function parsePeers($peers, $curl_handle)
     foreach ($peers as $peer) {
 
         // Extract IP address for later
-        $peer_addr_array = explode(':', $peer['addr']);
+        $peer_addr_array = preg_split('/\:(?=[^:]*$)/', $peer['addr']);
         $peer_ip = $peer_addr_array[0];
 
         // Continue if peer is 'dark'
