@@ -104,7 +104,7 @@ function getData($from_cache = false)
     }
 
     // Bitcoin Daemon uptime
-    if (($config['display_bitcoind_uptime'] === true) || (strcmp(PHP_OS, "Linux") == 0)) {
+    if (($config['display_bitcoind_uptime'] === true) && (strcmp(PHP_OS, "Linux") == 0)) {
         $data['bitcoind_uptime'] = getProcessUptime($config['bitcoind_process_name']);
     }
 
