@@ -19,7 +19,7 @@ $config = array(
   'rpc_ssl_ca'                => null,
 
   // Donations
-  'display_donation_text'     => true,
+  'display_donation_text'     => false,
   'donation_address'          => 'not_set',
   'donation_amount'           => '0.001',
 
