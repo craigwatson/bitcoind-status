@@ -45,7 +45,7 @@ $config = array(
 
   // UI
   'display_ip'                => true,
-  'display_free_disk_space'   => false,
+  'display_free_disk_space'   => true,
   'display_testnet'           => false,
   'display_version'           => true,
   'display_github_ribbon'     => false,
@@ -76,6 +76,7 @@ $config = array(
 
   // System
   'date_format'               => 'H:i:s T, j F Y ',
+  'disk_space_mount_point'    => '.',
   'timezone'                  => null,
   'stylesheet'                => 'v2-light.css',
   'debug'                     => false,

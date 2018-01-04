@@ -76,6 +76,7 @@ $config = array(
 
   // System
   'date_format'               => 'H:i:s T, j F Y ',
+  'disk_space_mount_point'    => '.',
   'timezone'                  => null,
   'stylesheet'                => 'v2-light.css',
   'debug'                     => false,
