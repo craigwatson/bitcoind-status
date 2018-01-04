@@ -9,3 +9,4 @@ lib
 log
 Gemfile
 Gemfile.lock
+*.log

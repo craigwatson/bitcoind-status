@@ -1,63 +1,77 @@
-Vagrant.configure("2") do |config|
+PUPPET_VERSION = "5.3.3"
+MODULES = [
+  { name: "Slashbunny-phpfpm", version: "0.0.13" },
+  { name: "puppet-nginx", git: "https://github.com/voxpupuli/puppet-nginx.git" },
+  { name: "CraigWatson1987-bitcoind" },
+  { name: "puppetlabs-concat", version: "4.0.1" }
+]
 
-  # Statis configuration
-  ip                 = '172.16.100.24'
-  config.vm.hostname = 'bitcoind-status.test.local'
-  config.vm.box      = 'ubuntu/trusty64'
+Vagrant.configure("2") do |c|
+
+  # Check for Puppet plugin
+  unless Vagrant.has_plugin?("vagrant-puppet-install")
+    raise 'vagrant-puppet-install is not installed!'
+  end
+
+  # Static config
+  ip            = '172.16.100.24'
+  c.vm.hostname = 'bitcoind-status.test.local'
+  c.vm.box      = 'ubuntu/xenial64'
+  c.puppet_install.puppet_version = PUPPET_VERSION
 
   # Synchronised folder
   if Vagrant::Util::Platform.darwin?
-    config.vm.synced_folder ".", "/vagrant", type: "nfs"
-    config.nfs.map_uid = Process.uid
-    config.nfs.map_gid = Process.gid
+    c.vm.synced_folder ".", "/vagrant", type: "nfs"
+    c.nfs.map_uid = Process.uid
+    c.nfs.map_gid = Process.gid
   else
-    config.vm.synced_folder ".", "/vagrant"
+    c.vm.synced_folder ".", "/vagrant"
   end
 
   # IP & VM custommisation
-  config.vm.network :private_network, ip: ip
-  config.vm.provider "virtualbox" do |vb|
+  c.vm.network :private_network, ip: ip
+  c.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 1024]
     vb.gui = false
   end
 
   # Fix TTY messages
-  config.vm.provision :shell, :inline => "(grep -q -E '^mesg n$' /root/.profile && sed -i 's/^mesg n$/tty -s \\&\\& mesg n/g' /root/.profile && echo 'Ignore the previous error about stdin not being a tty. Fixing it now...') || exit 0;"
+  c.vm.provision :shell, :inline => "(grep -q -E '^mesg n$' /root/.profile && sed -i 's/^mesg n$/tty -s \\&\\& mesg n/g' /root/.profile && echo 'Ignore the previous error about stdin not being a tty. Fixing it now...') || exit 0;"
 
-  # Install Puppet repo
-  config.vm.provision :shell, :inline => "
-    if [ ! -f /etc/apt/sources.list.d/puppetlabs-pc1.list ]; then
-      echo 'Adding Puppetlabs apt repository'
-      wget -q -O /tmp/puppet.deb https://apt.puppetlabs.com/puppetlabs-release-pc1-trusty.deb
-      sudo dpkg -i /tmp/puppet.deb > /dev/null 2>&1
-      sudo apt-get -qq update > /dev/null 2>&1
-      sudo apt-get -qq purge puppet > /dev/null 2>&1
-      sudo apt-get -qq autoremove > /dev/null 2>&1
-      rm /tmp/puppet.deb
-    fi
-  "
+  # Handle Puppet 3 and 4/5 paths
+  if PUPPET_VERSION.start_with?('3')
+    puppet_bin_path = '/usr/bin/puppet'
+    module_path = '/etc/puppet/modules'
+  else
+    puppet_bin_path = '/opt/puppetlabs/bin/puppet'
+    module_path = '/etc/puppetlabs/code/environments/production/modules'
+  end
 
-  # Install Puppet binary & Augeas lenses
-  config.vm.provision :shell, :inline => "if [ ! -x /opt/puppetlabs/puppet/bin/puppet ]; then echo 'Installing Puppet binary' && sudo apt-get -qq install puppet-agent > /dev/null 2>&1; fi"
-  config.vm.provision :shell, :inline => "if [ ! -d /usr/share/augeas/lenses ]; then echo 'Installing augeas-leneses' && sudo apt-get -qq install augeas-lenses > /dev/null 2>&1; fi"
+  # Install git ... with Puppet!
+  c.vm.provision :shell, :inline => "#{puppet_bin_path} resource package git ensure=present"
 
-  # Install Puppet modules
-  config.vm.provision :shell, :inline => "
-    for MODULE in nodes-php puppetlabs-apache CraigWatson1987-bitcoind; do
-      if [ ! -d /etc/puppetlabs/code/environments/production/modules/${MODULE#*-} ]; then
-        echo \"Installing Puppet module $MODULE\"
-        sudo /opt/puppetlabs/puppet/bin/puppet module install $MODULE > /dev/null 2>&2
-      fi
-    done
-  "
+  # Install modules
+  MODULES.each do |mod|
+    if mod[:git].nil?
+      if mod[:version].nil?
+        mod_version = ''
+      else
+        mod_version = " --version #{mod[:version]}"
+      end
+      c.vm.provision :shell, :inline => "#{puppet_bin_path} module install #{mod[:name]}#{mod_version}"
+    else
+      mod_name = mod[:name].split('-').last
+      c.vm.provision :shell, :inline => "if [ ! -d #{module_path}/#{mod_name} ]; then git clone #{mod[:git]} #{module_path}/#{mod_name}; fi"
+    end
+  end
 
   # Provision with Puppet
-  config.vm.provision :shell, :inline => "echo 'Running Puppet' && STDLIB_LOG_DEPRECATIONS=false /opt/puppetlabs/puppet/bin/puppet apply --show_diff --verbose /vagrant/manifests/default.pp"
+  c.vm.provision :shell, :inline => "STDLIB_LOG_DEPRECATIONS=false #{puppet_bin_path} apply --verbose --show_diff /vagrant/manifests/default.pp"
 
   # Move config file
-  config.vm.provision :shell, :inline => "/bin/bash -c 'if [ ! -f /vagrant/php/config.php ]; then cp /vagrant/php/config.vagrant.php /vagrant/php/config.php; fi'"
+  c.vm.provision :shell, :inline => "/bin/bash -c 'if [ ! -f /vagrant/php/config.php ]; then cp /vagrant/php/config.vagrant.php /vagrant/php/config.php; fi'"
 
   # Finally, output VM's hostname to terminal
-  config.vm.provision :shell, :inline => "echo \"Status Page URL: http://$(hostname --fqdn)\" or http://#{ip}"
+  c.vm.provision :shell, :inline => "echo \"Status Page URL: http://$(hostname --fqdn)\" or http://#{ip}"
 
 end

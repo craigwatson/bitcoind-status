@@ -2,25 +2,39 @@ node default {
 
   include ::apt
 
-  Class['::apt::update'] -> Package <| title != 'software-properties-common' |>
+  # == PHP-FPM
 
-  class { '::apache':
-    mpm_module    => 'prefork',
-    default_vhost => false,
+  class { '::phpfpm':
+      poold_purge => true,
   }
 
-  ::apache::vhost { $::fqdn:
-    port           => '80',
-    docroot        => '/vagrant',
-    manage_docroot => false,
+  ::phpfpm::pool { 'main': }
+
+  package { ['php-curl']:
+    ensure => present,
+    notify => Service['php7.0-fpm'],
   }
 
-  include ::php::params
-  include ::php::apache
-  include ::php::extension::curl
-  include ::apache::mod::php
+  # == Nginx
 
-  Php::Extension <| |> -> Php::Config <| |> ~> Service['httpd']
+  class { '::nginx':
+    server_purge => true,
+    confd_purge  =>  true,
+  }
+
+  ::nginx::resource::server { 'default':
+    index_files          => ['index.php'],
+    use_default_location => false,
+    www_root             => '/vagrant',
+  }
+
+  ::nginx::resource::location { 'webroot':
+    location => '~ \.php$',
+    server   => 'default',
+    fastcgi  => '127.0.0.1:9000',
+  }
+
+  # == Bitcoin Daemon
 
   class { '::bitcoind':
     rpcallowip          => ['127.0.0.1'],
@@ -28,7 +42,6 @@ node default {
     rpcuser             => 'status',
     testnet             => true,
     disablewallet       => true,
-    use_bitcoin_classic => false,
   }
 
   cron { 'bitcoind_stats':
