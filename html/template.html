@@ -86,10 +86,10 @@
   </div>
 
   <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-3 image">
-    <?php 
-      if ($config['display_donation_text'] === TRUE) {
+    <?php
+      if (($config['display_donation_text'] === TRUE) && ($config['donation_address'] !== 'not_set')) {
         echo '<p class="donation">' . "Please support this Bitcoin node by donating to <a href='http://blocktrail.com/address/" . $config['donation_address'] . "' target='_blank'>" . $config['donation_address'] . "</a></p>";
-      } 
+      }
     ?>
     <?php if (strcmp($config['donation_address'],'not_set') == 0){ echo '<img src="img/logo.png" alt="Bitcoin Logo" class="logo" />'; } else { echo generateDonationImage(); } ?>
     <?php if ((is_array($config['node_links'])) & (count($config['node_links']) > 0)) { echo '<div style="padding:10px;text-align:center"><p class="stat"><span class="label">Node Links</span></p>'; foreach ($config['node_links'] as $node_link) { ?>
