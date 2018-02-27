@@ -37,11 +37,12 @@ node default {
   # == Bitcoin Daemon
 
   class { '::bitcoind':
-    rpcallowip          => ['127.0.0.1'],
-    rpcpassword         => 'statustest',
-    rpcuser             => 'status',
-    testnet             => true,
-    disablewallet       => true,
+    rpcallowip                => ['127.0.0.1'],
+    rpcpassword               => 'statustest',
+    rpcuser                   => 'status',
+    testnet                   => true,
+    disablewallet             => true,
+    download_bitcoind_version => '0.16.0'
   }
 
   cron { 'bitcoind_stats':
