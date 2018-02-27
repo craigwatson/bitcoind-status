@@ -10,6 +10,7 @@
  */
 
 $curl_requests = 0;
+$default_app_title = 'Bitcoin Node Status';
 
 /**
  * Connects to Bitcoin daemon and retrieves information, then writes to cache

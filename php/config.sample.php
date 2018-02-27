@@ -52,6 +52,7 @@ $config = array(
   'display_max_height'        => true,
   'use_bitcoind_ip'           => true,
   'intro_text'                => 'not_set',
+  'title_text'                => 'Bitcoin Node Status',
   'display_bitnodes_info'     => false,
   'display_chart'             => false,
   'display_peer_chart'        => false,

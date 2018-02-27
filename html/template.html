@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bitcoin Node Status</title>
+  <title><?php echo isset($config['title_text']) ? $config['title_text'] : $default_app_title; ?></title>
   <link rel="icon" type="image/png" href="img/favicon.png" />
   <link rel="stylesheet" href="css/pure-min.css">
   <link rel="stylesheet" href="css/flags.css">
@@ -73,7 +73,7 @@
 <div id="container" class="pure-g">
 
   <div class="pure-u-1 pure-u-md-1-1">
-    <h1>Bitcoin Node Status</h1>
+    <h1><?php echo isset($config['title_text']) ? $config['title_text'] : $default_app_title; ?></h1>
     <?php
       if (isset($cache_message)) {
         echo '<p class="cache small">' . $cache_message . '</p>';
