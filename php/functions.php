@@ -51,7 +51,7 @@ function getData($from_cache = false)
     }
 
     // Get info
-    $data = $bitcoin->getinfo();
+    $data = $bitcoin->getnetworkinfo();
 
     // Handle errors if they happened
     if (!$data) {
