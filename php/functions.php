@@ -51,8 +51,11 @@ function getData($from_cache = false)
         $bitcoin->setSSL($config['rpc_ssl_ca']);
     }
 
-    // Get info
-    $data = $bitcoin->getnetworkinfo();
+    // Get blockchain and network info
+    $data = $bitcoin->getblockchaininfo();
+    $net_info = $bitcoin->getnetworkinfo();
+    $data['connections'] = $net_info['connections'];
+    $data['subversion'] = $net_info['subversion'];
 
     // Handle errors if they happened
     if (!$data) {
@@ -75,13 +78,10 @@ function getData($from_cache = false)
         $data['free_disk_space'] = getFreeDiskSpace($config['disk_space_mount_point']);
     }
 
-    // Store network info in data array
-    $data['net_info'] = $bitcoin->getnetworkinfo();
-
     if ($config['display_ip'] === true) {
         // Use bitcoind IP
         if ($config['use_bitcoind_ip'] === true) {
-            $data['node_ip'] = $data['net_info']['localaddresses'][0]['address'];
+            $data['node_ip'] = $net_info['localaddresses'][0]['address'];
         } else {
             $data['node_ip'] = $_SERVER['SERVER_ADDR'];
         }
