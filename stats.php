@@ -44,7 +44,7 @@ if ($config['rpc_ssl'] === true) {
 }
 
 // Get info and handle errors
-$new_raw_data = $bitcoin->getinfo();
+$new_raw_data = $bitcoin->getnetworkinfo();
 if (!$new_raw_data) {
     die("RPC Error");
 }
