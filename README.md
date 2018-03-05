@@ -22,7 +22,8 @@ To run the application, you will need:
 
 ### PHP Support
 
-This application has been tested with PHP 5.4, 5.5 and 5.6, as well as HHVM and Nightly PHP builds, via TravisCI.
+This application has been tested with PHP 5.6, 7.0, 7.1 and 7.2, as well as HHVM and Nightly PHP builds, via TravisCI. PHP 5.4 and 5.5 *is not supported* by this 
+application.
 
 ## Getting Started
 
