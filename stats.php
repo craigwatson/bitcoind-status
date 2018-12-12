@@ -13,7 +13,7 @@ require_once './php/config.php';
 
 // Die if we're not in the whitelist
 if (php_sapi_name() != 'cli') {
-    if(!in_array($_SERVER['REMOTE_ADDR'], $config['stats_whitelist'])) {
+    if (!in_array($_SERVER['REMOTE_ADDR'], $config['stats_whitelist'])) {
         die($_SERVER['REMOTE_ADDR']." is not in the whitelist");
     }
 }
