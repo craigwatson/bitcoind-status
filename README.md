@@ -43,8 +43,13 @@ To do this, just schedule the `/stats.php` script as well as the `/peercount.php
 Below are two example `crontab` entries to call the scripts every five minutes via `curl`. It is **highly recommended** to only allow `127.0.0.1` to call the script, as allowing other IP addresses could lead to your node becoming vulnerable to DDoS attacks.
 
 ```
+#Run over Curl / Http
 */5 *  *   *   *  curl -Ssk http://127.0.0.1/stats.php > /dev/null
 */5 *  *   *   *  curl -Ssk http://127.0.0.1/peercount.php > /dev/null
+
+#Run over php cgi
+*/5 *  *   *   *  cd /var/www/bitnodes/ && /usr/bin/php stats.php > /dev/null
+*/5 *  *   *   *  cd /var/www/bitnodes/ && /usr/bin/php peercount.php > /dev/null
 ```
 
 ## Node Profile Icons
