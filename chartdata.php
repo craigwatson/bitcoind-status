@@ -16,6 +16,8 @@ if (!isset($_GET['stat'])) {
 
 require_once './php/config.php';
 
+header('Content-Type: application/javascript');
+
 switch($_GET['stat']) {
 case 'connection':
     $data_file  = $config['stats_file'];
