@@ -43,7 +43,7 @@ function getData($from_cache = false)
     }
 
     // Include EasyBitcoin library and set up connection
-    include_once './php/easybitcoin.php';
+    require_once './php/easybitcoin.php';
     $bitcoin = new Bitcoin($config['rpc_user'], $config['rpc_pass'], $config['rpc_host'], $config['rpc_port']);
 
     // Setup SSL if configured
@@ -117,12 +117,11 @@ function getData($from_cache = false)
     // Get max height from bitnodes.earn.com
     if ($config['display_max_height'] === true) {
         if ($config['display_testnet'] === true) {
-            $exec_result = json_decode(curlRequest("https://testnet.blockexplorer.com/api/status?q=getBlockCount", $bitnodes_curl), true);
-            $data['max_height'] = $exec_result['blockcount'];
+            $exec_result = json_decode(curlRequest("https://chain.so/api/v2/get_info/BTCTEST", $bitnodes_curl), true);
         } else {
-            $exec_result = json_decode(curlRequest("https://bitnodes.earn.com/api/v1/snapshots/", $bitnodes_curl), true);
-            $data['max_height'] = $exec_result['results'][0]['latest_height'];
+            $exec_result = json_decode(curlRequest("https://chain.so/api/v2/get_info/BTC", $bitnodes_curl), true);
         }
+        $data['max_height'] = $exec_result['data']['blocks'];
         $data['node_height_percent'] = round(($data['blocks']/$data['max_height'])*100, 1);
     }
 
