@@ -43,7 +43,7 @@ function getData($from_cache = false)
     }
 
     // Include EasyBitcoin library and set up connection
-    require_once './php/easybitcoin.php';
+    include_once './php/easybitcoin.php';
     $bitcoin = new Bitcoin($config['rpc_user'], $config['rpc_pass'], $config['rpc_host'], $config['rpc_port']);
 
     // Setup SSL if configured
