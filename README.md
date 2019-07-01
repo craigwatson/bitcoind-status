@@ -22,7 +22,7 @@ To run the application, you will need:
 
 ### PHP Support
 
-This application has been tested with PHP 5.6, 7.0, 7.1 and 7.2, as well as HHVM and Nightly PHP builds, via TravisCI. PHP 5.4 and 5.5 *is not supported* by this 
+This application has been tested with PHP 5.6, 7.0, 7.1 and 7.2, as well as Nightly PHP builds, via TravisCI. PHP 5.4 and 5.5 *is not supported* by this
 application.
 
 ## Getting Started
@@ -208,4 +208,4 @@ The `config.php` file also contains lots of options to control how the applicati
 
 * Copyright (C) 2015 [Craig Watson](http://www.cwatson.org)
 * Distributed under the terms of the [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0) - see [LICENSE file](https://github.com/craigwatson/bitcoind-status/blob/master/LICENSE) for details.
-* [EasyBitcoin-PHP library](https://github.com/aceat64/EasyBitcoin-PHP) is reproduced under the terms of the [MIT licence](http://opensource.org/licenses/MIT) and is used from commit [670414e](https://github.com/aceat64/EasyBitcoin-PHP/tree/670414e1b733e11bb7bdf4fcb17169853301716b).
+* [EasyBitcoin-PHP library](https://github.com/aceat64/EasyBitcoin-PHP) is reproduced under the terms of the [MIT licence](http://opensource.org/licenses/MIT) and is used from commit [ff67be76](https://github.com/aceat64/EasyBitcoin-PHP/tree/ff67be76a9109beba2ec5f684d646c6f3a3e9792).
