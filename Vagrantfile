@@ -1,9 +1,8 @@
-PUPPET_VERSION = "5.3.3"
+PUPPET_VERSION = "6.5.0"
 MODULES = [
-  { name: "Slashbunny-phpfpm", version: "0.0.13" },
-  { name: "puppet-nginx", git: "https://github.com/voxpupuli/puppet-nginx.git" },
-  { name: "CraigWatson1987-bitcoind" },
-  { name: "puppetlabs-concat", version: "4.0.1" }
+  { name: "Slashbunny-phpfpm", version: "0.0.19" },
+  { name: "puppet-nginx", version: "0.15.0" },
+  { name: "CraigWatson1987-bitcoind", version: "3.1.0" }
 ]
 
 Vagrant.configure("2") do |c|
@@ -14,7 +13,7 @@ Vagrant.configure("2") do |c|
   end
 
   # Static config
-  ip            = '172.16.100.24'
+  ip            = '172.16.253.24'
   c.vm.hostname = 'bitcoind-status.test.local'
   c.vm.box      = 'ubuntu/xenial64'
   c.puppet_install.puppet_version = PUPPET_VERSION
@@ -38,17 +37,8 @@ Vagrant.configure("2") do |c|
   # Fix TTY messages
   c.vm.provision :shell, :inline => "(grep -q -E '^mesg n$' /root/.profile && sed -i 's/^mesg n$/tty -s \\&\\& mesg n/g' /root/.profile && echo 'Ignore the previous error about stdin not being a tty. Fixing it now...') || exit 0;"
 
-  # Handle Puppet 3 and 4/5 paths
-  if PUPPET_VERSION.start_with?('3')
-    puppet_bin_path = '/usr/bin/puppet'
-    module_path = '/etc/puppet/modules'
-  else
-    puppet_bin_path = '/opt/puppetlabs/bin/puppet'
-    module_path = '/etc/puppetlabs/code/environments/production/modules'
-  end
-
   # Install git ... with Puppet!
-  c.vm.provision :shell, :inline => "#{puppet_bin_path} resource package git ensure=present"
+  c.vm.provision :shell, :inline => "/opt/puppetlabs/bin/puppet resource package git ensure=present"
 
   # Install modules
   MODULES.each do |mod|
@@ -58,15 +48,15 @@ Vagrant.configure("2") do |c|
       else
         mod_version = " --version #{mod[:version]}"
       end
-      c.vm.provision :shell, :inline => "#{puppet_bin_path} module install #{mod[:name]}#{mod_version}"
+      c.vm.provision :shell, :inline => "/opt/puppetlabs/bin/puppet module install #{mod[:name]}#{mod_version}"
     else
       mod_name = mod[:name].split('-').last
-      c.vm.provision :shell, :inline => "if [ ! -d #{module_path}/#{mod_name} ]; then git clone #{mod[:git]} #{module_path}/#{mod_name}; fi"
+      c.vm.provision :shell, :inline => "if [ ! -d /etc/puppetlabs/code/environments/production/modules/#{mod_name} ]; then git clone #{mod[:git]} /etc/puppetlabs/code/environments/production/modules/#{mod_name}; fi"
     end
   end
 
   # Provision with Puppet
-  c.vm.provision :shell, :inline => "STDLIB_LOG_DEPRECATIONS=false #{puppet_bin_path} apply --verbose --show_diff /vagrant/manifests/default.pp"
+  c.vm.provision :shell, :inline => "STDLIB_LOG_DEPRECATIONS=false /opt/puppetlabs/bin/puppet apply --verbose --show_diff /vagrant/manifests/default.pp"
 
   # Move config file
   c.vm.provision :shell, :inline => "/bin/bash -c 'if [ ! -f /vagrant/php/config.php ]; then cp /vagrant/php/config.vagrant.php /vagrant/php/config.php; fi'"

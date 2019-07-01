@@ -5,12 +5,12 @@ node default {
   # == PHP-FPM
 
   class { '::phpfpm':
-      poold_purge => true,
+    poold_purge => true,
   }
 
   ::phpfpm::pool { 'main': }
 
-  package { ['php-curl']:
+  package { 'php-curl':
     ensure => present,
     notify => Service['php7.0-fpm'],
   }
@@ -19,7 +19,7 @@ node default {
 
   class { '::nginx':
     server_purge => true,
-    confd_purge  =>  true,
+    confd_purge  => true,
   }
 
   ::nginx::resource::server { 'default':
@@ -42,7 +42,7 @@ node default {
     rpcuser                   => 'status',
     testnet                   => true,
     disablewallet             => true,
-    download_bitcoind_version => '0.16.0'
+    download_bitcoind_version => '0.18.0'
   }
 
   cron { 'bitcoind_stats':
