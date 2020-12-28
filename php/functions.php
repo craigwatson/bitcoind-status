@@ -465,7 +465,7 @@ function getProcessUptime($process)
 {
     $process_pid = exec("pidof $process");
     $system_uptime = exec('cut -d "." -f1 /proc/uptime');
-    $pid_uptime = round((exec("cut -d \" \" -f22 /proc/$process_pid//stat")/100), 0);
+    $pid_uptime = round((intval(exec("cut -d \" \" -f22 /proc/$process_pid//stat"))/100), 0);
     $seconds = $system_uptime-$pid_uptime;
     $days = floor($seconds / 86400);
     $hours = str_pad(floor(($seconds - ($days*86400)) / 3600), 2, "0", STR_PAD_LEFT);
