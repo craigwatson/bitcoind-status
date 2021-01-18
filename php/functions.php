@@ -117,18 +117,18 @@ function getData($from_cache = false)
     // Get max height from bitnodes.earn.com
     if ($config['display_max_height'] === true) {
         if ($config['display_testnet'] === true) {
-            $exec_result = json_decode(curlRequest("https://chain.so/api/v2/get_info/BTCTEST", $bitnodes_curl), true);
+            $exec_result = json_decode(curlRequest("https://sochain.com/api/v2/get_info/BTCTEST", $bitnodes_curl), true);
         } else {
-            $exec_result = json_decode(curlRequest("https://chain.so/api/v2/get_info/BTC", $bitnodes_curl), true);
+            $exec_result = json_decode(curlRequest("https://sochain.com/api/v2/get_info/BTC", $bitnodes_curl), true);
         }
         $data['max_height'] = $exec_result['data']['blocks'];
         $data['node_height_percent'] = round(($data['blocks']/$data['max_height'])*100, 1);
     }
 
-    // Get node info from bitnodes.earn.com
+        // Get node info from bitnodes.io
     if ($config['display_bitnodes_info'] === true) {
-        $data['bitnodes_info'] = json_decode(curlRequest("https://bitnodes.earn.com/api/v1/nodes/" . $data['node_ip'] . "-8333/", $bitnodes_curl), true);
-        $latency = json_decode(curlRequest("https://bitnodes.earn.com/api/v1/nodes/" . $data['node_ip'] . "-8333/latency/", $bitnodes_curl), true);
+        $data['bitnodes_info'] = json_decode(curlRequest("https://bitnodes.io/api/v1/nodes/" . $data['node_ip'] . "-".$config['node_port']."/", $bitnodes_curl), true);
+        $latency = json_decode(curlRequest("https://bitnodes.io/api/v1/nodes/" . $data['node_ip'] . "-".$config['node_port']."/latency/", $bitnodes_curl), true);
         $data['bitnodes_info']['latest_latency'] = $latency['daily_latency'][0]['v'];
     }
 
@@ -465,7 +465,7 @@ function getProcessUptime($process)
 {
     $process_pid = exec("pidof $process");
     $system_uptime = exec('cut -d "." -f1 /proc/uptime');
-    $pid_uptime = round((exec("cut -d \" \" -f22 /proc/$process_pid//stat")/100), 0);
+    $pid_uptime = round((intval(exec("cut -d \" \" -f22 /proc/$process_pid//stat"))/100), 0);
     $seconds = $system_uptime-$pid_uptime;
     $days = floor($seconds / 86400);
     $hours = str_pad(floor(($seconds - ($days*86400)) / 3600), 2, "0", STR_PAD_LEFT);

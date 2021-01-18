@@ -18,6 +18,9 @@ $config = array(
   'rpc_ssl'                   => false,
   'rpc_ssl_ca'                => null,
 
+  //Node Port for bitnodes
+  'node_port'                 => 8333,
+  
   // Donations
   'display_donation_text'     => false,
   'donation_address'          => 'not_set',
